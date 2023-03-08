@@ -5,16 +5,18 @@ import java.util.Date;
 import java.util.List;
 import java.util.regex.*;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import sk.tuke.gamestudio.entity.Score;
 import sk.tuke.gamestudio.game.minesweeper.core.Field;
 import sk.tuke.gamestudio.game.minesweeper.core.GameState;
 import sk.tuke.gamestudio.service.ScoreException;
 import sk.tuke.gamestudio.service.ScoreService;
-import sk.tuke.gamestudio.service.ScoreServiceJDBC;
 
 /**
  * Console user interface.
  */
+@Component
 public class ConsoleUI implements UserInterface {
     /** Playing field. */
     private Field field;
@@ -25,7 +27,8 @@ public class ConsoleUI implements UserInterface {
     /** Input reader. */
     private BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
 
-    private ScoreService scoreService = new ScoreServiceJDBC();
+    @Autowired
+    private ScoreService scoreService;
     
     /**
      * Reads line of text from the reader.
