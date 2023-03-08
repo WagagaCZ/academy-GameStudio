@@ -2,11 +2,10 @@ package sk.tuke.gamestudio;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.WebApplicationType;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Primary;
 import sk.tuke.gamestudio.game.minesweeper.consoleui.ConsoleUI;
 import sk.tuke.gamestudio.game.minesweeper.core.Field;
 
