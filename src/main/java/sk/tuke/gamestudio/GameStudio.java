@@ -2,12 +2,13 @@ package sk.tuke.gamestudio;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.WebApplicationType;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.Bean;
 import sk.tuke.gamestudio.game.minesweeper.consoleui.ConsoleUI;
 import sk.tuke.gamestudio.game.minesweeper.core.Field;
+import sk.tuke.gamestudio.service.ScoreService;
+import sk.tuke.gamestudio.service.ScoreServiceJPA;
 
 @SpringBootApplication
 public class GameStudio {
@@ -28,7 +29,12 @@ public class GameStudio {
     @Bean
     public CommandLineRunner runnerMines(ConsoleUI minesConsole) {
         return args -> {
-            minesConsole.newGameStarted(new Field(10, 10, 10));
+            minesConsole.newGameStarted(new Field(10, 10, 1));
         };
+    }
+
+    @Bean
+    public ScoreService getScoreService() {
+        return new ScoreServiceJPA();
     }
 }

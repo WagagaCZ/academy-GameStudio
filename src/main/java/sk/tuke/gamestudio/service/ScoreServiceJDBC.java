@@ -8,7 +8,6 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
 public class ScoreServiceJDBC implements ScoreService {
     public static final String URL = "jdbc:postgresql://localhost/gamestudio";
     public static final String USER = "postgres";

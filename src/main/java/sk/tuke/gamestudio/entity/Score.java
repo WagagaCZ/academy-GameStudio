@@ -1,9 +1,19 @@
 package sk.tuke.gamestudio.entity;
 
+import jakarta.persistence.*;
+
 import java.util.Date;
 import java.util.Formatter;
 
+@Entity
+@NamedQuery( name = "Score.getTopScores",
+        query = "SELECT s FROM Score s WHERE s.game=:game ORDER BY s.points DESC")
+@NamedQuery( name = "Score.resetScores",
+        query = "DELETE FROM Score")
 public class Score {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String game;
 
     private String player;
@@ -12,11 +22,21 @@ public class Score {
 
     private Date playedOn;
 
+    public Score() {}
+
     public Score(String game, String player, int points, Date playedOn) {
         this.game = game;
         this.player = player;
         this.points = points;
         this.playedOn = playedOn;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getGame() {
