@@ -5,17 +5,18 @@ import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.Bean;
+import org.springframework.web.client.RestTemplate;
 import sk.tuke.gamestudio.game.minesweeper.consoleui.ConsoleUI;
 import sk.tuke.gamestudio.game.minesweeper.core.Field;
 import sk.tuke.gamestudio.service.ScoreService;
 import sk.tuke.gamestudio.service.ScoreServiceJPA;
 
 @SpringBootApplication
-public class GameStudio {
+public class GameStudioClient {
 
     //start as a standard app - no web server
     public static void main(String[] args) {
-        new SpringApplicationBuilder(GameStudio.class)
+        new SpringApplicationBuilder(GameStudioClient.class)
                 .web(WebApplicationType.NONE).run(args);
     }
 
@@ -37,4 +38,9 @@ public class GameStudio {
     public ScoreService getScoreService() {
         return new ScoreServiceJPA();
     }
+
+//    @Bean
+//    public RestTemplate restTemplate() {
+//        return new RestTemplate();
+//    }
 }
