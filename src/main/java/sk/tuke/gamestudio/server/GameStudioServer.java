@@ -4,8 +4,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
-import sk.tuke.gamestudio.service.ScoreService;
-import sk.tuke.gamestudio.service.ScoreServiceJPA;
+import sk.tuke.gamestudio.server.service.ScoreService;
+import sk.tuke.gamestudio.server.service.ScoreServiceJPA;
 
 @SpringBootApplication
 @EntityScan(basePackages = "sk.tuke.gamestudio.entity")

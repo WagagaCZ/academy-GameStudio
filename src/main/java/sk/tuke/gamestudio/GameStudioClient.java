@@ -5,11 +5,10 @@ import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.Bean;
-import org.springframework.web.client.RestTemplate;
 import sk.tuke.gamestudio.game.minesweeper.consoleui.ConsoleUI;
 import sk.tuke.gamestudio.game.minesweeper.core.Field;
-import sk.tuke.gamestudio.service.ScoreService;
-import sk.tuke.gamestudio.service.ScoreServiceJPA;
+import sk.tuke.gamestudio.server.service.ScoreService;
+import sk.tuke.gamestudio.server.service.ScoreServiceJPA;
 
 @SpringBootApplication
 public class GameStudioClient {

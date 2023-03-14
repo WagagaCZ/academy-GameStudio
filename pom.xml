@@ -18,8 +18,8 @@
         <maven.compiler.source>18</maven.compiler.source>
         <maven.compiler.target>18</maven.compiler.target>
 
-        <serverMain>${groupId}.server.GameStudioServer</serverMain>
-        <clientMain>${groupId}.GameStudioClient</clientMain>
+        <serverMain>${project.groupId}.server.GameStudioServer</serverMain>
+        <clientMain>${project.groupId}.GameStudioClient</clientMain>
     </properties>
 
     <dependencyManagement>
@@ -79,40 +79,16 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-<!--        <dependency>-->
-<!--            <groupId>io.springfox</groupId>-->
-<!--            <artifactId>springfox-boot-starter</artifactId>-->
-<!--            <version>3.0.0</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>io.springfox</groupId>-->
-<!--            <artifactId>springfox-swagger-ui</artifactId>-->
-<!--            <version>3.0.0</version>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>2.0.0</version>
+        </dependency>
 
     </dependencies>
 
     <build>
         <plugins>
-
-            <!--            <plugin>
-                            <groupId>org.codehaus.mojo</groupId>
-                            <artifactId>exec-maven-plugin</artifactId>
-                            <version>3.1.0</version>
-                            <configuration>
-                                <mainClass>sk.tuke.gamestudio.game.minesweeper.Minesweeper</mainClass>
-                            </configuration>
-                            <executions>
-                                <execution>
-                                    <id>run-mines</id>
-                                    <phase>install</phase>
-                                    <goals>
-                                        <goal>java</goal>
-                                    </goals>
-                                </execution>
-                            </executions>
-                        </plugin>-->
-
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>

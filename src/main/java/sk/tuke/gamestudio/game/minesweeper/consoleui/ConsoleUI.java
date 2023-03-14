@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
 import sk.tuke.gamestudio.entity.Score;
 import sk.tuke.gamestudio.game.minesweeper.core.Field;
 import sk.tuke.gamestudio.game.minesweeper.core.GameState;
-import sk.tuke.gamestudio.service.ScoreException;
-import sk.tuke.gamestudio.service.ScoreService;
+import sk.tuke.gamestudio.server.service.ScoreException;
+import sk.tuke.gamestudio.server.service.ScoreService;
 
 /**
  * Console user interface.

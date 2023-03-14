@@ -1,10 +1,8 @@
-package sk.tuke.gamestudio.service;
+package sk.tuke.gamestudio.server.service;
 
-import org.springframework.stereotype.Component;
 import sk.tuke.gamestudio.entity.Score;
 
 import java.sql.*;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 

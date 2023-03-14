@@ -1,4 +1,4 @@
-package sk.tuke.gamestudio.service;
+package sk.tuke.gamestudio.server.service;
 
 import sk.tuke.gamestudio.entity.Comment;
 
