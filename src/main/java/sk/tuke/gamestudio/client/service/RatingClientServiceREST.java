@@ -4,16 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.client.RestTemplate;
 import sk.tuke.gamestudio.common.entity.Rating;
-import sk.tuke.gamestudio.common.entity.Score;
 import sk.tuke.gamestudio.common.service.RatingException;
 import sk.tuke.gamestudio.common.service.RatingService;
 import sk.tuke.gamestudio.common.service.ScoreException;
-import sk.tuke.gamestudio.common.service.ScoreService;
 
-import java.util.Arrays;
-import java.util.List;
-
-public class RatingServiceREST implements RatingService {
+public class RatingClientServiceREST implements RatingService {
 
     @Autowired
     RestTemplate restTemplate;

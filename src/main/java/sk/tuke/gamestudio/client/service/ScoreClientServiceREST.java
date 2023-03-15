@@ -10,10 +10,9 @@ import sk.tuke.gamestudio.common.entity.Score;
 import sk.tuke.gamestudio.common.service.ScoreException;
 import sk.tuke.gamestudio.common.service.ScoreService;
 
-import java.util.Arrays;
 import java.util.List;
 
-public class ScoreServiceREST implements ScoreService {
+public class ScoreClientServiceREST implements ScoreService {
 
     @Autowired
     RestTemplate restTemplate;

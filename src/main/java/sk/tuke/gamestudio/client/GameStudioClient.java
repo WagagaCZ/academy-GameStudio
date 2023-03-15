@@ -9,11 +9,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 import sk.tuke.gamestudio.client.game.minesweeper.consoleui.ConsoleUI;
 import sk.tuke.gamestudio.client.game.minesweeper.core.Field;
-import sk.tuke.gamestudio.client.service.RatingServiceREST;
-import sk.tuke.gamestudio.client.service.ScoreServiceREST;
+import sk.tuke.gamestudio.client.service.RatingClientServiceREST;
+import sk.tuke.gamestudio.client.service.ScoreClientServiceREST;
 import sk.tuke.gamestudio.common.service.RatingService;
 import sk.tuke.gamestudio.common.service.ScoreService;
-import sk.tuke.gamestudio.service.RatingServiceJPA;
 
 @SpringBootApplication
 @EntityScan(basePackages = "sk.tuke.gamestudio.common.entity")
@@ -41,12 +40,12 @@ public class GameStudioClient {
 
     @Bean
     public ScoreService getScoreService() {
-        return new ScoreServiceREST();
+        return new ScoreClientServiceREST();
     }
 
     @Bean
     public RatingService getRatingService() {
-        return new RatingServiceREST();
+        return new RatingClientServiceREST();
     }
 
     @Bean
