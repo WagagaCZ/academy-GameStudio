@@ -1,6 +1,6 @@
-package sk.tuke.gamestudio.server.service;
+package sk.tuke.gamestudio.common.service;
 
-import sk.tuke.gamestudio.entity.Rating;
+import sk.tuke.gamestudio.common.entity.Rating;
 
 public interface RatingService {
     void setRating(Rating rating) throws RatingException;

@@ -1,6 +1,8 @@
 package sk.tuke.gamestudio.server.service;
 
-import sk.tuke.gamestudio.entity.Score;
+import sk.tuke.gamestudio.common.entity.Score;
+import sk.tuke.gamestudio.common.service.ScoreException;
+import sk.tuke.gamestudio.common.service.ScoreService;
 
 import java.sql.*;
 import java.util.ArrayList;

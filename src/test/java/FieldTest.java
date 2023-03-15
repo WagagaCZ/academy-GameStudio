@@ -1,4 +1,4 @@
-import sk.tuke.gamestudio.game.minesweeper.core.Field;
+import sk.tuke.gamestudio.client.game.minesweeper.core.Field;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

@@ -1,4 +1,4 @@
-package sk.tuke.gamestudio.game.minesweeper.consoleui;
+package sk.tuke.gamestudio.client.game.minesweeper.consoleui;
 
 import java.io.*;
 import java.util.Date;
@@ -7,11 +7,13 @@ import java.util.regex.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import sk.tuke.gamestudio.entity.Score;
-import sk.tuke.gamestudio.game.minesweeper.core.Field;
-import sk.tuke.gamestudio.game.minesweeper.core.GameState;
-import sk.tuke.gamestudio.server.service.ScoreException;
-import sk.tuke.gamestudio.server.service.ScoreService;
+import sk.tuke.gamestudio.client.game.minesweeper.core.Field;
+import sk.tuke.gamestudio.client.game.minesweeper.core.GameState;
+import sk.tuke.gamestudio.common.entity.Rating;
+import sk.tuke.gamestudio.common.entity.Score;
+import sk.tuke.gamestudio.common.service.RatingService;
+import sk.tuke.gamestudio.common.service.ScoreException;
+import sk.tuke.gamestudio.common.service.ScoreService;
 
 /**
  * Console user interface.
@@ -29,6 +31,9 @@ public class ConsoleUI implements UserInterface {
 
     @Autowired
     private ScoreService scoreService;
+
+    @Autowired
+    private RatingService ratingService;
     
     /**
      * Reads line of text from the reader.
@@ -72,6 +77,15 @@ public class ConsoleUI implements UserInterface {
                         score,
                         new Date()
                 ));
+
+                ratingService.setRating(new Rating("mines", "Miska", 3));
+
+                System.out.println("Average rating:");
+                System.out.println(ratingService.getAverageRating("mines"));
+                System.out.println("Your rating:");
+                System.out.println(ratingService.getRating("mines", "player"));
+
+
 
                 printScores();
 

@@ -1,4 +1,4 @@
-package sk.tuke.gamestudio.game.minesweeper.core;
+package sk.tuke.gamestudio.client.game.minesweeper.core;
 
 import java.util.concurrent.ThreadLocalRandom;
 

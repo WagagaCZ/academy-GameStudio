@@ -1,16 +1,22 @@
-package sk.tuke.gamestudio;
+package sk.tuke.gamestudio.client;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.Bean;
-import sk.tuke.gamestudio.game.minesweeper.consoleui.ConsoleUI;
-import sk.tuke.gamestudio.game.minesweeper.core.Field;
-import sk.tuke.gamestudio.server.service.ScoreService;
-import sk.tuke.gamestudio.server.service.ScoreServiceJPA;
+import org.springframework.web.client.RestTemplate;
+import sk.tuke.gamestudio.client.game.minesweeper.consoleui.ConsoleUI;
+import sk.tuke.gamestudio.client.game.minesweeper.core.Field;
+import sk.tuke.gamestudio.client.service.RatingServiceREST;
+import sk.tuke.gamestudio.client.service.ScoreServiceREST;
+import sk.tuke.gamestudio.common.service.RatingService;
+import sk.tuke.gamestudio.common.service.ScoreService;
+import sk.tuke.gamestudio.service.RatingServiceJPA;
 
 @SpringBootApplication
+@EntityScan(basePackages = "sk.tuke.gamestudio.common.entity")
 public class GameStudioClient {
 
     //start as a standard app - no web server
@@ -35,11 +41,16 @@ public class GameStudioClient {
 
     @Bean
     public ScoreService getScoreService() {
-        return new ScoreServiceJPA();
+        return new ScoreServiceREST();
     }
 
-//    @Bean
-//    public RestTemplate restTemplate() {
-//        return new RestTemplate();
-//    }
+    @Bean
+    public RatingService getRatingService() {
+        return new RatingServiceREST();
+    }
+
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
 }

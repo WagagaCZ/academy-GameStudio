@@ -1,4 +1,4 @@
-package sk.tuke.gamestudio.game.minesweeper.consoleui;
+package sk.tuke.gamestudio.client.game.minesweeper.consoleui;
 
 /**
  * User input format error.

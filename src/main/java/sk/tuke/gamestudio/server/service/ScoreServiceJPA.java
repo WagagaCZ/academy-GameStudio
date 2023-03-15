@@ -3,7 +3,9 @@ package sk.tuke.gamestudio.server.service;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.transaction.annotation.Transactional;
-import sk.tuke.gamestudio.entity.Score;
+import sk.tuke.gamestudio.common.entity.Score;
+import sk.tuke.gamestudio.common.service.ScoreException;
+import sk.tuke.gamestudio.common.service.ScoreService;
 
 import java.util.List;
 

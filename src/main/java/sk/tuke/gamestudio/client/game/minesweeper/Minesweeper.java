@@ -1,7 +1,7 @@
-package sk.tuke.gamestudio.game.minesweeper;
+package sk.tuke.gamestudio.client.game.minesweeper;
 
-import sk.tuke.gamestudio.game.minesweeper.consoleui.ConsoleUI;
-import sk.tuke.gamestudio.game.minesweeper.core.Field;
+import sk.tuke.gamestudio.client.game.minesweeper.consoleui.ConsoleUI;
+import sk.tuke.gamestudio.client.game.minesweeper.core.Field;
 
 /**
  * Main application class.

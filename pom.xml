@@ -19,7 +19,7 @@
         <maven.compiler.target>18</maven.compiler.target>
 
         <serverMain>${project.groupId}.server.GameStudioServer</serverMain>
-        <clientMain>${project.groupId}.GameStudioClient</clientMain>
+        <clientMain>${project.groupId}.client.GameStudioClient</clientMain>
     </properties>
 
     <dependencyManagement>
