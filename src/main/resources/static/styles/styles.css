@@ -1,0 +1,32 @@
+table { border-spacing: 0; }
+table > thead {
+  background-color: #398897;
+  color: white;
+}
+table thead th {
+  border-bottom: 2px solid #10606F;
+}
+table thead th, table tbody td {
+  padding: 0.25rem 0.5rem;
+}
+
+/* menej specificke css - nizsia priorita */
+table tr:nth-child(even) {
+  background-color: lightgray;
+}
+/* specifickejsie css - vyssia priorita */
+table tbody tr:hover {
+  background-color: #F5A559;
+}
+
+.warning {
+  background-color: #FFE5AB;
+  color: black;
+  padding: 1rem;
+  margin: 1rem;
+  border: 1px solid darkred;
+}
+
+/*#scoreTable {*/
+/*  color: white;*/
+/*}*/
