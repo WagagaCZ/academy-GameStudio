@@ -1,0 +1,74 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.header {
+  @apply mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white;
+}
+.subheader {
+  @apply mb-6 text-xl font-normal text-gray-500 lg:text-xl dark:text-gray-400;
+}
+
+@layer components {
+  .button-link {
+    @apply align-baseline font-bold text-sm text-blue-500 hover:text-blue-800;
+  }
+  .button-primary {
+    @apply text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800;
+  }
+  .input-field {
+    @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500;
+  }
+  .input-label {
+    @apply block mb-2 text-sm font-medium text-gray-900 dark:text-white;
+  }
+}
+
+.minefield {
+  @apply grid grid-cols-4 gap-0.5 mb-8;
+}
+
+.minefield .tile {
+  @apply w-6 h-6 border border-gray-300 rounded flex justify-center items-center;
+  display: flex;
+}
+
+.minefield .tile[class^="tile-"] { @apply bg-white; }
+.minefield .tile.tile-1 { @apply text-blue-500; }
+.minefield .tile.tile-2 { @apply text-green-500; }
+.minefield .tile.tile-3 { @apply text-red-500; }
+.minefield .tile.tile-4 { @apply text-purple-500; }
+.minefield .tile.tile-5 { @apply text-black; }
+.minefield .tile.tile-6 { @apply text-gray-800; }
+.minefield .tile.tile-7 { @apply text-pink-500; }
+.minefield .tile.tile-8 { @apply text-indigo-500; }
+
+.minefield .tile.closed, .minefield .tile.marked, .minefield .tile.mine {
+  @apply border-none focus:ring-blue-500;
+}
+
+.minefield .tile.closed, .minefield .tile.marked {
+  @apply shadow hover:shadow-xl border-l-2 border-b-2 border-solid;
+}
+
+.minefield .tile.marked, .minefield .tile.mine {
+  @apply p-1;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-origin: content-box;
+}
+
+.minefield .tile.closed {
+  @apply bg-blue-400 hover:bg-blue-600 border-blue-800 hover:border-blue-900;
+}
+
+.minefield .tile.marked {
+  @apply bg-yellow-400 hover:bg-yellow-600 border-yellow-800 hover:border-yellow-900;
+  background-image: url('/images/mines/flag.svg');
+}
+
+.minefield .tile.mine {
+  @apply bg-red-500;
+  background-image: url('/images/mines/mine.svg');
+}

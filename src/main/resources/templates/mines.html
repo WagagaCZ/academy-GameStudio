@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Minesweeper</title>
+</head>
+<body>
+  <h1>This is Minesweeper</h1>
+
+  <div>
+    <img src="images/mines.png" alt="Minesweeper game screenshot" style="height:150px">
+  </div>
+
+  <button>
+    <span>
+      <img src="images/icons/hand_pointer.png" alt="Minesweeper game screenshot" style="height:32px">
+    </span>
+    Click me inline
+  </button>
+
+  <button>
+    <div>
+      <img src="images/icons/hand_pointer.png" alt="Minesweeper game screenshot" style="height:32px">
+    </div>
+    Click me
+  </button>
+
+  <h2>Add a Comment</h2>
+  <form onsubmit="alert('comment added!');return false">
+    <label for="name">Your name:</label>
+    <br>
+    <input type="text" id="name" name="name">
+    <br>
+    <label for="comment">Comment:</label>
+    <br>
+    <input type="text" id="comment" name="comment">
+<!--    <input type="submit" value="Send">-->
+    <button type="submit">Send</button>
+  </form>
+
+  <a href="index-old.html">Back to Home</a>
+</body>
+</html>

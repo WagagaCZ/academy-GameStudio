@@ -1,0 +1,10 @@
+{
+  "name": "web-frontend",
+  "private": true,
+  "scripts": {
+    "build": "tailwindcss -i ./main.css -o ../resources/static/styles/tailwind.css"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.2.7"
+  }
+}
