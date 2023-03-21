@@ -1,43 +1,65 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.com" lang="en">
 <head>
-  <meta charset="UTF-8">
   <title>Minesweeper</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <link th:href="@{/styles/tailwind.css}" rel="stylesheet" />
 </head>
-<body>
-  <h1>This is Minesweeper</h1>
+<body class="p-4">
+  <h1 class="header">
+    Minesweeper Game
+  </h1>
+  <p class="subheader">
+    May the force be with you.
+  </p>
 
-  <div>
-    <img src="images/mines.png" alt="Minesweeper game screenshot" style="height:150px">
+  <div class="minefield"
+       style="grid-template-columns: 0fr 0fr 0fr 0fr;">
+    <div class="tile tile-1">1</div>
+    <div class="tile tile-2">2</div>
+    <div class="tile closed"></div>
+    <div class="tile tile-3">3</div>
+    <div class="tile tile-4">4</div>
+    <div class="tile closed"></div>
+    <div class="tile tile-5">5</div>
+    <div class="tile closed"></div>
+    <div class="tile tile-6">6</div>
+    <div class="tile tile-7">7</div>
+    <div class="tile closed"></div>
+    <div class="tile tile-8">8</div>
+    <div class="tile closed"></div>
+    <div class="tile marked"></div>
+    <div class="tile mine"></div>
+    <div class="tile tile-1">1</div>
+    <div class="tile marked"></div>
+    <div class="tile marked"></div>
+    <div class="tile marked"></div>
   </div>
 
-  <button>
-    <span>
-      <img src="images/icons/hand_pointer.png" alt="Minesweeper game screenshot" style="height:32px">
-    </span>
-    Click me inline
-  </button>
-
-  <button>
-    <div>
-      <img src="images/icons/hand_pointer.png" alt="Minesweeper game screenshot" style="height:32px">
+  <h2 class="subheader">Add a Comment</h2>
+  <form class="mb-6"
+        id="commentForm"
+        onsubmit="alert('comment added!');return false">
+    <div class="mb-6">
+      <label for="name"
+             class="input-label">
+        Your name:
+      </label>
+      <input class="input-field"
+             type="text" id="name" name="name">
     </div>
-    Click me
-  </button>
-
-  <h2>Add a Comment</h2>
-  <form onsubmit="alert('comment added!');return false">
-    <label for="name">Your name:</label>
-    <br>
-    <input type="text" id="name" name="name">
-    <br>
-    <label for="comment">Comment:</label>
-    <br>
-    <input type="text" id="comment" name="comment">
-<!--    <input type="submit" value="Send">-->
-    <button type="submit">Send</button>
+    <div class="mb-6">
+      <label for="comment"
+             class="input-label">
+        Comment:
+      </label>
+      <input class="input-field"
+             type="text" id="comment" name="comment">
+    </div>
+    <button class="button-primary"
+            type="submit">Send</button>
   </form>
 
-  <a href="index-old.html">Back to Home</a>
+  <a class="button-link" href="/">&#x2190; Back to Home</a>
 </body>
 </html>

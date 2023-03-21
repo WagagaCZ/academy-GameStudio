@@ -40,6 +40,11 @@
                 <artifactId>lombok</artifactId>
                 <version>1.18.26</version>
             </dependency>
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+                <version>2.0.0</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -58,7 +63,6 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
@@ -68,7 +72,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
@@ -78,13 +81,20 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-            <version>2.0.0</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -104,12 +114,43 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <id>CLIENT</id>
+                        <id>CONSOLE-CLIENT</id>
                         <goals>
                             <goal>run</goal>
                         </goals>
                         <configuration>
                             <mainClass>${clientMain}</mainClass>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.maciejwalkowiak.paseq</groupId>
+                <artifactId>paseq-maven-plugin</artifactId>
+                <version>0.1.1</version>
+                <!-- configuration for building the package -->
+                <executions>
+                    <execution>
+                        <id>WEB-CLIENT</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <tasks>
+                                <task>
+                                    <exec>
+                                        <directory>src/main/web-frontend</directory>
+                                        <command>npm.cmd install</command>
+                                    </exec>
+                                </task>
+                                <task>
+                                    <exec>
+                                        <directory>src/main/web-frontend</directory>
+                                        <command>npm.cmd run build</command>
+                                    </exec>
+                                </task>
+                            </tasks>
                         </configuration>
                     </execution>
                 </executions>
