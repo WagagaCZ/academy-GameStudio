@@ -11,6 +11,31 @@
 <body>
 <h2>Minesweeper</h2>
 
-<div th:utext="${@minesController.getHtmlField()}"></div>
+<a class="abutton" th:if="not ${@minesController.marking}" href="/mines/chmode">Change to mark</a>
+<a class="abutton" th:if="${@minesController.isMarking()}" href="/mines/chmode">Change to open</a>
+<a class="abutton" href="/mines/new">New game</a>
+<section th:utext="${@minesController.getHtmlField()}"></section>
+<section>
+    <h3>Best Scores</h3>
+
+    <table class="scores">
+        <thead>
+        <tr>
+            <th>Number</th>
+            <th>Name</th>
+            <th>Score</th>
+            <th>Date and time</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="score: ${@minesController.getTopScores()}">
+            <td th:text="${scoreStat.index+1}"></td>
+            <td th:text="${score.player}"></td>
+            <td th:text="${score.getPoints()}"></td>
+            <td th:text="${score.getPlayedOn()}"></td>
+        </tr>
+        </tbody>
+    </table>
+</section>
 </body>
 </html>
