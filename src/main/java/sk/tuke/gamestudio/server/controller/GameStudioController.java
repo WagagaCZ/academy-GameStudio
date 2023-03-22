@@ -9,6 +9,4 @@ public class GameStudioController {
     @RequestMapping("/")
     public String mainPage(){return "index";}
 
-    @RequestMapping("/mines")
-    public String minesPage(){return "mines";}
 }

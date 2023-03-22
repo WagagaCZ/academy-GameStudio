@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<html  xmlns:th="http://www.thymeleaf.com" lang="en">
+<head>
+    <title>GameStudio - every game you can imagine!</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- this is where we refer the css file from src/main/resources/static/styles/tailwind.css -->
+    <link th:href="@{/styles/gamestudio.css}" rel="stylesheet" />
+</head>
+<body>
+<h1>Welcome to GameStudio!</h1>
+
+Please select a game:
+<ul>
+    <li><a href="/mines">Minesweeper</a></li>
+    <li>15 Puzzle</li>
+    <li>Lights Out</li>
+    <li>1024</li>
+</ul>
+</body>
+</html>
