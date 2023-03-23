@@ -27,6 +27,9 @@ public class MinesController {
     @Autowired
     private ScoreService scoreService;
 
+    @Autowired
+    private UserController userController;
+
     // /mines
     @RequestMapping
     public String processUserInput(@RequestParam(required = false) Integer row,@RequestParam(required = false) Integer column){
@@ -68,7 +71,9 @@ public class MinesController {
             }
 
             if(field.getState()==GameState.SOLVED && stateBeforeMove!=field.getState()){
-                scoreService.addScore(new Score("mines","anonymous",field.getScore(), new Date()));
+                if(userController.isLogged()){
+                    scoreService.addScore(new Score("mines",userController.getLoggedUser(),field.getScore(), new Date()));
+                }
             }
         }
 

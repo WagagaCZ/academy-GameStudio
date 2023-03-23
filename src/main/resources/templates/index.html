@@ -9,13 +9,21 @@
     <link th:href="@{/styles/gamestudio.css}" rel="stylesheet" />
 </head>
 <body>
-<h1>Welcome to GameStudio!</h1>
+
+<header th:replace="fragments/fragments::gsheader"></header>
+
+<h2>Welcome!</h2>
+
+
+
 
 <form action="/login" method="post">
     <label for="login"> Login: </label> <input type="text" id="login" name="login" required /> <br />
     <label for="password"> Password: </label> <input type="password" id="password" name="password" required /> <br />
     <button type="submit">Log in</button>
 </form>
+
+
 
 <h2>Games</h2>
 Please select a game:
@@ -25,5 +33,9 @@ Please select a game:
     <li>Lights Out</li>
     <li>1024</li>
 </ul>
+
+<footer th:replace="fragments/fragments::gsfooter"></footer>
+
+
 </body>
 </html>

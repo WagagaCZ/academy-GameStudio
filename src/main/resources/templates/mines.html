@@ -9,6 +9,7 @@
     <link th:href="@{/styles/gamestudio.css}" rel="stylesheet" />
 </head>
 <body>
+<header th:replace="fragments/fragments::gsheader"></header>
 <!--/*@thymesVar id="minesController" type="sk.tuke.gamestudio.server.controller.MinesController"*/-->
 <h2>Minesweeper</h2>
 
@@ -56,5 +57,7 @@
         </tbody>
     </table>
 </section>
+
+<footer th:replace="fragments/fragments::gsfooter"></footer>
 </body>
 </html>
