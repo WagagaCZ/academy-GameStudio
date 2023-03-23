@@ -1,16 +1,14 @@
 <!DOCTYPE HTML>
-<html  xmlns:th="http://www.thymeleaf.com" lang="en">
+<html  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+       xmlns:th="http://www.thymeleaf.com"
+       layout:decorate="~{layout/layoutGameStudio.html}"
+       lang="en">
 <head>
     <title>GameStudio - every game you can imagine!</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- this is where we refer the css file from src/main/resources/static/styles/tailwind.css -->
-    <link th:href="@{/styles/gamestudio.css}" rel="stylesheet" />
 </head>
 <body>
 
-<header th:replace="fragments/fragments::gsheader"></header>
+<main layout:fragment="content">
 
 <h2>Welcome!</h2>
 
@@ -34,8 +32,8 @@ Please select a game:
     <li>1024</li>
 </ul>
 
-<footer th:replace="fragments/fragments::gsfooter"></footer>
 
+</main>
 
 </body>
 </html>

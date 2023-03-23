@@ -1,15 +1,15 @@
 <!DOCTYPE HTML>
-<html  xmlns:th="http://www.thymeleaf.com" lang="en">
+<html  xmlns:th="http://www.thymeleaf.com"
+       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+       layout:decorate="~{layout/layoutGameStudio.html}"
+       lang="en">
 <head>
     <title>GameStudio - Minesweeper</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- this is where we refer the css file from src/main/resources/static/styles/tailwind.css -->
-    <link th:href="@{/styles/gamestudio.css}" rel="stylesheet" />
 </head>
 <body>
-<header th:replace="fragments/fragments::gsheader"></header>
+
+<main layout:fragment="content">
+
 <!--/*@thymesVar id="minesController" type="sk.tuke.gamestudio.server.controller.MinesController"*/-->
 <h2>Minesweeper</h2>
 
@@ -18,7 +18,6 @@
 <a class="abutton" href="/mines/new">New game</a>
 
 
-<!--<section th:utext="${@minesController.getHtmlField()}"></section>-->
 
 <section>
     <table  class='minefield'>
@@ -58,6 +57,7 @@
     </table>
 </section>
 
-<footer th:replace="fragments/fragments::gsfooter"></footer>
+</main>
+
 </body>
 </html>

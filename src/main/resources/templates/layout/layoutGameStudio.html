@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html   xmlns:th="http://www.thymeleaf.com"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:href="@{/styles/gamestudio.css}" rel="stylesheet" />
+</head>
+<body>
+
+<header th:replace="fragments/fragments::gsheader"></header>
+
+<main layout:fragment="content"></main>
+
+<footer th:replace="fragments/fragments::gsfooter"></footer>
+
+</body>
+</html>
