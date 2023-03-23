@@ -98,6 +98,22 @@ public class MinesController {
         return scoreService.getTopScores("mines");
     }
 
+    public Tile[][] getFieldTiles() {
+        if(field==null){
+            return null;
+        }else{
+            return field.getTiles();
+        }
+    }
+
+    public boolean isPlaying(){
+        if(field==null){
+            return false;
+        }else{
+            return (field.getState()==GameState.PLAYING);
+        }
+    }
+
     public String getHtmlField(){
         StringBuilder sb = new StringBuilder();
         sb.append("<table class='minefield'> \n");
@@ -122,7 +138,7 @@ public class MinesController {
     }
 
 
-    private String getTileText(Tile tile) {
+    public String getTileText(Tile tile) {
         switch (tile.getState()) {
             case CLOSED:
                 return "-";
@@ -139,7 +155,7 @@ public class MinesController {
         }
     }
 
-    private String getTileClass(Tile tile) {
+    public String getTileClass(Tile tile) {
         switch (tile.getState()) {
             case OPEN:
                 if (tile instanceof Clue)

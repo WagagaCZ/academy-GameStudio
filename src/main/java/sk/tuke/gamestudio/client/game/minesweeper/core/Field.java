@@ -219,6 +219,10 @@ public class Field {
         return score;
     }
 
+    public Tile[][] getTiles() {
+        return tiles;
+    }
+
     public int getScore() {
         return score;
     }

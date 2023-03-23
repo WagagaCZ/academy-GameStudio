@@ -34,6 +34,10 @@ public abstract class Tile {
         this.state = state;
     }
 
+    public boolean isNotOpen(){
+        return this.state != State.OPEN;
+    }
+
     @Override
     public String toString() {
         if(this.state == Tile.State.CLOSED) return "-";

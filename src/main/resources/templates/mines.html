@@ -9,12 +9,31 @@
     <link th:href="@{/styles/gamestudio.css}" rel="stylesheet" />
 </head>
 <body>
+<!--/*@thymesVar id="minesController" type="sk.tuke.gamestudio.server.controller.MinesController"*/-->
 <h2>Minesweeper</h2>
 
 <a class="abutton" th:if="not ${@minesController.marking}" href="/mines/chmode">Change to mark</a>
 <a class="abutton" th:if="${@minesController.isMarking()}" href="/mines/chmode">Change to open</a>
 <a class="abutton" href="/mines/new">New game</a>
-<section th:utext="${@minesController.getHtmlField()}"></section>
+
+
+<!--<section th:utext="${@minesController.getHtmlField()}"></section>-->
+
+<section>
+    <table  class='minefield'>
+        <tr th:each="row: ${@minesController.fieldTiles}">
+            <td th:each="tile: ${row}" th:attr="class=${@minesController.getTileClass(tile)}">
+                <a th:if="${tile.isNotOpen()} and ${@minesController.isPlaying()}"
+                   th:href="@{/mines(row=${rowStat.index}, column=${tileStat.index})}">
+                    <span th:text="${@minesController.getTileText(tile)}"></span>
+                </a>
+                <span th:if="not(${tile.isNotOpen()} and ${@minesController.isPlaying()})"
+                      th:text="${@minesController.getTileText(tile)}"></span>
+            </td>
+        </tr>
+    </table>
+</section>
+
 <section>
     <h3>Best Scores</h3>
 
