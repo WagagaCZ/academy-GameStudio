@@ -13,9 +13,9 @@
 <!--/*@thymesVar id="minesController" type="sk.tuke.gamestudio.server.controller.MinesController"*/-->
 <h2>Minesweeper</h2>
 
-<a class="abutton" th:if="not ${@minesController.marking}" href="/mines/chmode">Change to mark</a>
-<a class="abutton" th:if="${@minesController.isMarking()}" href="/mines/chmode">Change to open</a>
-<a class="abutton" href="/mines/new">New game</a>
+<button class="abutton" id="btChMode" onclick="processModeChangeClick()">Change to mark</button>
+<button class="abutton" id="btNew" onclick="processNewGameClick()">New game</button>
+
 
 
 
@@ -44,12 +44,15 @@
 <script type="text/javascript">
     const minesField = document.getElementById("minesField");
     const scoresTableBody = document.getElementById("scoresTableBody");
+    const btChMode = document.getElementById("btChMode");
+    const btNew = document.getElementById("btNew");
 
     //const serverUrl="http://localhost:8080";
     const serverUrl="";//if from the same server as this page
 
     const getBestScoresJsonUrl =serverUrl+"/api/score/mines";
     const getGameFieldUrl =serverUrl+"/mines/json";
+    const chModeUrl =serverUrl+"/mines/jsonchmode";
 
     fetchAndRenderBestScores();
 
@@ -114,6 +117,7 @@
             .then(gameFieldData =>{
                 console.log(gameFieldData);
                 renderGameField(gameFieldData, minesField);
+                changeBtChModeLabel(gameFieldData.marking);
                 if(gameFieldData.justFinished){
                     fetchAndRenderBestScores();
                 }
@@ -186,9 +190,42 @@
         }
     }
 
+    function changeBtChModeLabel(marking){
+        if(marking){
+            btChMode.innerHTML="Change to open";
+        }else {
+            btChMode.innerHTML="Change to mark";
+        }
+    }
 
     function processTileClick(row,col){
         fetchGameFieldAndRenderAll(row,col);
+    }
+
+    function processModeChangeClick(){
+        fetch(chModeUrl)
+        .then(response => {
+                if(response.ok){
+                    return(response.json());
+                }else{
+                    return Promise.reject(new Error('Mode change failed. Server answered with status '+response.status));
+                }
+            }
+        )
+        .then(gameFieldData =>{
+            changeBtChModeLabel(gameFieldData.marking);
+        })
+        .catch(error =>{
+            console.error(error);
+            let errorMessage = "Failed to change game mode. Details:"+error;
+            minesField.innerHTML=errorMessage;
+        })
+
+    }
+
+    function processNewGameClick(){
+        //todo
+        console.log("processNewGameClick not implemented!");
     }
 
 </script>

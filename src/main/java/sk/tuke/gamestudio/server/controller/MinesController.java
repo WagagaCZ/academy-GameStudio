@@ -68,10 +68,29 @@ public class MinesController {
     @ResponseBody
     public Field processUserInputJson(@RequestParam(required = false) Integer row,@RequestParam(required = false) Integer column){
         field.setJustFinished(startOrUpdateGame(row,column));
+        field.setMarking(marking);
         return field;
     }
 
+    // /mines/jsonchmode
+    @RequestMapping(value="/jsonchmode", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Field changeModeJson(){
+        changeGameMode();
+        field.setJustFinished(false);
+        field.setMarking(marking);
+        return field;
+    }
 
+    // /mines/jsonnew
+    @RequestMapping(value="/jsonnew", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Field newGameJson(){
+        startNewGame();
+        field.setJustFinished(false);
+        field.setMarking(marking);
+        return field;
+    }
 
     private boolean startOrUpdateGame(Integer row, Integer column){
         if(field==null){

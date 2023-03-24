@@ -36,6 +36,8 @@ public class Field {
 
     private boolean justFinished=false;
 
+    private boolean marking=false;
+
     /**
      * Constructor.
      *
@@ -235,5 +237,13 @@ public class Field {
 
     public void setJustFinished(boolean justFinished) {
         this.justFinished = justFinished;
+    }
+
+    public boolean isMarking() {
+        return marking;
+    }
+
+    public void setMarking(boolean marking) {
+        this.marking = marking;
     }
 }
