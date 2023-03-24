@@ -19,6 +19,22 @@
 
 </header>
 
+<!--
+<header th:fragment="gsheader">
+    <h1>Game Studio</h1>
+
+    <div th:if="${logged}">
+        Logged as <span th:text="${username}">.</span>
+        <a href="/logout">Log out.</a>
+    </div>
+    <div th:if="not ${logged}">
+        Logged out. Please, <a href="/">log in</a>.
+    </div>
+
+</header>
+-->
+
+
 <footer th:fragment="gsfooter">
     <hr />
     GameStudio ver.FPTacad 2023-03

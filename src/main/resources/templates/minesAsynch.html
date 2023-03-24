@@ -1,0 +1,110 @@
+<!DOCTYPE HTML>
+<html  xmlns:th="http://www.thymeleaf.com"
+       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+       layout:decorate="~{layout/layoutGameStudio.html}"
+       lang="en">
+<head>
+    <title>GameStudio - Minesweeper</title>
+</head>
+<body>
+
+<main layout:fragment="content">
+
+<!--/*@thymesVar id="minesController" type="sk.tuke.gamestudio.server.controller.MinesController"*/-->
+<h2>Minesweeper</h2>
+
+<a class="abutton" th:if="not ${@minesController.marking}" href="/mines/chmode">Change to mark</a>
+<a class="abutton" th:if="${@minesController.isMarking()}" href="/mines/chmode">Change to open</a>
+<a class="abutton" href="/mines/new">New game</a>
+
+
+
+<section>
+    <table  class='minefield'>
+        <tr th:each="row: ${@minesController.fieldTiles}">
+            <td th:each="tile: ${row}" th:attr="class=${@minesController.getTileClass(tile)}">
+                <a th:if="${tile.isNotOpen()} and ${@minesController.isPlaying()}"
+                   th:href="@{/mines(row=${rowStat.index}, column=${tileStat.index})}">
+                    <span th:text="${@minesController.getTileText(tile)}"></span>
+                </a>
+                <span th:if="not(${tile.isNotOpen()} and ${@minesController.isPlaying()})"
+                      th:text="${@minesController.getTileText(tile)}"></span>
+            </td>
+        </tr>
+    </table>
+</section>
+
+<section>
+    <h3>Best Scores</h3>
+
+    <table class="scores">
+        <thead>
+        <tr>
+            <th>Number</th>
+            <th>Name</th>
+            <th>Score</th>
+            <th>Date and time</th>
+        </tr>
+        </thead>
+        <tbody id="scoresTableBody">
+        </tbody>
+    </table>
+</section>
+
+
+
+<script type="text/javascript">
+    const scoresTableBody = document.getElementById("scoresTableBody");
+    const serverUrl="http://localhost:8080"
+
+    fetchAndRenderBestScores();
+
+    function fetchAndRenderBestScores(){
+        //const getJsonUrl =serverUrl+"/api/score/mines";
+        const getJsonUrl ="/api/score/mines"; //same server
+
+        fetch(getJsonUrl)
+            .then(response => {
+                if(response.ok){
+                    return(response.json());
+                }else{
+                    return Promise.reject(new Error('Best scores acquisition failed. Server answered with status '+response.status));
+                }
+                }
+            )
+            .then(bestScoresData =>{
+                console.log(bestScoresData);
+                renderBestScores(bestScoresData,scoresTableBody);
+            })
+            .catch(error =>{
+                console.error(error);
+            })
+
+    }
+
+    function renderBestScores(bestScoresData, renderTo){
+        const rowCount = bestScoresData.length;
+        let html2render="";
+        for(let row=0; row<rowCount;row++){
+            html2render+=
+                `
+                <tr>
+                <td>${row+1}</td>
+                <td>${bestScoresData[row].player}</td>
+                <td>${bestScoresData[row].points}</td>
+                <td>${bestScoresData[row].playedOn}</td>
+                </tr>
+                `
+        }
+        renderTo.innerHTML=html2render;
+    }
+
+
+
+
+</script>
+
+</main>
+
+</body>
+</html>

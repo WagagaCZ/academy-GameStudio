@@ -53,6 +53,16 @@ public class MinesController {
     }
 
 
+    // /mines/asynch
+    @RequestMapping("/asynch")
+    public String loadInAsynchMode(){
+        startOrUpdateGame(null,null);
+        return "minesAsynch";
+
+    }
+
+
+
     private void startOrUpdateGame(Integer row, Integer column){
         if(field==null){
             startNewGame();
