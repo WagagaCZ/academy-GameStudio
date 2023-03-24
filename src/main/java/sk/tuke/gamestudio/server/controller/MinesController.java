@@ -2,9 +2,11 @@ package sk.tuke.gamestudio.server.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.WebApplicationContext;
 import sk.tuke.gamestudio.client.game.minesweeper.core.Clue;
 import sk.tuke.gamestudio.client.game.minesweeper.core.Field;
@@ -61,12 +63,22 @@ public class MinesController {
 
     }
 
+    // /mines/json
+    @RequestMapping(value="/json", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Field processUserInputJson(@RequestParam(required = false) Integer row,@RequestParam(required = false) Integer column){
+        field.setJustFinished(startOrUpdateGame(row,column));
+        return field;
+    }
 
 
-    private void startOrUpdateGame(Integer row, Integer column){
+
+    private boolean startOrUpdateGame(Integer row, Integer column){
         if(field==null){
             startNewGame();
         }
+
+        boolean justFinished=false;
 
         if(row!=null && column!=null){
 
@@ -80,12 +92,17 @@ public class MinesController {
                 }
             }
 
+
+
             if(field.getState()==GameState.SOLVED && stateBeforeMove!=field.getState()){
+                justFinished=true;
                 if(userController.isLogged()){
                     scoreService.addScore(new Score("mines",userController.getLoggedUser(),field.getScore(), new Date()));
                 }
             }
         }
+
+        return justFinished;
 
     }
 

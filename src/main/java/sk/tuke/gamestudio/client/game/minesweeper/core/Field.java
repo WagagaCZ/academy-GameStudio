@@ -34,6 +34,8 @@ public class Field {
     private final long startTimeInMs;
     private int score;
 
+    private boolean justFinished=false;
+
     /**
      * Constructor.
      *
@@ -225,5 +227,13 @@ public class Field {
 
     public int getScore() {
         return score;
+    }
+
+    public boolean isJustFinished() {
+        return justFinished;
+    }
+
+    public void setJustFinished(boolean justFinished) {
+        this.justFinished = justFinished;
     }
 }

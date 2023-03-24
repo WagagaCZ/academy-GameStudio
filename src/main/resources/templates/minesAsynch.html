@@ -19,19 +19,7 @@
 
 
 
-<section>
-    <table  class='minefield'>
-        <tr th:each="row: ${@minesController.fieldTiles}">
-            <td th:each="tile: ${row}" th:attr="class=${@minesController.getTileClass(tile)}">
-                <a th:if="${tile.isNotOpen()} and ${@minesController.isPlaying()}"
-                   th:href="@{/mines(row=${rowStat.index}, column=${tileStat.index})}">
-                    <span th:text="${@minesController.getTileText(tile)}"></span>
-                </a>
-                <span th:if="not(${tile.isNotOpen()} and ${@minesController.isPlaying()})"
-                      th:text="${@minesController.getTileText(tile)}"></span>
-            </td>
-        </tr>
-    </table>
+<section id="minesField">
 </section>
 
 <section>
@@ -54,16 +42,21 @@
 
 
 <script type="text/javascript">
+    const minesField = document.getElementById("minesField");
     const scoresTableBody = document.getElementById("scoresTableBody");
-    const serverUrl="http://localhost:8080"
+
+    //const serverUrl="http://localhost:8080";
+    const serverUrl="";//if from the same server as this page
+
+    const getBestScoresJsonUrl =serverUrl+"/api/score/mines";
+    const getGameFieldUrl =serverUrl+"/mines/json";
 
     fetchAndRenderBestScores();
 
-    function fetchAndRenderBestScores(){
-        //const getJsonUrl =serverUrl+"/api/score/mines";
-        const getJsonUrl ="/api/score/mines"; //same server
+    fetchGameFieldAndRenderAll();
 
-        fetch(getJsonUrl)
+    function fetchAndRenderBestScores(){
+        fetch(getBestScoresJsonUrl)
             .then(response => {
                 if(response.ok){
                     return(response.json());
@@ -73,14 +66,18 @@
                 }
             )
             .then(bestScoresData =>{
-                console.log(bestScoresData);
+                //console.log(bestScoresData);
                 renderBestScores(bestScoresData,scoresTableBody);
             })
             .catch(error =>{
-                console.error(error);
+                //console.error(error);
+                const errorMessage = "Failed to get or render best scores. Details:"+error;
+                scoresTableBody.innerHTML=errorMessage;
             })
 
     }
+
+
 
     function renderBestScores(bestScoresData, renderTo){
         const rowCount = bestScoresData.length;
@@ -99,8 +96,100 @@
         renderTo.innerHTML=html2render;
     }
 
+    function fetchGameFieldAndRenderAll(row, col){
+        let getGameFieldUrlWParams = getGameFieldUrl;
+        if(Number.isInteger(row) && Number.isInteger(col)){
+            getGameFieldUrlWParams = `${getGameFieldUrlWParams}?row=${row}&column=${col}`;
+            console.log(getGameFieldUrlWParams);
+        }
+        fetch(getGameFieldUrlWParams)
+            .then(response => {
+                    if(response.ok){
+                        return(response.json());
+                    }else{
+                        return Promise.reject(new Error('Game field acquisition failed. Server answered with status '+response.status));
+                    }
+                }
+            )
+            .then(gameFieldData =>{
+                console.log(gameFieldData);
+                renderGameField(gameFieldData, minesField);
+                if(gameFieldData.justFinished){
+                    fetchAndRenderBestScores();
+                }
+            })
+            .catch(error =>{
+                console.error(error);
+                let errorMessage = "Failed to get or render the game field. Details:"+error;
+                minesField.innerHTML=errorMessage;
+            })
+
+    }
+
+    function renderGameField(gameFieldData, renderTo){
+        let html2render="<table class='minefield'>\n";
+        for (let row=0;row<gameFieldData.rowCount;row++){
+            html2render+="<tr>\n";
+            for (let col=0;col<gameFieldData.columnCount;col++){
+                let onClickHandling ="";
+
+                if(gameFieldData.state=="PLAYING" && gameFieldData.tiles[row][col].state!="OPEN"){
+                    onClickHandling=`onclick='processTileClick(${row},${col})'`;
+                }
+
+                html2render+=
+                    `
+                        <td class ='${getTileClass(gameFieldData.tiles[row][col])}' ${onClickHandling}>
+                            <span>
+                                ${getTileText(gameFieldData.tiles[row][col])}
+                            </span>
+                        </td>
+                        `;
+            }
+            html2render+="</tr>\n";
+        }
+        html2render+="</table>\n";
+
+        renderTo.innerHTML=html2render;
+
+    }
+
+    function  getTileText(tile) {
+        switch (tile.state) {
+            case "OPEN":
+                if (tile.value!= undefined)
+                    return "" + tile.value;
+                else
+                    return "X";
+            case "CLOSED":
+                return "-";
+            case "MARKED":
+                return "M";
+            default:
+                return "?";
+        }
+    }
+
+    function  getTileClass(tile) {
+        switch (tile.state) {
+            case "OPEN":
+                if (tile.value!= undefined)
+                    return "open" + tile.value;
+                else
+                    return "mine";
+            case "CLOSED":
+                return "closed";
+            case "MARKED":
+                return "marked";
+            default:
+                return "unknown";
+        }
+    }
 
 
+    function processTileClick(row,col){
+        fetchGameFieldAndRenderAll(row,col);
+    }
 
 </script>
 
