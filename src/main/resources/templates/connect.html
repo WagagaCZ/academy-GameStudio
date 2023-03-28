@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html  xmlns:th="http://www.thymeleaf.com"
+       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+       layout:decorate="~{layout/layoutGameStudio.html}"
+       lang="en">
+<head>
+  <title>GameStudio - Connect</title>
+</head>
+<body>
+
+<main layout:fragment="content">
+
+  <!--/*@thymesVar id="connectController" type="sk.tuke.gamestudio.server.controller.ConnectController"*/-->
+  <h2>Connect: <span th:style="${@connectController.getPlayingStyle()}"
+                     th:text="${@connectController.getState()}"></span></h2>
+
+  <a class="abutton" href="/connect/new">New game</a>
+
+
+
+  <section>
+    <table  class='minefield'>
+      <tr th:each="row: ${@connectController.fieldTiles}">
+        <td th:each="tile: ${row}"
+            th:style="${@connectController.getTileStyle(tile)}">
+          <a th:if="${@connectController.isPlaying()}"
+             th:href="@{/connect(row=${rowStat.index}, column=${tileStat.index})}">
+            <span th:text="${@connectController.getTileText(tile)}"></span>
+          </a>
+          <span th:if="not(${@connectController.isPlaying()})"
+                th:text="${@connectController.getTileText(tile)}"></span>
+        </td>
+      </tr>
+    </table>
+  </section>
+
+  <section>
+    <h3>Best Scores</h3>
+
+    <table class="scores">
+      <thead>
+      <tr>
+        <th>Number</th>
+        <th>Name</th>
+        <th>Score</th>
+        <th>Date and time</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="score: ${@connectController.getTopScores()}">
+        <td th:text="${scoreStat.index+1}"></td>
+        <td th:text="${score.player}"></td>
+        <td th:text="${score.getPoints()}"></td>
+        <td th:text="${score.getPlayedOn()}"></td>
+      </tr>
+      </tbody>
+    </table>
+  </section>
+
+</main>
+
+</body>
+</html>
