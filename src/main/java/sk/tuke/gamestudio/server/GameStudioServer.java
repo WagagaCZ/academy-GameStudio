@@ -15,6 +15,7 @@ import sk.tuke.gamestudio.server.service.ScoreServiceJPA;
 public class GameStudioServer {
     public static void main(String[] args) {
         SpringApplication.run(GameStudioServer.class);
+        System.out.println("\n*** Server started ***\n");
     }
 
     @Bean
