@@ -1,0 +1,29 @@
+.main-table {
+  margin-top: 4px;
+  border-spacing: 0;
+  width: 100%;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.scores-table tbody tr:hover {
+  background-color: hotpink;
+  cursor: pointer;
+}
+
+.scores-table {
+  border: 1px solid rgb(100, 100, 100);
+  border-radius: 4px;
+}
+
+.scores-table th,
+.scores-table td {
+  border-bottom: 1px solid rgb(46, 46, 46);
+  padding: 6px 0;
+}
+
+.comments-table tbody {
+  display: grid;
+  grid-auto-flow: row;
+  gap: 18px;
+}

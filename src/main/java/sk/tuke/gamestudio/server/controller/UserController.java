@@ -4,7 +4,11 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.WebApplicationContext;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @Scope(WebApplicationContext.SCOPE_SESSION)
@@ -42,7 +46,14 @@ public class UserController {
         }
         model.addAttribute("logged",isLogged());
         //System.out.println("prepareModel");
+    }
 
+    @RequestMapping("/api/v2/user")
+    @ResponseBody
+    public Map<String, Object> getUserInfo() {
+        Map<String, Object> result = new HashMap<>();
+        result.put("loggedUser", getLoggedUser());
+        return result;
     }
 
     public String getLoggedUser() {

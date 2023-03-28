@@ -1,0 +1,185 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: rgb(20,21,23);
+    color: white;
+}
+
+.main-wrapper {
+    margin-top: 120px;
+    margin-bottom: 120px;
+}
+
+.board_wrapper {
+  position: relative;
+}
+
+.minesweeper_game {
+  display: grid;
+  place-items: center;
+  padding: 20px 0;
+}
+
+.minesweeper_board {
+  position: relative;
+  display: grid;
+}
+
+.board_size {
+  grid-template-columns: repeat(8, 1fr);
+  /* grid-template-rows: repeat(10, 1fr); */
+}
+
+.settings-minesweeper .settings-head {
+  background-color: rgb(140, 59, 99);
+}
+
+.minesweeper-settings-wrapper {
+  display: grid;
+  gap: 10px;
+}
+
+.minesweeper_display {
+  display: grid;
+  grid-auto-flow: column;
+  justify-content: space-between;
+}
+
+#reset-btn {
+  justify-self: end;
+}
+
+.cell {
+  width: 30px;
+  height: 30px;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-bottom: 4px solid #3d3d3d;
+  border-left: 3px solid rgba(137, 47, 92, 0.5);
+  background-color: #727272;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: 80ms;
+  margin: 1px;
+  color: white;
+  font-weight: 700;
+}
+
+.cell:hover {
+  transform: scale(1.1);
+  background-color: rgb(73, 72, 72);
+}
+
+.cell-0 {
+  color: #2b2a2a;
+  background-color: rgb(27, 27, 27);
+  border: none;
+}
+
+.cell-0:hover {
+
+  transform: none;
+}
+
+.cell-1:hover,
+.cell-2:hover,
+.cell-3:hover,
+.cell-4:hover,
+.cell-5:hover,
+.cell-6:hover,
+.cell-7:hover,
+.cell-8:hover {
+  background-color: #3d3d3d;
+  transform: none;
+}
+
+.cell-1 {
+  background-color: #6665cf;
+}
+
+.cell-2 {
+  background-color: #42ab3e;
+}
+
+.cell-3 {
+  background-color: #ff3c00;
+}
+
+.cell-4 {
+  background-color: #234cac;
+}
+
+.cell-5 {
+  background-color: #d24646;
+}
+
+.cell-6 {
+  background-color: #b960f9;
+}
+
+.cell-7 {
+  background-color: #cdcdcd;
+}
+
+.cell-8 {
+  background-color: #6a6a6a;
+}
+
+.cell-flagged {
+  background-color: orange;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: grid;
+  place-items: center;
+  z-index: 5;
+  height: 100%;
+  width: 100%;
+  color: white;
+  font-size: 1.5rem;
+}
+
+.reset-overlay {
+  background-color: #234cacdf;
+}
+
+.lose-overlay {
+  background-color: #6b2436df;
+}
+
+.win-overlay {
+  background-color: #23ac45df;
+}
+
+.hidden {
+  display: none;
+}
+
+
+@media screen and (max-width: 700px) {
+  .cell {
+    width: 25px;
+    height: 25px;
+  }
+}
+
+@media screen and (max-width: 700px) {
+    .main-wrapper {
+        padding: 0 5%;
+    }
+}
+
+@media screen and (min-width: 1400px) {
+    .game-wrapper {
+        padding: 0 30%;
+    }
+}
