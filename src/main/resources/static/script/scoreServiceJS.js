@@ -35,3 +35,15 @@ const apiGetScores = async (game) => {
 
   } catch (err) { console.log(err) }
 }
+
+// GET User
+const apiGetUser = async () => {
+  try {
+
+    const response = await fetch(`${APIURL}/user`);
+    const scores = await response.json();
+
+    return scores;
+
+  } catch (err) { console.log(err) }
+}

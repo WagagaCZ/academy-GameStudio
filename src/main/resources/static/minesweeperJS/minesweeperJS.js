@@ -266,13 +266,9 @@ function countScore() {
 
 /////////////////////////
 // score api
-async function getScores() {
-  let scores = await apiGetScores('Minesweeper');
-  return scores;
-}
 
 async function showScores() {
-  let scores = await getScores();
+  let scores = await apiGetScores('Minesweeper');
 
   // clear table first
   tableBody.innerHTML = '';
@@ -290,7 +286,21 @@ async function showScores() {
   });
 }
 
-async function sendScoreAndReloadTable() {
-  await apiSendScore('player', 'Minesweeper', countScore());
-  showScores()
+async function getPlayer() {
+  const player = await apiGetUser();
+  console.log(player);
 }
+
+
+async function sendScoreAndReloadTable() {
+  const res = await apiGetUser();
+  const player = res.loggedUser;
+
+  if (player != null) {
+    await apiSendScore(player, 'Minesweeper', countScore());
+    showScores()
+  }
+}
+
+
+
