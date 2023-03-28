@@ -1,4 +1,4 @@
-package sk.tuke.gamestudio.service;
+package sk.tuke.gamestudio.server.service;
 
 import jakarta.persistence.*;
 import org.springframework.transaction.annotation.Transactional;
