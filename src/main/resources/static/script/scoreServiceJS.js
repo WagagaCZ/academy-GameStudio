@@ -1,8 +1,9 @@
 console.log("ScoreServiceJS  loaded");
 
-const APIURL = 'http://localhost:8081/api';
+const APIURL = 'http://localhost:8080/api/v2';
 
-const sendScore = async (player, game, points) => {
+// POST request
+const apiSendScore = async (player, game, points) => {
   try {
 
     const score = { player, game, points };
@@ -19,6 +20,18 @@ const sendScore = async (player, game, points) => {
     const data = await response.json();
 
     console.log(data);
+
+  } catch (err) { console.log(err) }
+}
+
+// GET request
+const apiGetScores = async (game) => {
+  try {
+
+    const response = await fetch(`${APIURL}/score/top/${game}`);
+    const scores = await response.json();
+
+    return scores;
 
   } catch (err) { console.log(err) }
 }

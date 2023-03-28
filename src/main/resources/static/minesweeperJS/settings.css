@@ -1,0 +1,43 @@
+
+.settings {
+    margin: auto;
+    max-width: 500px;
+    min-height: 80px;
+    box-shadow: 0px 0px 16px 0px black;
+    background-color: rgb(28, 28, 30);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.settings-head {
+    color: white;
+    padding: 8px;
+}
+
+.settings-body {
+    padding: 8px;
+}
+
+.settings button {
+  background-color: rgb(32, 32, 32);
+  color: white;
+  border: 1px solid rgb(128, 128, 128);
+  border-radius: 6px;
+  padding: 4px 8px;
+  cursor: pointer;
+  transition: 70ms;
+}
+
+.settings button:hover {
+  transform: scale(1.05);
+  border: 1px solid hotpink;
+  color: hotpink;
+}
+
+.settings select {
+  border: 1px solid rgb(100, 100, 100);
+  background: rgb(37, 37, 37);
+  border-radius: 4px;
+  padding: 4px;
+  color: white;
+}

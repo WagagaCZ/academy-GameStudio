@@ -13,6 +13,8 @@ const overlayWin = document.querySelector("#overlay_win");
 const difficulty = document.querySelector("#difficulty");
 const setDifficulty = document.querySelector("#setDifficulty");
 
+const tableBody = document.querySelector("#score-table-body");
+
 let board = [];
 let bombs = 4;
 let size = 8;
@@ -21,6 +23,7 @@ let flaggedTiles = 0;
 let started = false;
 
 init();
+showScores();
 
 function init() {
   // Create game board
@@ -85,7 +88,7 @@ function openTile(x, y) {
     pauseTimer();
     overlayWin.textContent = "You won \n Score: " + countScore();
     overlayWin.classList.remove("hidden");
-    sendScore('player', 'Minesweeper', countScore());
+    sendScoreAndReloadTable()
     return;
   }
 
@@ -261,3 +264,33 @@ function countScore() {
   return (size + size) * bombs - (Math.floor(getTime() / 1000));
 }
 
+/////////////////////////
+// score api
+async function getScores() {
+  let scores = await apiGetScores('Minesweeper');
+  return scores;
+}
+
+async function showScores() {
+  let scores = await getScores();
+
+  // clear table first
+  tableBody.innerHTML = '';
+
+  scores.forEach(score => {
+    let date = new Date(score.playedOn);
+    date = date.toLocaleDateString("en-GB") + ' ' + date.toLocaleTimeString("en-GB");
+    tableBody.innerHTML += `
+      <tr">
+          <td>${score.player}</td>
+          <td>${score.points}</td>
+          <td>${date}</td>
+      </tr>
+      `;
+  });
+}
+
+async function sendScoreAndReloadTable() {
+  await apiSendScore('player', 'Minesweeper', countScore());
+  showScores()
+}

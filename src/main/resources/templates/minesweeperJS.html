@@ -10,10 +10,12 @@
 
 
   <link rel="stylesheet" th:href="@{/minesweeperJS/minesweeperJS.css}">
+  <link rel="stylesheet" th:href="@{/minesweeperJS/scoreTable.css}">
+  <link rel="stylesheet" th:href="@{/minesweeperJS/settings.css}">
 
-  <script defer th:src="@{/minesweeperJS/minesweeperJS.js}"></script>
-  <script defer th:src="@{/script/timer.js}"></script>
   <script defer th:src="@{/script/scoreServiceJS.js}"></script>
+  <script defer th:src="@{/script/timer.js}"></script>
+  <script defer th:src="@{/minesweeperJS/minesweeperJS.js}"></script>
 
   <title>MinesweeperJS</title>
 </head>
@@ -23,6 +25,7 @@
 
 <div class="main-wrapper">
 
+  <!-- settings -->
   <div class="settings settings-minesweeper">
     <div class="settings-head">
       <h2>Minesweeper</h2>
@@ -56,6 +59,7 @@
     </div>
   </div>
 
+  <!-- game -->
   <div class="minesweeper_game">
     <div class="board_wrapper">
       <div class="minesweeper_board board_size"></div>
@@ -65,8 +69,22 @@
       <div id="overlay_win" class="overlay win-overlay hidden">You won</div>
     </div>
   </div>
+  
+  <!-- score table -->
+  <table class="main-table scores-table">
+    <thead>
+      <h2>High Scores</h2>
+      <tr>
+        <th><i class="fa-regular fa-user"></i> player</th>
+        <th><i class="fa-solid fa-trophy"></i> points</th>
+        <th><i class="fa-regular fa-calendar"></i> played on</th>
+      </tr>
+    </thead>
+    <tbody id="score-table-body">
+    </tbody>
+  </table>
 
-</div>
+</div> <!-- end main-wrapper -->
 
 </main>
 </body>
