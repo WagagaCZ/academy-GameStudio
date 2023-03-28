@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layoutGameStudio.html}">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <script src="https://kit.fontawesome.com/3497c75dc3.js" crossorigin="anonymous"></script>
+
+
+  <link rel="stylesheet" th:href="@{/minesweeperJS/minesweeperJS.css}">
+
+  <script defer th:src="@{/minesweeperJS/minesweeperJS.js}"></script>
+  <script defer th:src="@{/script/timer.js}"></script>
+  <script defer th:src="@{/script/scoreServiceJS.js}"></script>
+
+  <title>MinesweeperJS</title>
+</head>
+
+<body>
+<main layout:fragment="content">
+
+<div class="main-wrapper">
+
+  <div class="settings settings-minesweeper">
+    <div class="settings-head">
+      <h2>Minesweeper</h2>
+    </div>
+    <div class="settings-body">
+
+      <div class="minesweeper-settings-wrapper">
+
+        <div class="minesweeper_display">
+          <p><span id="tilesOpen">0</span> / <span id="tilesAll">0</span> opened</p>
+          <p><span id="flagged">0</span> / <span id="mines">0</span> flagged</p>
+        </div>
+
+        <div class="minesweeper_display">
+          <form action="" class="difficulty-form">
+            <label for="difficulty">Difficulty</label>
+            <select name="difficulty" id="difficulty">
+              <option value="easy">Easy</option>
+              <option value="medium">Medium</option>
+              <option value="hard">Hard</option>
+            </select>
+            <button type="button" id="setDifficulty">set</button>
+          </form>
+          <button id="reset-btn" onclick="reset()">reset</button>
+
+          <p class="timer-display"></p>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="minesweeper_game">
+    <div class="board_wrapper">
+      <div class="minesweeper_board board_size"></div>
+
+      <div id="overlay_reset" class="overlay reset-overlay hidden">Reseting</div>
+      <div id="overlay_lose" class="overlay lose-overlay hidden">BOOM</div>
+      <div id="overlay_win" class="overlay win-overlay hidden">You won</div>
+    </div>
+  </div>
+
+</div>
+
+</main>
+</body>
+
+</html>
