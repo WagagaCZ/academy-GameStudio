@@ -7,7 +7,7 @@
 <body>
 
 <header th:fragment="gsheader">
-    <h1>Game Studio</h1>
+    <a href="/"><h1>Game Studio</h1></a>
 
     <div th:if="${@userController.logged}">
         Logged as <span th:text="${@userController.loggedUser}">.</span>
