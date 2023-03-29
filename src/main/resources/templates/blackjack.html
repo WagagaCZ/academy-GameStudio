@@ -33,6 +33,11 @@
     <a class="abutton" th:href="@{/blackjack(move=2)}" th:if="${@blackJackController.isPlayersTurn}">Stop</a>
     <a class="abutton" th:href="@{/blackjack/new}" th:if="${@blackJackController.isEnd}">New Hand</a>
     <a class="abutton" th:href="@{/blackjack/shuffle}" th:if="${@blackJackController.isEnd}">Shuffle Deck</a>
+    <br>
+    <h2 th:if="${@blackJackController.isEnd}">
+        <span th:if="${@blackJackController.isPlayerWinner()}">Player WINS!</span>
+        <span th:if=" not ${@blackJackController.isPlayerWinner()}">Dealer WINS!</span>
+    </h2>
 
 
 </main>

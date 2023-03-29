@@ -73,4 +73,7 @@ public class BlackJackController {
     public boolean isEnd(){
         return table.getTurn() == Turn.END;
     }
+    public boolean isPlayerWinner(){
+        return table.isPlayerWinner();
+    }
 }

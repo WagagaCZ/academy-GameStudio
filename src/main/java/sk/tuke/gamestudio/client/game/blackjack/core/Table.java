@@ -16,7 +16,7 @@ public class Table {
 
     public void setup() {
         System.out.println("Cards in deck: " + deck.getLeftInDeck());
-        if(deck.getLeftInDeck()<10){
+        if (deck.getLeftInDeck() < 10) {
             shuffle();
         }
         playerHand = new Card[5];
@@ -27,7 +27,7 @@ public class Table {
             dealerHand[i] = deck.drawCard();
         }
         dealerCard = dealerHand[1];
-        dealerHand[1] = new Card(-1,-1);
+        dealerHand[1] = new Card(-1, -1);
         numberOfDealerCards = 2;
         numberOfPlayerCards = 2;
     }
@@ -36,38 +36,56 @@ public class Table {
         if (turn == Turn.PLAYER) {
             playerHand[numberOfPlayerCards] = deck.drawCard();
             numberOfPlayerCards++;
-            if(checkIfOut(playerHand)){
+            if (checkIfOut(playerHand)) {
                 System.out.println("Player busted!");
             }
         } else if (turn == Turn.DEALER) {
             dealerHand[numberOfDealerCards] = deck.drawCard();
             numberOfDealerCards++;
-            if(checkIfOut(dealerHand)){
+            if (checkIfOut(dealerHand)) {
                 System.out.println("Dealer busted!");
             }
         }
     }
 
     public void shuffle() {
-        if(turn==Turn.END){
+        if (turn == Turn.END) {
             deck = new Deck();
-        }
-        else {
+        } else {
             System.out.println("Can't shuffle, not the end of game.");
         }
     }
-    public void switchTurns(){
+
+    public void switchTurns() {
         System.out.println("Switching");
-        if(turn == Turn.PLAYER) {
+        if (turn == Turn.PLAYER) {
             dealerHand[1] = dealerCard;
             turn = Turn.DEALER;
             checkIfOut(dealerHand);
-        }
-        else {
+        } else {
             System.out.println("Can't switch, not players turn.");
         }
     }
+
     private boolean checkIfOut(Card[] hand) {
+        int sum = checkSum(hand);
+        if (sum > 21) {
+            turn = Turn.END;
+            System.out.println(sum);
+            return true;
+        }
+        if (numberOfPlayerCards == 5 && turn == Turn.PLAYER) {
+            System.out.println("Player over hand limit");
+            switchTurns();
+        }
+        if (numberOfDealerCards == 5 || (turn == Turn.DEALER && sum >= 17)) {
+            turn = Turn.END;
+        }
+        System.out.println(sum);
+        return false;
+    }
+
+    private int checkSum(Card[] hand) {
         int sum = 0;
         int numOfAces = 0;
         boolean aceOver = false;
@@ -88,26 +106,12 @@ public class Table {
                     sum += 11;
                 }
             }
-            if (sum > 21) {
-                if (!aceOver && numOfAces > 0) {
-                    aceOver = true;
-                    sum = sum - (numOfAces * 10);
-                } else {
-                    turn = Turn.END;
-                    System.out.println(sum);
-                    return true;
-                }
-            }
-            if (numberOfPlayerCards == 5 && turn == Turn.PLAYER) {
-                System.out.println("Player over hand limit");
-                switchTurns();
-            }
-            if (numberOfDealerCards == 5 || (turn == Turn.DEALER && sum >= 17)) {
-                turn = Turn.END;
+            if (sum > 21 && !aceOver && numOfAces > 0) {
+                aceOver = true;
+                sum = sum - (numOfAces * 10);
             }
         }
-        System.out.println(sum);
-        return false;
+        return sum;
     }
 
     public Card[] getPlayerHand() {
@@ -124,5 +128,9 @@ public class Table {
 
     public Turn getTurn() {
         return turn;
+    }
+
+    public boolean isPlayerWinner() {
+        return (!checkIfOut(playerHand) && (checkSum(playerHand) > checkSum(dealerHand) || checkIfOut(dealerHand)));
     }
 }
