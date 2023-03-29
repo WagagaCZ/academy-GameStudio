@@ -1,6 +1,7 @@
 package sk.tuke.gamestudio.client.game.blackjack;
 
 import sk.tuke.gamestudio.client.game.blackjack.core.Table;
+import sk.tuke.gamestudio.client.game.blackjack.core.Turn;
 
 import java.util.Arrays;
 
@@ -13,9 +14,9 @@ public class Blackjack {
         System.out.println("Dealer:");
         System.out.println(Arrays.toString(table.getDealerHand()));
         table.drawNewCard();
-        if (table.getTurn() != Table.Turn.END) {
-            table.switchTurns();
-        }
+//        if (table.getTurn() != Turn.END) {
+//            table.switchTurns();
+//        }
         table.drawNewCard();
         table.drawNewCard();
         table.drawNewCard();

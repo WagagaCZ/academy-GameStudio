@@ -1,32 +1,33 @@
 package sk.tuke.gamestudio.client.game.blackjack.core;
 
 public class Table {
-    private final Card[] playerHand;
-    private final Card[] dealerHand;
+    private Card[] playerHand;
+    private Card[] dealerHand;
     private int numberOfPlayerCards;
     private int numberOfDealerCards;
     private Deck deck;
-
-    public enum Turn {
-        PLAYER,
-        DEALER,
-        END
-    }
-
     private Turn turn;
+    private Card dealerCard;
 
     public Table() {
-        playerHand = new Card[5];
-        dealerHand = new Card[5];
         deck = new Deck();
+        setup();
     }
 
     public void setup() {
+        System.out.println("Cards in deck: " + deck.getLeftInDeck());
+        if(deck.getLeftInDeck()<10){
+            shuffle();
+        }
+        playerHand = new Card[5];
+        dealerHand = new Card[5];
         turn = Turn.PLAYER;
         for (int i = 0; i < 2; i++) {
             playerHand[i] = deck.drawCard();
             dealerHand[i] = deck.drawCard();
         }
+        dealerCard = dealerHand[1];
+        dealerHand[1] = new Card(-1,-1);
         numberOfDealerCards = 2;
         numberOfPlayerCards = 2;
     }
@@ -48,10 +49,23 @@ public class Table {
     }
 
     public void shuffle() {
-        deck = new Deck();
+        if(turn==Turn.END){
+            deck = new Deck();
+        }
+        else {
+            System.out.println("Can't shuffle, not the end of game.");
+        }
     }
     public void switchTurns(){
-        turn = Turn.DEALER;
+        System.out.println("Switching");
+        if(turn == Turn.PLAYER) {
+            dealerHand[1] = dealerCard;
+            turn = Turn.DEALER;
+            checkIfOut(dealerHand);
+        }
+        else {
+            System.out.println("Can't switch, not players turn.");
+        }
     }
     private boolean checkIfOut(Card[] hand) {
         int sum = 0;
@@ -80,16 +94,19 @@ public class Table {
                     sum = sum - (numOfAces * 10);
                 } else {
                     turn = Turn.END;
+                    System.out.println(sum);
                     return true;
                 }
             }
             if (numberOfPlayerCards == 5 && turn == Turn.PLAYER) {
-                turn = Turn.DEALER;
+                System.out.println("Player over hand limit");
+                switchTurns();
             }
             if (numberOfDealerCards == 5 || (turn == Turn.DEALER && sum >= 17)) {
                 turn = Turn.END;
             }
         }
+        System.out.println(sum);
         return false;
     }
 

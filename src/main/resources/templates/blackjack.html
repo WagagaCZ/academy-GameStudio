@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.com"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layoutGameStudio.html}"
+      lang="en">>
+<head>
+    <title>GameStudio - BlackJack</title>
+</head>
+<body>
+
+<main layout:fragment="content">
+    <h2>Turn: <span th:text="${@blackJackController.getTurn().toString()}"></span></h2>
+    <br>
+    <h3>Dealers hand</h3>
+    <section>
+        <tr th:each="hand: ${@blackJackController.dealersHand}">
+            <td th:each="card: ${hand}">
+                <span th:text="${@blackJackController.getCardText(card)}"></span>
+            </td>
+        </tr>
+    </section>
+    <br>
+    <h3>Players hand</h3>
+    <section>
+        <tr th:each="hand: ${@blackJackController.playersHand}">
+            <td th:each="card: ${hand}">
+                <span th:text="${@blackJackController.getCardText(card)}"></span>
+            </td>
+        </tr>
+    </section>
+    <br>
+    <a class="abutton" th:href="@{/blackjack(move=1)}" th:if="not ${@blackJackController.isEnd}">Next Card</a>
+    <a class="abutton" th:href="@{/blackjack(move=2)}" th:if="${@blackJackController.isPlayersTurn}">Stop</a>
+    <a class="abutton" th:href="@{/blackjack/new}" th:if="${@blackJackController.isEnd}">New Hand</a>
+    <a class="abutton" th:href="@{/blackjack/shuffle}" th:if="${@blackJackController.isEnd}">Shuffle Deck</a>
+
+
+</main>
+
+</body>
+</html>
