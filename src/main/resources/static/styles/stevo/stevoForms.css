@@ -1,0 +1,92 @@
+.comment-form {
+  display: grid;
+  grid-auto-flow: row;
+  gap: 5px;
+}
+
+.comment-form input,
+.comment-form textarea {
+  border: 1px solid rgb(100, 100, 100);
+  background: none;
+  color: white;
+  border-radius: 4px;
+  padding: 4px;
+}
+
+.comment-form button {
+  justify-self: center;
+  background-color: rgb(32, 32, 32);
+  color: white;
+  border: 1px solid rgb(128, 128, 128);
+  border-radius: 6px;
+  padding: 2px 8px;
+  cursor: pointer;
+  transition: 70ms;
+}
+
+.comment-form button:hover {
+  border: 1px solid hotpink;
+  color: hotpink;
+}
+
+.main-form {
+margin: 0 auto;
+display: grid;
+grid-auto-flow: row;
+gap: 15px;
+
+padding: 15px;
+
+box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+border-radius: 6px;
+max-width: 500px;
+}
+
+.main-form-item {
+display: grid;
+grid-auto-flow: row;
+}
+
+.main-form button {
+justify-self: end;
+background-color: rgb(68, 68, 68);
+color: white;
+border: 1px solid rgb(128, 128, 128);
+border-radius: 6px;
+padding: 4px 16px;
+cursor: pointer;
+transition: 70ms;
+}
+
+.main-form button:hover {
+background-color: hotpink;
+}
+
+.main-form input {
+border: 1px solid rgb(100, 100, 100);
+background: none;
+border-radius: 4px;
+padding: 4px;
+box-sizing: border-box;
+}
+
+.main-form input:focus {
+outline: none;
+border:1px solid rgb(204, 53, 128);
+outline: 2px solid rgb(230, 127, 178);
+}
+
+.register-message {
+  display: grid;
+  place-items: center;
+  padding: 6px;
+  border: 1px solid #9a3d3d;
+  border-radius: 6px;
+  background-color: #ad6b6b;
+  color: white;
+}
+
+.main-form .not-valid-input {
+  border: 1px solid red;
+  background-color: #ffe2e2;
+}

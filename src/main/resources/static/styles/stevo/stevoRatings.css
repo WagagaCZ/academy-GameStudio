@@ -1,0 +1,64 @@
+.avg-rating {
+  display: grid;
+  grid-auto-flow: column;
+  justify-content: space-between;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.rating-form {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+}
+
+.rating-form input[type="radio"] {
+  display: none;
+}
+
+.rating-form label {
+  cursor: pointer;
+  color: rgb(63, 63, 63);
+  transition: 70ms;
+  min-width: 0;
+}
+
+.rating-form label:hover {
+  transform: scale(1.1);
+  color: hotpink;
+}
+
+.rating-form input[type="radio"]:checked~label {
+  color: hotpink;
+}
+
+.rating-form button {
+  background: none;
+  color: white;
+  border: 1px solid rgb(128, 128, 128);
+  border-radius: 6px;
+  padding: 2px 8px;
+  cursor: pointer;
+  transition: 70ms;
+}
+
+.rating-form button:hover {
+  transform: scale(1.1);
+  border: 1px solid hotpink;
+  color: hotpink;
+}
+
+#rating {
+  color: white;
+  transform: scale(1);
+
+  transition: 160ms ease-in-out;
+}
+
+#rating.animate {
+  transform: scale(1.2);
+  color: hotpink;
+}
+  
