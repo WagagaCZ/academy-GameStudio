@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layoutGameStudio.html}">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <script src="https://kit.fontawesome.com/3497c75dc3.js" crossorigin="anonymous"></script>
+
+
+  <link rel="stylesheet" th:href="@{/styles/stevo/stevoSettings.css}">
+  <link rel="stylesheet" th:href="@{/Game1024/game1024.css}">
+  <link rel="stylesheet" th:href="@{/Game1024/game1024Tiles.css}">
+
+  <link rel="stylesheet" th:href="@{/styles/stevo/stevoTables.css}">
+  <link rel="stylesheet" th:href="@{/styles/stevo/stevoForms.css}">
+  <link rel="stylesheet" th:href="@{/styles/stevo/stevoRatings.css}">
+
+  <script defer th:src="@{/script/userServiceJS.js}"></script>
+  <script defer th:src="@{/script/scoreServiceJS.js}"></script>
+  <script defer th:src="@{/script/ratingServiceJS.js}"></script>
+  <script defer th:src="@{/script/commentServiceJS.js}"></script>
+
+  <script defer th:src="@{/script/stevoTables.js}"></script>
+
+  <script defer th:src="@{/script/timer.js}"></script>
+  <script defer th:src="@{/Game1024/game1024Moves.js}"></script>
+  <script defer th:src="@{/Game1024/game1024.js}"></script>
+
+  <title>Minesweeper</title>
+</head>
+
+<body>
+<main layout:fragment="content">
+
+<div class="main-wrapper game-wrapper">
+
+<div class="settings settings-game1024">
+  <div class="settings-head">
+    <h2>Game 1024</h2>
+  </div>
+  <div class="settings-body">
+    <div class="game1024-settings-wrapper">
+
+      <h3> moves: <span id="display-moves">0</span></h3>
+
+      <h2><span id="display-biggest">0</span> / 1024</h2>
+
+      <button onclick="reset()">reset</button>
+
+    </div>
+    <h3 class="timer-display"></h3>
+    <p style="text-align: center;">WASD or arrows to play</p>
+  </div>
+</div>
+
+<div class="game-field-wrapper">
+  <div class="game-field"></div>
+
+  <div class="overlay overlay-reset hidden">Resetting⌛</div>
+  <div class="overlay overlay-win hidden">You Won👍</div>
+  <div class="overlay overlay-lose hidden">You Lost👎</div>
+</div>
+
+<div class="controls">
+  <div class="control-btn btn-up" onclick="dispatchKeyboardEvent('w')"><i class="fa-solid fa-caret-up"></i></div>
+  <div class="control-btn btn-left" onclick="dispatchKeyboardEvent('a')"><i class="fa-solid fa-caret-left"></i></div>
+  <div class="control-btn btn-empty"><i class="fa-solid fa-gamepad"></i></div>
+  <div class="control-btn btn-right" onclick="dispatchKeyboardEvent('d')"><i class="fa-solid fa-caret-right"></i></div>
+  <div class="control-btn btn-down" onclick="dispatchKeyboardEvent('s')"><i class="fa-solid fa-caret-down"></i></div>
+</div>
+
+
+  <div th:replace="~{fragments/_serviceTables :: serviceTables(game=${'Game1024'}) }"></div>
+
+
+  </div>
+</body>
+
+</main>
+</html>
