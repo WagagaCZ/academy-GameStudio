@@ -13,16 +13,7 @@ const overlayWin = document.querySelector("#overlay_win");
 const difficulty = document.querySelector("#difficulty");
 const setDifficulty = document.querySelector("#setDifficulty");
 
-const scoreTableBody = document.querySelector("#score-table-body");
 
-const commentTableBody = document.querySelector("#comment-table-body");
-const commentForm = document.querySelector("#comment-form");
-const commentSubmitBtn = document.querySelector("#comment-submit");
-
-const ratingDisplay = document.querySelector("#rating");
-const ratingForm = document.querySelector("#rating-select");
-const ratingRadios = ratingForm.querySelectorAll("input[type=radio]");
-const ratingSubmitBtn = document.querySelector("#rating-button");
 
 let board = [];
 let bombs = 4;
@@ -30,6 +21,7 @@ let size = 8;
 let flaggedTiles = 0;
 
 let started = false;
+let scoreSent = false;
 
 // main
 init();
@@ -95,12 +87,13 @@ function openTile(x, y) {
   }
 
   // win
-  if (isSolved()) {
+  if (isSolved() && !scoreSent) {
+    scoreSent = true;
     refreshDisplay();
     pauseTimer();
     overlayWin.textContent = "You won \n Score: " + countScore();
     overlayWin.classList.remove("hidden");
-    sendScoreAndReloadTable()
+    sendScoreAndReloadTable("Minesweeper");
     return;
   }
 
@@ -237,6 +230,7 @@ function reset() {
   overlayReset.classList.remove("hidden");
   resetTimer()
   started = false;
+  scoreSent = false;
   setTimeout(() => { overlayReset.classList.add("hidden") }, 500);
   init();
   refreshBoard();
@@ -276,117 +270,3 @@ function isSolved() {
 function countScore() {
   return (size + size) * bombs - (Math.floor(getTime() / 1000));
 }
-
-
-async function getPlayer() {
-  const player = await apiGetUser();
-}
-
-/////////////////////////
-// score api
-
-async function showScores(game) {
-  let scores = await apiGetScores(game);
-
-  // clear table first
-  scoreTableBody.innerHTML = '';
-
-  scores.forEach(score => {
-    let date = new Date(score.playedOn);
-    date = date.toLocaleDateString("en-GB") + ' ' + date.toLocaleTimeString("en-GB");
-    scoreTableBody.innerHTML += `
-      <tr">
-          <td>${score.player}</td>
-          <td>${score.points}</td>
-          <td>${date}</td>
-      </tr>
-      `;
-  });
-}
-
-
-async function sendScoreAndReloadTable() {
-  const res = await apiGetUser();
-  const player = res.loggedUser;
-
-  if (player != null) {
-    await apiSendScore(player, 'Minesweeper', countScore());
-    showScores("Minesweeper")
-  }
-}
-
-//////////////////////////////
-// RATING API
-async function showRatings(game) {
-  let rating = await apiGetAvgRating(game);
-  if (rating > 0) {
-    let formattedRating = rating.toFixed(2);
-    ratingDisplay.innerHTML = `Rating: <span>${formattedRating}</span>`;
-  } else {
-    ratingDisplay.innerHTML = `Game not rated yet`;
-  }
-}
-
-ratingSubmitBtn.addEventListener('click', async () => {
-
-  const res = await apiGetUser();
-  const player = res.loggedUser;
-
-  if (player == null) { alert("log in first"); return; }
-
-  let rating = -1;
-  ratingRadios.forEach(radio => {
-    if (radio.checked) { rating = radio.value; }
-    return
-  });
-
-  if (rating == -1) { return; }
-
-  await apiSendRating(player, 'Minesweeper', rating);
-  animateRating();
-  ratingRadios.forEach(radio => {
-    if (radio.checked) { radio.checked = false; }
-    return
-  });
-  showRatings("Minesweeper");
-});
-
-function animateRating() {
-  ratingDisplay.classList.add("animate");
-  setTimeout(() => { ratingDisplay.classList.remove("animate") }, 900);
-}
-
-// COMMENT API
-async function showComments(game) {
-  let comments = await apiGetComments(game);
-  // clear table first
-  commentTableBody.innerHTML = '';
-
-  comments.forEach(comment => {
-    let date = new Date(comment.commentedOn);
-    date = date.toLocaleDateString("en-GB") + ' ' + date.toLocaleTimeString("en-GB");
-    commentTableBody.innerHTML += `
-      <tr">
-          <td>${comment.comment}</td>
-          <td>
-            <span><i class="fa-solid fa-user"></i> </span>
-            <span>${comment.player}</span>
-            <span> &nbsp </span>
-            <span><i class="fa-solid fa-calendar-days"></i> </span>
-            <span>${date}</span>
-          </td>
-      </tr>
-      `;
-  });
-}
-commentSubmitBtn.addEventListener('click', async () => {
-  const player = commentForm[0].value;
-  const comment = commentForm[1].value;
-  if (comment.length > 0) {
-
-    await apiSendComment(player,'Minesweeper', comment);
-    commentForm[0].value = '';
-    commentForm[1].value = '';
-    showComments('Minesweeper');
-  }
-});

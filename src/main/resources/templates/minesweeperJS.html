@@ -19,6 +19,9 @@
   <script defer th:src="@{/script/scoreServiceJS.js}"></script>
   <script defer th:src="@{/script/ratingServiceJS.js}"></script>
   <script defer th:src="@{/script/commentServiceJS.js}"></script>
+  
+  <script defer th:src="@{/script/stevoTables.js}"></script>
+
   <script defer th:src="@{/script/timer.js}"></script>
   <script defer th:src="@{/minesweeperJS/minesweeperJS.js}"></script>
 
@@ -82,7 +85,7 @@
         </div>
     
         <form class="rating-form" id="rating-select">
-          <button type="button" id="rating-button">rate</button>
+          <button type="button" id="rating-button" onclick="submitRating('Minesweeper')">rate</button>
     
           <input type="hidden" name="game" th:value="${game}">
     
@@ -123,7 +126,7 @@
       <h2>Post a Comment</h2>
       <input type="text" name="player" placeholder="Enter your name" required />
       <textarea name="comment" placeholder="Enter your comment" required></textarea>
-      <button type="button" id="comment-submit">Post Comment</button>
+      <button type="button" id="comment-submit" onclick="submitComment('Minesweeper')">Post Comment</button>
     </form>
 
     <!-- comment table-->
