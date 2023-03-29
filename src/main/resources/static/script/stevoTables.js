@@ -16,6 +16,11 @@ const ratingRadios = ratingForm.querySelectorAll("input[type=radio]");
 async function showScores(game) {
   let scores = await apiGetScores(game);
 
+   if(scores.message) {
+      scoreTableBody.innerHTML = `<tr><td></td><td></td><td style='text-align: end'>${scores.message} </td></tr>`;
+      return;
+    }
+
   // clear table first
   scoreTableBody.innerHTML = '';
 
@@ -47,6 +52,12 @@ async function sendScoreAndReloadTable(game) {
 // RATING API
 async function showRatings(game) {
   let rating = await apiGetAvgRating(game);
+
+  if(rating.message) {
+    ratingDisplay.innerHTML = `<p style="font-size: 0.8rem">${rating.message}</p>`;
+    return;
+  }
+
   if (rating > 0) {
     let formattedRating = rating.toFixed(2);
     ratingDisplay.innerHTML = `Rating: <span>${formattedRating}</span>`;
@@ -96,6 +107,11 @@ async function showComments(game) {
   let comments = await apiGetComments(game);
   // clear table first
   commentTableBody.innerHTML = '';
+
+  if(comments.message) {
+    commentTableBody.innerHTML = `<tr><td>${comments.message} </td></tr>`;
+    return;
+  }
 
   comments.forEach(comment => {
     let date = new Date(comment.commentedOn);
