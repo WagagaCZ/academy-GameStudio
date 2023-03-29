@@ -86,7 +86,6 @@ public class ConsoleUI implements UserInterface {
                 System.out.println(ratingService.getRating("mines", "player"));
 
 
-
                 printScores();
 
                 gameShouldContinue = false;
