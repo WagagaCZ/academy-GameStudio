@@ -17,7 +17,7 @@
         </div>
     
         <form class="rating-form" id="rating-select">
-          <button type="button" id="rating-button" onclick="submitRating('${game}')">rate</button>
+          <button type="button" id="rating-button" th:onclick="submitRating([[${game}]])">rate</button>
     
           <input type="hidden" name="game" th:value="${game}">
     
@@ -58,7 +58,7 @@
       <h2>Post a Comment</h2>
       <input type="text" name="player" placeholder="Enter your name" required />
       <textarea name="comment" placeholder="Enter your comment" required></textarea>
-      <button type="button" id="comment-submit" onclick="submitComment('${game}')">Post Comment</button>
+      <button type="button" id="comment-submit" th:onclick="submitComment([[${game}]])">Post Comment</button>
     </form>
 
     <!-- comment table-->
