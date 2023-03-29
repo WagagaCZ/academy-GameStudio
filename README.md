@@ -25,8 +25,10 @@ JSON:
   "points": 500
 }
 ```
-date timestamp added in controller
+ - date timestamp added in controller
+
 </br >
+
 #### ratingController
 - get average rating for Minesweeper
 ```
@@ -44,4 +46,27 @@ JSON:
   "rating": 5
 }
 ```
-date timestamp added in controller
+ - date timestamp added in controller
+
+</br >
+#### commentController
+- get top 10 comments for minesweeper
+
+```
+http://localhost:8080/api/v2/comment/Minesweeper
+```
+
+- post comment
+```
+http://localhost:8080/api/v2/comment
+```
+
+```
+JSON:
+{
+  "game":"Minesweeper",
+  "player":"player",
+  "comment":"Hello"
+}
+```
+- date timestamp added in controller
