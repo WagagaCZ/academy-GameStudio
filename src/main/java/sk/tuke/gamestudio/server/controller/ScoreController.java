@@ -16,7 +16,6 @@ import java.util.Map;
 @RestController
 @RequestMapping("api/v2/score")
 public class ScoreController {
-
     @Autowired
     private ScoreService scoreService;
 
