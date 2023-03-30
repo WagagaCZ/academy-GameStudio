@@ -6,7 +6,7 @@ public class Table {
     private int numberOfPlayerCards;
     private int numberOfDealerCards;
     private Deck deck;
-    private Turn turn;
+    private Turn turn = Turn.END;
     private Card dealerCard;
 
     public Table() {
@@ -51,7 +51,7 @@ public class Table {
     }
 
     public void shuffle() {
-        if (turn == Turn.END) {
+        if (turn == Turn.END || turn == null) {
             deck = new Deck();
         } else {
             System.out.println("Can't shuffle, not the end of game.");
