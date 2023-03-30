@@ -1,3 +1,10 @@
+body {
+  background-color: rgb(20, 21, 23);
+  color: rgb(231, 231, 231);
+}
+
+
+
 .main-table {
   margin-top: 4px;
   border-spacing: 0;
@@ -26,4 +33,22 @@
   display: grid;
   grid-auto-flow: row;
   gap: 18px;
+}
+
+.comments-table tr {
+  display: grid;
+  grid-auto-flow: row;
+  border: 1px solid rgb(100, 100, 100);
+  border-radius: 4px;
+}
+
+.comments-table td:first-child {
+  padding: 8px;
+  text-align: left;
+}
+
+.comments-table td:last-child {
+  text-align: right;
+  border-top: 1px solid rgb(46, 46, 46);
+  padding: 5px;
 }

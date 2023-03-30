@@ -10,10 +10,19 @@
 
 
   <link rel="stylesheet" th:href="@{/minesweeperJS/minesweeperJS.css}">
-  <link rel="stylesheet" th:href="@{/minesweeperJS/scoreTable.css}">
-  <link rel="stylesheet" th:href="@{/minesweeperJS/settings.css}">
+  <link rel="stylesheet" th:href="@{/styles/stevo/stevoSettings.css}">
 
+  <link rel="stylesheet" th:href="@{/styles/stevo/stevoTables.css}">
+  <link rel="stylesheet" th:href="@{/styles/stevo/stevoForms.css}">
+  <link rel="stylesheet" th:href="@{/styles/stevo/stevoRatings.css}">
+
+  <script defer th:src="@{/script/userServiceJS.js}"></script>
   <script defer th:src="@{/script/scoreServiceJS.js}"></script>
+  <script defer th:src="@{/script/ratingServiceJS.js}"></script>
+  <script defer th:src="@{/script/commentServiceJS.js}"></script>
+  
+  <script defer th:src="@{/script/stevoTables.js}"></script>
+
   <script defer th:src="@{/script/timer.js}"></script>
   <script defer th:src="@{/minesweeperJS/minesweeperJS.js}"></script>
 
@@ -23,7 +32,7 @@
 <body>
 <main layout:fragment="content">
 
-<div class="main-wrapper">
+<div class="main-wrapper game-wrapper">
 
   <!-- settings -->
   <div class="settings settings-minesweeper">
@@ -69,20 +78,9 @@
       <div id="overlay_win" class="overlay win-overlay hidden">You won</div>
     </div>
   </div>
-  
-  <!-- score table -->
-  <table class="main-table scores-table">
-    <thead>
-      <h2>High Scores</h2>
-      <tr>
-        <th><i class="fa-regular fa-user"></i> player</th>
-        <th><i class="fa-solid fa-trophy"></i> points</th>
-        <th><i class="fa-regular fa-calendar"></i> played on</th>
-      </tr>
-    </thead>
-    <tbody id="score-table-body">
-    </tbody>
-  </table>
+
+  <!-- tables -->
+  <div th:replace="~{fragments/_serviceTables :: serviceTables(game=${'Minesweeper'}) }"></div>
 
 </div> <!-- end main-wrapper -->
 

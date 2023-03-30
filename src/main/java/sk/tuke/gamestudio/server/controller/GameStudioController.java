@@ -12,6 +12,9 @@ public class GameStudioController {
     @RequestMapping("/minesweeperJS")
     public String minesweeperJS(){return "minesweeperJS";}
 
+    @RequestMapping("/game1024")
+    public String game1024(){return "game1024";}
+
     @RequestMapping("/test")
     public String testpage(){return "testpage";}
 

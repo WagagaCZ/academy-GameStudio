@@ -1,0 +1,241 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: monospace;
+}
+
+body {
+  background-color: rgb(20, 21, 23);
+}
+
+.settings-game1024 .settings-head {
+  background-color: rgb(63, 140, 59);
+}
+
+.game-field {
+  margin: 50px auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  width: 400px;
+}
+
+.game-field-wrapper {
+  position: relative;
+  margin: auto;
+  width: fit-content;
+}
+
+.game1024-settings-wrapper {
+  display: grid;
+  grid-auto-flow: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.overlay {
+  z-index: 100;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: grid;
+  place-items: center;
+  color: white;
+  text-align: center;
+  font-size: 3rem;
+}
+
+.timer-display {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.overlay-reset {
+  background-color: rgba(43, 37, 84, 0.8);
+}
+
+.overlay-win {
+  background-color: rgba(47, 136, 60, 0.8);
+}
+
+.overlay-lose {
+  background-color: rgba(62, 12, 12, 0.8);
+}
+
+.tile {
+  position: relative;
+  display: grid;
+  place-items: center;
+  font-size: 2.5rem;
+
+  width: 100px;
+  height: 100px;
+  border-radius: 16px;
+  border: 4px solid rgba(255, 255, 255, 0.455);
+  border-left: 6px solid rgba(199, 92, 25, 0.249);
+  border-bottom: 6px solid rgba(172, 32, 134, 0.259);
+  user-select: none;
+
+  color: white;
+  background-color: rgb(57, 57, 57);
+  /* margin: 1px; */
+  overflow: hidden;
+}
+
+.tile::before {
+  content: '';
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.16);
+  border-radius: 100%;
+}
+
+
+
+.controls {
+  position: relative;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  width: 300px;
+}
+
+.control-btn {
+  position: relative;
+  display: grid;
+  place-items: center;
+
+  width: 100px;
+  height: 100px;
+
+  font-size: 4rem;
+  border: 2px solid rgb(104, 104, 104);
+  background-color: rgb(12, 13, 14);
+  color: white;
+  transition: 90ms;
+  overflow: hidden;
+}
+
+.control-btn::before {
+  position: absolute;
+  content: '';
+
+  width: 90%;
+  height: 90%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  border: 1px solid rgb(32, 32, 32);
+  background-color: rgb(10, 10, 10);
+  border-radius: 100%;
+  opacity: 0.5;
+  transition: 60ms;
+}
+
+.control-btn:hover::before {
+  width: 70%;
+  height: 70%;
+}
+
+.control-btn:hover {
+  cursor: pointer;
+  transform: scale(0.95);
+  background-color: rgb(45, 44, 44);
+  font-size: 2rem;
+}
+
+.btn-empty {
+  grid-column: 2;
+  grid-row: 2;
+  border: none;
+  font-size: 1.5rem;
+  color: rgb(72, 72, 72);
+}
+
+.btn-empty:hover {
+  background-color: rgb(12, 13, 14);
+  transform: none;
+  cursor: default;
+}
+
+.btn-empty::before {
+  display: none;
+}
+
+.btn-empty:hover::before {
+  background-color: rgb(46, 46, 46);
+}
+
+.btn-up {
+  grid-column: 2;
+  grid-row: 1;
+  border-bottom: none;
+  border-radius: 6px 6px 0 0;
+}
+
+.btn-left {
+  grid-column: 1;
+  grid-row: 2;
+  border-right: none;
+  border-radius: 6px 0 0 6px;
+}
+
+.btn-right {
+  grid-column: 3;
+  grid-row: 2;
+  border-left: none;
+  border-radius: 0 6px 6px 0;
+}
+
+.btn-down {
+  grid-column: 2;
+  grid-row: 3;
+  border-top: none;
+  border-radius: 0 0 6px 6px;
+}
+
+.hidden {
+  display: none;
+}
+
+
+
+@media screen and (max-width: 440px) {
+  .game-field {
+    width: 240px;
+  }
+
+  .tile {
+    width: 60px;
+    height: 60px;
+    font-size: 1.2rem;
+  }
+
+  .controls {
+    width: 225px;
+  }
+
+  .control-btn {
+    width: 75px;
+    height: 75px;
+    font-size: 1.5rem;
+  }
+
+  .game1024-settings-wrapper {
+    display: grid;
+    grid-auto-flow: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
+  .overlay {
+    font-size: 2rem;
+  }
+}

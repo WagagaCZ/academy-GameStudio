@@ -13,7 +13,7 @@ const overlayWin = document.querySelector("#overlay_win");
 const difficulty = document.querySelector("#difficulty");
 const setDifficulty = document.querySelector("#setDifficulty");
 
-const tableBody = document.querySelector("#score-table-body");
+
 
 let board = [];
 let bombs = 4;
@@ -21,9 +21,13 @@ let size = 8;
 let flaggedTiles = 0;
 
 let started = false;
+let scoreSent = false;
 
+// main
 init();
-showScores();
+showScores("Minesweeper");
+showComments("Minesweeper");
+showRatings("Minesweeper");
 
 function init() {
   // Create game board
@@ -83,12 +87,13 @@ function openTile(x, y) {
   }
 
   // win
-  if (isSolved()) {
+  if (isSolved() && !scoreSent) {
+    scoreSent = true;
     refreshDisplay();
     pauseTimer();
     overlayWin.textContent = "You won \n Score: " + countScore();
     overlayWin.classList.remove("hidden");
-    sendScoreAndReloadTable()
+    sendScoreAndReloadTable("Minesweeper");
     return;
   }
 
@@ -144,9 +149,10 @@ function countAdjacentMines(x, y) {
 }
 
 gameBoard.addEventListener("click", (e) => {
-  let x = +e.target.dataset.row;
-  let y = +e.target.dataset.col;
-  openTile(x, y);
+  let x = e.target.dataset.row;
+  let y = e.target.dataset.col;
+  if(x === undefined || y === undefined) { return; }
+  openTile(+x, +y);
 });
 
 gameBoard.addEventListener("contextmenu", (e) => {
@@ -224,6 +230,7 @@ function reset() {
   overlayReset.classList.remove("hidden");
   resetTimer()
   started = false;
+  scoreSent = false;
   setTimeout(() => { overlayReset.classList.add("hidden") }, 500);
   init();
   refreshBoard();
@@ -263,44 +270,3 @@ function isSolved() {
 function countScore() {
   return (size + size) * bombs - (Math.floor(getTime() / 1000));
 }
-
-/////////////////////////
-// score api
-
-async function showScores() {
-  let scores = await apiGetScores('Minesweeper');
-
-  // clear table first
-  tableBody.innerHTML = '';
-
-  scores.forEach(score => {
-    let date = new Date(score.playedOn);
-    date = date.toLocaleDateString("en-GB") + ' ' + date.toLocaleTimeString("en-GB");
-    tableBody.innerHTML += `
-      <tr">
-          <td>${score.player}</td>
-          <td>${score.points}</td>
-          <td>${date}</td>
-      </tr>
-      `;
-  });
-}
-
-async function getPlayer() {
-  const player = await apiGetUser();
-  console.log(player);
-}
-
-
-async function sendScoreAndReloadTable() {
-  const res = await apiGetUser();
-  const player = res.loggedUser;
-
-  if (player != null) {
-    await apiSendScore(player, 'Minesweeper', countScore());
-    showScores()
-  }
-}
-
-
-

@@ -4,9 +4,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
+import sk.tuke.gamestudio.common.service.CommentService;
 import sk.tuke.gamestudio.common.service.RatingService;
 
 import sk.tuke.gamestudio.common.service.ScoreService;
+import sk.tuke.gamestudio.server.service.CommentServiceJPA;
 import sk.tuke.gamestudio.server.service.RatingServiceJPA;
 import sk.tuke.gamestudio.server.service.ScoreServiceJPA;
 
@@ -27,4 +29,7 @@ public class GameStudioServer {
     public RatingService getRatingService() {
         return new RatingServiceJPA();
     }
+
+    @Bean
+    CommentService getCommentService() { return new CommentServiceJPA(); }
 }
