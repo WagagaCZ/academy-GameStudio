@@ -1,43 +1,37 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.com" lang="en">
 <head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <meta charset="UTF-8">
     <title>Gamestudio</title>
 </head>
 <body>
 
 <header th:fragment="gsheader">
-    <a href="/"><h1>Game Studio</h1></a>
-
-    <div th:if="${@userController.logged}">
-        Logged as <span th:text="${@userController.loggedUser}">.</span>
-        <a href="/logout">Log out.</a>
+    <div th:fragment="navbar">
+        <nav class="navbar navbar-dark bg-primary navbar-expand-sm">
+            <a class="navbar-brand" th:href="@{/}">Main page</a>
+            <a class="navbar-brand" th:href="@{/mines}">MINESWEEPER</a>
+            <div th:if="${@userController.logged}">
+                Logged as <span th:text="${@userController.loggedUser}">.</span>
+                <a href="/logout">Log out.</a>
+            </div>
+        </nav>
     </div>
+
+
     <div th:if="not ${@userController.logged}">
         Logged out. Please, <a href="/">log in</a>.
     </div>
 
 </header>
 
-<!--
-<header th:fragment="gsheader">
-    <h1>Game Studio</h1>
 
-    <div th:if="${logged}">
-        Logged as <span th:text="${username}">.</span>
-        <a href="/logout">Log out.</a>
+<footer th:fragment="gsfooter" class="bg-light text-center text-lg-start">
+    <div class="text-center p-3" style="background-color: rgba(30,144,255);">
+        @GameStudio ver.FPT Academy 2023-03
     </div>
-    <div th:if="not ${logged}">
-        Logged out. Please, <a href="/">log in</a>.
-    </div>
-
-</header>
--->
-
-
-<footer th:fragment="gsfooter">
-    <hr />
-    GameStudio ver.FPTacad 2023-03
 </footer>
 
 </body>
