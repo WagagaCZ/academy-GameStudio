@@ -38,11 +38,11 @@ public class MastermindConsoleUI {
     }
 
     private void winGame() {
-
+        System.out.println("VICTORY\n\n\n");
     }
 
     private void loseGame() {
-
+        System.out.println("GAME OVER\n\n\n");
     }
 
     private void newTurn() {
