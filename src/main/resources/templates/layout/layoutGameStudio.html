@@ -6,14 +6,15 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link th:href="@{/styles/gamestudio.css}" rel="stylesheet" />
+    <link rel="stylesheet" th:href="@{/styles/header.css}">
 </head>
-<body>
 
-<header th:replace="fragments/fragments::gsheader"></header>
+<main>
+  <header th:replace="fragments/fragments::gsheader"></header>
 
-<main layout:fragment="content"></main>
+  <body class="content" layout:fragment="content"></body>
 
-<footer th:replace="fragments/fragments::gsfooter"></footer>
+  <footer th:replace="fragments/fragments::gsfooter"></footer>
+</main>
 
-</body>
 </html>
