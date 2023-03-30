@@ -6,9 +6,13 @@
 </head>
 <body>
 
-<header th:fragment="gsheader">
-    <a href="/"><h1>Game Studio</h1></a>
+<header class="header" th:fragment="gsheader">
 
+  <div class="header-title">
+    <a href="/"><h1>Game Studio</h1></a>
+  </div>
+
+  <div class="header-user">
     <div th:if="${@userController.logged}">
         Logged as <span th:text="${@userController.loggedUser}">.</span>
         <a href="/logout">Log out.</a>
@@ -16,6 +20,7 @@
     <div th:if="not ${@userController.logged}">
         Logged out. Please, <a href="/">log in</a>.
     </div>
+  </div>
 
 </header>
 
