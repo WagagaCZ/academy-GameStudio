@@ -36,6 +36,13 @@ body {
   align-items: center;
 }
 
+.game-state {
+  background-color: #2d2d2d;
+  padding: 2px 8px;
+  border: 1px solid #595959;
+  border-radius: 7px;
+}
+
 .overlay {
   z-index: 100;
   position: absolute;
