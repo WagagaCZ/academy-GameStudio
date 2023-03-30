@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.com"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/layoutGameStudio.html}">
+      layout:decorate="~{layout/layoutGameStudio.html}" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>Gamestudio</title>
-    <link rel="stylesheet" href="/static/styles/styles.css"/>
     <link rel="stylesheet" href="/static/styles/gamestudio.css"/>
+    <link rel="stylesheet" href="/static/styles/styles.css"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 </head>
@@ -20,35 +20,80 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
+
 <main layout:fragment="content">
 
-<div class="container">
-    <h1 align="center">TIC-TAC-TOE</h1>
-    <div class="col-sm-4 mx-auto" style="width: 200px;">
-        <div th:utext="${@toeController.getToeField()}"></div>
+    <div class="container-fluid text-center">
+        <div class="row">
+            <div class="col-12"></div>
+            <h1>TIC-TAC-TOE</h1>
+        </div>
     </div>
+
+
+    <div class="row content">
+        <div class="col-sm-5 sidenav">
+            <a href="toe/new" class="btn btn-warning btn-lg btn-block "
+               role="button" aria-pressed="true">NEW GAME</a>
+        </div>
+
+        <div class="col-sm-7 center-l">
+
+            <div th:utext="${@toeController.getToeField()}"></div>
+        </div>
+    </div>
+    </div>
+
+
+    <div class="alert alert-danger" role="alert" th:if="${@toeController.checkWin()}"
+         th:text="${@toeController.getGameResult()}">
+    </div>
+
+    <div class="alert alert-success" role="alert" th:if="${@toeController.checkWin()}">
+        <span>Your game time in sec:</span>
+        <span th:text="${@toeController.getTime()}"></span>
+    </div>
+
+    <div class="alert alert-primary" role="alert" th:if="${@toeController.gameOver}"
+         th:text="${@toeController.getGameResult()}">
+    </div>
+
+    <div class="mx-auto" style="width: 200px;">
+
+    </div>
+
+    <div class="container overflow-hidden m-5">
+        <div class="row gy-5">
+            <div class="col">
+                <h2>Score</h2>
+                <table class="table table-bordered table-sm table-striped">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th>player</th>
+                        <th>game</th>
+                        <th>score</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="score : ${list}">
+                        <td th:text="${scoreStat.index}" scope="col"></td>
+                        <td th:text="${score.player}" scope="col"></td>
+                        <td th:text="${score.game}"></td>
+                        <td th:text="${score.points}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="row gy-5 m-5">
+                <div class="col">
+                    <h2 class="text-center text-primary">RATING</h2>
+                </div>
+            </div>
+
+
 </div>
-
-
-<div class="alert alert-danger" role="alert" th:if="${@toeController.checkWin()}"
-     th:text="${@toeController.getGameResult()}">
-</div>
-
-<div class="alert alert-success" role="alert" th:if="${@toeController.checkWin()}">
-    <span>Your game time in sec:</span>
-    <span th:text="${@toeController.getTime()}"></span>
-</div>
-
-<div class="alert alert-primary" role="alert" th:if="${@toeController.gameOver}"
-     th:text="${@toeController.getGameResult()}">
-</div>
-
-<div class="mx-auto" style="width: 200px;">
-    <a href="toe/new" class="btn btn-success btn-lg "
-       role="button" aria-pressed="true">NEW GAME</a>
-</div>
-
-
+    </div>
 </main>
 
 </body>
