@@ -65,7 +65,7 @@ function incrementTile(x, y, event) {
 // keyboard
 document.addEventListener('keydown', function (event) {
 
-  if(gameStatus === "paused") {
+  if(gameStatus === "paused" && ["w", "a", "s", "d"].includes(event.key)) {
     startTimer();
     gameStatus = "playing";
   }
