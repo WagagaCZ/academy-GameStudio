@@ -34,6 +34,7 @@ a:link:hover, a:visited:hover {
 
 .content {
   margin-top: 85px;
+  min-height: 100vh;
 }
 
 /*Properties of the form elements*/
