@@ -9,16 +9,22 @@
 <header class="header" th:fragment="gsheader">
 
   <div class="header-title">
-    <a href="/"><h1>Game Studio</h1></a>
+    <a href="/"><h1><i class="fa-brands fa-jedi-order"></i> Game Studio</h1></a>
   </div>
 
   <div class="header-user">
-    <div th:if="${@userController.logged}">
-        Logged as <span th:text="${@userController.loggedUser}">.</span>
-        <a href="/logout">Log out.</a>
+    <div th:if="${@userController.logged}"class="header-user-item">
+      <i class="fa-solid fa-user-secret"></i> <span th:text="${@userController.loggedUser}"></span>
+      <div class="header-user-link">
+        <a href="/logout">Log out <i class="fa-solid fa-person-through-window"></i></a>
+      </div>
     </div>
-    <div th:if="not ${@userController.logged}">
-        Logged out. Please, <a href="/">log in</a>.
+    
+    <div th:if="not ${@userController.logged}" class="header-user-item">
+      <p> Logged out </p>
+      <div class="header-user-link">
+        <a href="/">log in <i class="fa-solid fa-arrow-right-to-bracket"></i></a>
+      </div>
     </div>
   </div>
 
