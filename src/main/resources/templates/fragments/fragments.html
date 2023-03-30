@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.com" lang="en">
 <head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <meta charset="UTF-8">
     <title>Gamestudio</title>
 </head>
 <body>
+
 
 <header class="header" th:fragment="gsheader">
 
@@ -30,25 +33,19 @@
 
 </header>
 
-<!--
-<header th:fragment="gsheader">
-    <h1>Game Studio</h1>
 
-    <div th:if="${logged}">
-        Logged as <span th:text="${username}">.</span>
-        <a href="/logout">Log out.</a>
-    </div>
-    <div th:if="not ${logged}">
+
+    <div th:if="not ${@userController.logged}">
         Logged out. Please, <a href="/">log in</a>.
     </div>
 
 </header>
--->
 
 
-<footer th:fragment="gsfooter">
-    <hr />
-    GameStudio ver.FPTacad 2023-03
+<footer th:fragment="gsfooter" class="bg-light text-center text-lg-start">
+    <div class="text-center p-3" style="background-color: rgba(30,144,255);">
+        @GameStudio ver.FPT Academy 2023-03
+    </div>
 </footer>
 
 </body>
