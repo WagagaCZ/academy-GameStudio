@@ -3,6 +3,7 @@ body {
     font-size: 1rem;
     font-family: Arial, "Arial CE", "Helvetica CE", sans-serif;
     color: #000000;
+    max-width: 30rem;
     margin: auto;
     padding: 1em;
 }
@@ -32,6 +33,7 @@ a:link:hover, a:visited:hover {
 }
 
 
+
 /*Properties of the form elements*/
 
 label {
@@ -39,6 +41,7 @@ label {
     display: inline-block; /*instead of inline (default)*/
     min-width: 5em;
 }
+
 
 
 /*Properties of the tables with scores*/
@@ -64,15 +67,15 @@ table.scores tr:nth-child(odd) {
 }
 
 /*Properties of the control block above the minefield*/
-div.minesControl {
+div.minesControl{
     border: 1px solid darkgrey;
     border-radius: 0.4em;
     padding: 0.5em;
     min-width: 13em;
 }
 
-div.minesControl span.gameInfo {
-    width: 13em;
+div.minesControl span.gameInfo{
+    width:13em;
     display: inline-block;
 }
 
@@ -103,8 +106,6 @@ table.minefield td {
     font-size: 2.1em;
     border-radius: 0.2em;
 }
-
-
 
 table.minefield a:link,
 table.minefield a:visited,
@@ -235,67 +236,22 @@ table.minefield td.mine {
     animation-timing-function: linear;
 }
 
-@keyframes explosion {
+@keyframes explosion{
     from {
         background-image: none;
         background-color: white;
     }
-    20% {
+    20%{
         background-color: darkgray;
     }
-    30% {
+    30%{
         background-color: yellow;
     }
-    to {
+    to{
         background-color: red;
         background-image: url("/images/mines/mine.svg");
     }
 }
-
-table.toe td {
-    text-align: center;
-    background-color: #C5E1A5;
-    width: 3em;
-    height: 3em;
-    font-size: 2.1em;
-    border-radius: 0.2em;
-    border: 1.5px solid
-}
-
-table.toe a:link,
-table.toe a:visited,
-table.toe a:link:hover,
-table.toe a:visited:hover {
-    color: inherit;
-    font-weight: normal;
-    text-decoration: none;
-}
-
-table.toe a {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-}
-
-table.toe td.closed {
-    background-color: darkgray;
-    color: darkgray;
-}
-
-table.toe td.closed:hover {
-    background-color: springgreen;
-}
-
-table.toe td.closed span {
-    display: none;
-}
-
-table.minefield td.mine span {
-    display: none;
-}
-
 
 
 
