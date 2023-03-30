@@ -32,7 +32,9 @@ a:link:hover, a:visited:hover {
     text-decoration: underline;
 }
 
-
+.content {
+  margin-top: 85px;
+}
 
 /*Properties of the form elements*/
 
