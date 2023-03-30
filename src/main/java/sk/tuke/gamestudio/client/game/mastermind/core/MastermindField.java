@@ -21,6 +21,7 @@ public class MastermindField {
         this.numberOfColors = 5;
         this.pegSlots = new Peg[numberOfTries + 1][numberOfColors];
         this.triesLeft = pegSlots.length;
+        this.colorGenerator = PegColor.BLACK;
 
         generate();
 
@@ -35,7 +36,9 @@ public class MastermindField {
 
     public void setGuessPegs(char[] input) {
         for (int pegIndex = 0; pegIndex < 5; pegIndex++) {
-            pegSlots[triesLeft][pegIndex] = new Peg(PegColor.values()[input[pegIndex]]);
+            pegSlots[triesLeft][pegIndex] = new Peg(
+                    PegColor.values()[Character.getNumericValue(input[pegIndex])]
+            );
         }
 
         if (isSolved()) {

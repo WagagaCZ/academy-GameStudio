@@ -55,16 +55,16 @@ public class MastermindConsoleUI {
         System.out.println("  " + getVerticalBorder());
         for (int r = 0; r < field.getHeight(); r++) {
             if (field.getTriesLeft() == r) {
-                System.out.println("> ");
+                System.out.print("> ");
             } else {
-                System.out.println("  ");
+                System.out.print("  ");
             }
 
             for (int c = 0; c < 5; c++) {
                 if (field.getPeg(r, c) == null) {
-                    System.out.println("        ");
+                    System.out.print("        ");
                 } else {
-                    System.out.println(field.getPeg(r, c) + " ");
+                    System.out.print(field.getPeg(r, c) + " ");
                 }
             }
 
@@ -77,7 +77,7 @@ public class MastermindConsoleUI {
 
     private void printClue(int row, Peg firstPeg) {
         if (row != 0 && firstPeg != null) {
-            System.out.println("| ");
+            System.out.print("| ");
             for (int pegIndex = 0; pegIndex < 5; pegIndex++) {
                 PegColor actualPegVal = field.getPeg(row, pegIndex).getColor();
                 PegColor firstRowPegVal = field.getPeg(0, pegIndex).getColor();
