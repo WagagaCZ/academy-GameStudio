@@ -76,6 +76,18 @@ public class MastermindField {
         return listOfColorsOfHiddenPegs.contains(peg.getColor());
     }
 
+    public void decreaseTriesLeft() {
+        this.triesLeft--;
+    }
+
+    public int getHeight() {
+        return numberOfTries + 1;
+    }
+
+    public Peg getPeg(int row, int column) {
+        return pegSlots[row][column];
+    }
+
     public int getNumberOfColors() {
         return numberOfColors;
     }
