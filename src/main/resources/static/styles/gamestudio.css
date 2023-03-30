@@ -8,10 +8,6 @@ body {
     padding: 1em;
 }
 
-.content {
-  margin-top: 80px;
-}
-
 h1 {
     font-size: 1.6em
 }
@@ -23,6 +19,20 @@ h2 {
 h3 {
     font-size: 1.2em
 }
+
+a:link, a:visited {
+    color: #045491;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+a:link:hover, a:visited:hover {
+    color: #045491;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+
 
 /*Properties of the form elements*/
 

@@ -3,17 +3,23 @@ package sk.tuke.gamestudio.server.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.WebApplicationContext;
 import sk.tuke.gamestudio.client.game.tiktaktoe.StateTile;
 import sk.tuke.gamestudio.client.game.tiktaktoe.TiktaktoeWebField;
+import sk.tuke.gamestudio.common.entity.Rating;
 import sk.tuke.gamestudio.common.entity.Score;
+import sk.tuke.gamestudio.common.service.RatingException;
+import sk.tuke.gamestudio.common.service.RatingService;
+import sk.tuke.gamestudio.common.service.ScoreException;
+import sk.tuke.gamestudio.common.service.ScoreService;
+import sk.tuke.gamestudio.server.EntityDTO.RatingDTO;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
+
 import static sk.tuke.gamestudio.common.Constants.*;
 
 @Controller
@@ -22,12 +28,19 @@ import static sk.tuke.gamestudio.common.Constants.*;
 public class ToeController {
     @Autowired
     ScoreController scoreController;
+    @Autowired
+    ScoreService scoreService;
+
+    @Autowired
+    RatingService ratingService;
 
     TiktaktoeWebField field = new TiktaktoeWebField();
     public static final String userName = System.getProperty("user.name");
+
     public String getGameResult() {
         return gameResult;
     }
+
     public void setGameResult(String gameResult) {
         this.gameResult = gameResult;
     }
@@ -46,7 +59,11 @@ public class ToeController {
     }
 
     @GetMapping("toe")
-    public String index() {
+    public String index(Model model) throws ScoreException, RatingException {
+        model.addAttribute("score", new Score());
+        List<Score> list = scoreService.getTopScores(TIC_TAC_TOE);
+        model.addAttribute("list", list);
+        System.out.println(list);
         return "toe.html";
     }
 
@@ -56,11 +73,41 @@ public class ToeController {
         return "toe";
     }
 
+    @GetMapping("/score")
+    public String greeting(Model model) throws ScoreException, RatingException {
+
+
+        model.addAttribute("rating", new Rating());
+        double ratingToe = ratingService.getAverageRating(TIC_TAC_TOE);
+        model.addAttribute("ratingToe", ratingToe);
+        return "toe";
+    }
+
+    @PostMapping(value = "/addrating")
+    public String addComment(@ModelAttribute("rating") RatingDTO rating) throws RatingException {
+
+        if (rating != null) {
+            Rating ratingForSave = new Rating();
+            if (rating.getGame().equals("MINESWEEPER")) {
+                ratingForSave.setGame(MINESWEEPER);
+            } else if (rating.getGame().equals("PUZZLE_FIFTEEN")) {
+                ratingForSave.setGame(PUZZLE_FIFTEEN);
+            } else if (rating.getGame().equals("TIC_TAC_TOE")) {
+                ratingForSave.setGame(TIC_TAC_TOE);
+            }
+            ratingForSave.setRating(rating.getRating());
+            ratingForSave.setUsername(userName);
+            ratingForSave.setRatedAt(Timestamp.valueOf(LocalDateTime.now()));
+            ratingService.setRating(ratingForSave);
+        }
+        return "toe";
+    }
+
     public String getToeField() {
         List<StateTile> tileList = field.getData();
         int index = 0;
         StringBuilder sb = new StringBuilder();
-        sb.append("<table class='minefield'> \n");
+        sb.append("<table class='toe'> \n");
         for (int row = 0; row < 3; row++) {
             sb.append("<tr>\n");
             for (int column = 0; column < 3; column++) {
