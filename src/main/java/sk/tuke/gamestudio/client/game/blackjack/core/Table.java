@@ -15,21 +15,23 @@ public class Table {
     }
 
     public void setup() {
-        System.out.println("Cards in deck: " + deck.getLeftInDeck());
-        if (deck.getLeftInDeck() < 10) {
-            shuffle();
+        if(turn == Turn.END) {
+            System.out.println("Cards in deck: " + deck.getLeftInDeck());
+            if (deck.getLeftInDeck() < 10) {
+                shuffle();
+            }
+            playerHand = new Card[5];
+            dealerHand = new Card[5];
+            turn = Turn.PLAYER;
+            for (int i = 0; i < 2; i++) {
+                playerHand[i] = deck.drawCard();
+                dealerHand[i] = deck.drawCard();
+            }
+            dealerCard = dealerHand[1];
+            dealerHand[1] = new Card(-1, -1);
+            numberOfDealerCards = 2;
+            numberOfPlayerCards = 2;
         }
-        playerHand = new Card[5];
-        dealerHand = new Card[5];
-        turn = Turn.PLAYER;
-        for (int i = 0; i < 2; i++) {
-            playerHand[i] = deck.drawCard();
-            dealerHand[i] = deck.drawCard();
-        }
-        dealerCard = dealerHand[1];
-        dealerHand[1] = new Card(-1, -1);
-        numberOfDealerCards = 2;
-        numberOfPlayerCards = 2;
     }
 
     public void drawNewCard() {
@@ -57,7 +59,6 @@ public class Table {
     }
 
     public void switchTurns() {
-        System.out.println("Switching");
         if (turn == Turn.PLAYER) {
             dealerHand[1] = dealerCard;
             turn = Turn.DEALER;
