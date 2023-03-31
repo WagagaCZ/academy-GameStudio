@@ -7,4 +7,5 @@ public class Constants {
     public static final String WIN = "YOU ARE WIN!";
     public static final String GAME_OVER = "GAME OVER!";
     public final static String REMIZA = "Nobody win!";
+
 }
