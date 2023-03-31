@@ -1,0 +1,13 @@
+.hero {
+  display: grid;
+  place-items: center;
+
+  margin: auto;
+  margin-top: 125px;
+  padding: 20px;
+
+  max-width: 800px;
+
+  border: 1px solid gray;
+  border-radius: 4px;
+}

@@ -26,7 +26,7 @@
     <div th:if="not ${@userController.logged}" class="header-user-item">
       <p> Logged out </p>
       <div class="header-user-link">
-        <a href="/">log in <i class="fa-solid fa-arrow-right-to-bracket"></i></a>
+        <a href="/loginPage">log in <i class="fa-solid fa-arrow-right-to-bracket"></i></a>
       </div>
     </div>
   </div>
@@ -34,12 +34,6 @@
 </header>
 
 
-
-    <div th:if="not ${@userController.logged}">
-        Logged out. Please, <a href="/">log in</a>.
-    </div>
-
-</header>
 
 
 <footer th:fragment="gsfooter" class="bg-light text-center text-light foooooooter">

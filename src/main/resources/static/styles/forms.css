@@ -1,0 +1,86 @@
+.login-form-wrapper {
+  margin: auto;
+  margin-top: 200px;
+
+  max-width: 500px;
+}
+
+.login-form {
+  display: grid;
+  gap: 30px;
+}
+
+.login-form-title {
+  margin: 50px auto;
+  padding: 15px;
+
+  font-size: 2rem;
+  text-align: center;
+
+  border: 1px solid gray;
+  border-radius: 10px;
+}
+
+.login-form-icon {
+  color:  rgb(138, 138, 138);
+  position: absolute;
+  top: 37px;
+  left: 10px;
+}
+
+
+.login-form-item {
+  position: relative;
+  display: grid;
+  gap: 5px;
+}
+
+.login-form input {
+  padding: 8px 40px;
+  border-radius: 4px;
+  outline: none;
+  border: 1px solid gray;
+}
+
+.login-form input:focus {
+  outline: 2px solid rgb(210, 58, 157);
+  border: 1px solid rgb(182, 33, 130);
+}
+
+.login-form button {
+  position: relative;
+  padding: 8px 40px;
+  border-radius: 4px;
+  outline: none;
+  border: 1px solid gray;
+  background-color: rgb(45, 45, 45);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+
+  transition: 80ms;
+}
+
+.login-form button:hover {
+  background-color: rgb(215, 47, 102);
+  transform: scale(0.98);
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.4);
+}
+
+.hidden {
+  display: none;
+}
+
+.login-form-pass {
+  position: absolute;
+  top: 38px;
+  right: 10px;
+  color: rgb(138, 138, 138);
+  cursor: pointer;
+  transition: 80ms;
+}
+
+.login-form-pass:hover {
+  transform: scale(1.04);
+  color: rgb(215, 47, 102);
+}
