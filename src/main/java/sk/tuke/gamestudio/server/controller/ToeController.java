@@ -6,20 +6,22 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.WebApplicationContext;
+import sk.tuke.gamestudio.client.game.connect.core.GameState;
 import sk.tuke.gamestudio.client.game.tiktaktoe.StateTile;
 import sk.tuke.gamestudio.client.game.tiktaktoe.TiktaktoeWebField;
+import sk.tuke.gamestudio.common.GameStates;
+import sk.tuke.gamestudio.common.entity.Comment;
 import sk.tuke.gamestudio.common.entity.Rating;
 import sk.tuke.gamestudio.common.entity.Score;
-import sk.tuke.gamestudio.common.service.RatingException;
-import sk.tuke.gamestudio.common.service.RatingService;
-import sk.tuke.gamestudio.common.service.ScoreException;
-import sk.tuke.gamestudio.common.service.ScoreService;
-import sk.tuke.gamestudio.server.EntityDTO.RatingDTO;
+import sk.tuke.gamestudio.common.service.*;
+import sk.tuke.gamestudio.server.service.RatingServiceJPA;
+import sk.tuke.gamestudio.server.service.ScoreServiceJPA;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static sk.tuke.gamestudio.client.game.connect.core.GameState.PLAYING;
 import static sk.tuke.gamestudio.common.Constants.*;
 
 @Controller
@@ -30,12 +32,20 @@ public class ToeController {
     ScoreController scoreController;
     @Autowired
     ScoreService scoreService;
-
     @Autowired
     RatingService ratingService;
-
+    @Autowired
+    RatingServiceJPA ratingServiceJPA;
+    @Autowired
+    ScoreServiceJPA scoreServiceJPA;
+    @Autowired
+    CommentService commentService;
     TiktaktoeWebField field = new TiktaktoeWebField();
     public static final String userName = System.getProperty("user.name");
+    private String gameResult = WIN;
+    public boolean gameOver = false;
+    public static long startMillis;
+    int countOfPlayerMove = 0;
 
     public String getGameResult() {
         return gameResult;
@@ -45,11 +55,6 @@ public class ToeController {
         this.gameResult = gameResult;
     }
 
-    private String gameResult = WIN;
-    public boolean gameOver = false;
-    public static long startMillis;
-    int countOfPlayerMove = 0;
-
     @RequestMapping
     public String processInput(@RequestParam(required = false) Integer index) throws InterruptedException {
         if (index != null) {
@@ -58,12 +63,8 @@ public class ToeController {
         return "toe.html";
     }
 
-    @GetMapping("toe")
+    @GetMapping("/toe")
     public String index(Model model) throws ScoreException, RatingException {
-        model.addAttribute("score", new Score());
-        List<Score> list = scoreService.getTopScores(TIC_TAC_TOE);
-        model.addAttribute("list", list);
-        System.out.println(list);
         return "toe.html";
     }
 
@@ -73,35 +74,15 @@ public class ToeController {
         return "toe";
     }
 
-    @GetMapping("/score")
-    public String greeting(Model model) throws ScoreException, RatingException {
-
-
-        model.addAttribute("rating", new Rating());
-        double ratingToe = ratingService.getAverageRating(TIC_TAC_TOE);
-        model.addAttribute("ratingToe", ratingToe);
-        return "toe";
-    }
-
-    @PostMapping(value = "/addrating")
-    public String addComment(@ModelAttribute("rating") RatingDTO rating) throws RatingException {
-
-        if (rating != null) {
-            Rating ratingForSave = new Rating();
-            if (rating.getGame().equals("MINESWEEPER")) {
-                ratingForSave.setGame(MINESWEEPER);
-            } else if (rating.getGame().equals("PUZZLE_FIFTEEN")) {
-                ratingForSave.setGame(PUZZLE_FIFTEEN);
-            } else if (rating.getGame().equals("TIC_TAC_TOE")) {
-                ratingForSave.setGame(TIC_TAC_TOE);
-            }
-            ratingForSave.setRating(rating.getRating());
-            ratingForSave.setUsername(userName);
-            ratingForSave.setRatedAt(Timestamp.valueOf(LocalDateTime.now()));
-            ratingService.setRating(ratingForSave);
+    @PostMapping("/rating")
+    public String addRating(@RequestParam(name = "ratingValue", required = false) Integer ratingValue,
+                            Model model) {
+        if (ratingValue != null) {
+            ratingService.setRating(new Rating(TIC_TAC_TOE, userName, ratingValue));
         }
         return "toe";
     }
+
 
     public String getToeField() {
         List<StateTile> tileList = field.getData();
@@ -189,6 +170,17 @@ public class ToeController {
         }
     }
 
+    public List<Score> getTopScores() {
+        return scoreService.getTopScores(TIC_TAC_TOE).subList(0, 5);
+    }
+
+    public int getAvverageRating() {
+        return ratingService.getAverageRating(TIC_TAC_TOE);
+    }
+
+    public List<Comment> getToeComments() {
+        return commentService.getComments(TIC_TAC_TOE);
+    }
 }
 
 

@@ -18,7 +18,6 @@ import static sk.tuke.gamestudio.common.Constants.*;
 public class TicTacConsoleUI {
     @Autowired
     private ScoreService scoreService;
-
     @Autowired
     private RatingService ratingService;
     final char SIGN_X = 'x';
@@ -31,10 +30,6 @@ public class TicTacConsoleUI {
     int countO = 0;
     int free = 0;
     public static int TT_SIZE = 3;
-
-    //public static void main(String[] args) {
-    //  new TicTacConsoleUI().play();
-    //  }
 
     TicTacConsoleUI() {
         random = new Random();
@@ -53,12 +48,10 @@ public class TicTacConsoleUI {
             if (checkWin(SIGN_X)) {
                 System.out.println(WIN);
                 ratingService.setRating(new Rating(TIC_TAC_TOE, "newUser", 3));
-
                 System.out.println("Average rating:");
                 System.out.println(ratingService.getAverageRating(TIC_TAC_TOE));
                 System.out.println("Your rating:");
                 System.out.println(ratingService.getRating(TIC_TAC_TOE, "player"));
-
                 printScores();
                 break;
             }
@@ -69,7 +62,6 @@ public class TicTacConsoleUI {
                 System.out.println(ratingService.getAverageRating(TIC_TAC_TOE));
                 System.out.println("Your rating:");
                 System.out.println(ratingService.getRating(TIC_TAC_TOE, "player"));
-
                 printScores();
                 break;
             }
@@ -307,7 +299,6 @@ public class TicTacConsoleUI {
             }
 
         }
-
         return false;
     }
 
