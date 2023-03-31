@@ -1,0 +1,21 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "GameStudioServer",
+      "request": "launch",
+      "mainClass": "sk.tuke.gamestudio.server.GameStudioServer",
+      "projectName": "GameStudio"
+    },
+    {
+      "type": "java",
+      "name": "Spring Boot-GameStudioClient<GameStudio>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "sk.tuke.gamestudio.client.GameStudioClient",
+      "projectName": "GameStudio",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    }
+  ]
+}
