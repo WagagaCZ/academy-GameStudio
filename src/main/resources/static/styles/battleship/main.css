@@ -552,6 +552,15 @@ table.minefield td.ship span {
     gap: 400px;
 }
 
+h1:hover {
+  color: blue;
+}
+
+a {
+    text-decoration: none;
+}
+
+
 
 
 
