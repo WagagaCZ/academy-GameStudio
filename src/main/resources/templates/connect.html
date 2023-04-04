@@ -31,8 +31,26 @@
       </tr>
     </table>
   </section>
-
   <section>
+    <span th:if="${@userController.isLogged()}">
+      <form action="/connect/comment" method="post">
+        Leave a comment: <input type="text" name="comment"/><br/>
+        <input type="submit"/>
+      </form>
+      <form action="/connect/rating" method="post">
+        Leave a rating: <input type="number" name="rating" min="1" max="5" required /><br/>
+        <input type="submit"/>
+      </form>
+
+
+      <!--    <p>Your rating:</p>-->
+      <!--    <h2><span th:utext="${@userController.getUserRating()}"/></h2>-->
+</span>
+
+    <p>Users rated:</p>
+    <h2><span th:utext="${@connectController.getAverageRating()}"/></h2> <br>
+
+
     <h3>Best Scores</h3>
 
     <table class="scores">
@@ -53,9 +71,26 @@
       </tr>
       </tbody>
     </table>
+
+    <h3>Comments</h3>
+
+    <table class="scores">
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>Comment</th>
+        <th>Date and time</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="comment: ${@connectController.getComments()}">
+        <td th:text="${comment.player}"></td>
+        <td th:text="${comment.getComment()}"></td>
+        <td th:text="${comment.getCommentedOn()}"></td>
+      </tr>
+      </tbody>
+    </table>
   </section>
-
 </main>
-
 </body>
 </html>
