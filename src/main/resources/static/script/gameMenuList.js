@@ -49,6 +49,12 @@ const games = [
     creator: "Riso",
     icon: "fa-solid fa-ship",
   },
+  {
+    name: "Mastermind",
+    url: "/mastermind",
+    creator: "Mila",
+    icon: "fa-solid fa-brain",
+  },
 ];
 
 

@@ -1,0 +1,106 @@
+* {
+    margin: 0px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+html {
+    background-color: gray;
+}
+
+#game {
+    text-align: center;
+    color: #18cdca7c;
+    border: 5px solid #18cdca7b;
+    border-radius: 12px;
+    background-color: #2a363b ;
+    max-width: 500px;
+    margin: 10px auto;
+    margin-top: 25px;
+}
+
+#menu-btn-container {
+    text-align: center;
+}
+
+.menu-btn {
+    text-align: center;
+    background-color: #18cdca7c;
+    cursor: pointer;
+    color: gray;
+    border-radius: 12px;
+    height: 35px;
+    width: 100px;
+    margin: 5px auto;
+    margin-inline: 20px;
+    transition: 0.5s;
+}
+
+header,
+footer {
+    background-color: #2a363b;
+    padding: 10px;
+}
+
+main {
+    margin: 10px auto;
+}
+
+.try {
+    display: flex;
+    justify-content: space-around;
+}
+
+.left,
+.right {
+    display: flex;
+}
+
+.left > div {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background-color: gray;
+    margin: 5px;
+}
+
+.right > div {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background-color: gray;
+    margin: 5px;
+}
+
+.select-wrapper {
+    border-radius: 50%;
+    display: inline-block;
+    overflow: hidden;
+    margin-inline: 5px;
+}
+
+.select-wrapper select {
+    width: 35px;
+    height: 35px;
+    border: 0px;
+    outline: none;
+}
+
+input[type=button] {
+    background-color: white;
+    cursor: pointer;
+    color: black;
+    border-radius: 12px;
+    height: 35px;
+    width: 100px;
+    margin: 5px auto;
+    transition: 0.5s;
+}
+
+select:hover,
+inpt:hover {
+    opacity: 0.8;
+}
+
+input[type=button]:active {
+    background-color: yellow;
+}
