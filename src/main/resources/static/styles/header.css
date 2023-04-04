@@ -44,7 +44,6 @@
 }
 
 .header-title:hover {
-  transform: scale(1.05);
   cursor: pointer;
 }
 
@@ -76,6 +75,12 @@
 
 .header-user-link:hover {
   transform: scale(1.05);
+}
+
+.foooooooter {
+  position: absolute;
+  left: 0;
+  width: 100%;
 }
 
 @media screen and (max-width: 724px) {

@@ -3,6 +3,7 @@ package sk.tuke.gamestudio.server.controller;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.WebApplicationContext;
@@ -36,6 +37,12 @@ public class UserController {
         loggedUser = null;
         //prepareModel(model);
         return "redirect:/";
+    }
+
+    @GetMapping("loginPage") 
+    public String loginPage() {
+ 
+        return "login";
     }
 
     private void prepareModel(Model model){

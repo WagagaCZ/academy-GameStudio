@@ -7,6 +7,5 @@ import java.util.List;
 
 public interface CommentRepository extends JpaRepository<Comment, Long> {
     List<Comment> findAllByGame(String game);
-
     List<Comment> findFirst10ByGameOrderByIdDesc(String game);
 }

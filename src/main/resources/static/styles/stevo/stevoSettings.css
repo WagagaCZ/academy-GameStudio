@@ -8,6 +8,10 @@ body {
   padding: 0 20%;
 }
 
+.main-wrapper p {
+  margin: 0;
+}
+
 .settings {
     margin: auto;
     max-width: 500px;
@@ -16,6 +20,10 @@ body {
     background-color: rgb(28, 28, 30);
     border-radius: 2px;
     overflow: hidden;
+}
+
+.settings p, .settings h2, .settings h3, .settings h4, .settings h5, .settings h6 {
+    font-size: 1rem;
 }
 
 .settings-head {

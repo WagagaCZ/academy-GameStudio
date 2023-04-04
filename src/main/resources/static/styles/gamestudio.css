@@ -3,7 +3,6 @@ body {
     font-size: 1rem;
     font-family: Arial, "Arial CE", "Helvetica CE", sans-serif;
     color: #000000;
-    max-width: 30rem;
     margin: auto;
     padding: 1em;
 }
@@ -20,20 +19,9 @@ h3 {
     font-size: 1.2em
 }
 
-a:link, a:visited {
-    color: #045491;
-    font-weight: bold;
-    text-decoration: none;
-}
-
-a:link:hover, a:visited:hover {
-    color: #045491;
-    font-weight: bold;
-    text-decoration: underline;
-}
-
 .content {
   margin-top: 85px;
+  min-height: 100vh;
 }
 
 /*Properties of the form elements*/
@@ -206,9 +194,6 @@ table.minefield td.open8 {
 /*adjustment for smaller screens/viewports*/
 @media (max-width: 600px)/*,
 (min-resolution: 1.8dppx) */ {
-    body {
-        max-width: 95vw;
-    }
 
     table.minefield td {
         font-size: calc(1em + 4vw);

@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.com"
+  layout:decorate="~{layout/layoutGameStudio.html}" lang="en">
+
+<head>
+  <link rel="stylesheet" th:href="@{/styles/forms.css}">
+
+  <script defer th:src="@{/script/showPassword.js}"></script>
+
+  <title>GameStudio Login</title>
+</head>
+
+<body>
+  <main layout:fragment="content">
+
+    <div class="login-form-wrapper">
+
+      <h2 class="login-form-title">Welcome!, Please Log In</h2>
+
+      <form action="/login" method="post" class="login-form">
+        <div class="login-form-item">
+          <label for="login"> Login: </label> 
+          <input type="text" id="login" name="login" required /> 
+          <div class="login-form-icon"><i class="fa-regular fa-user"></i> | </div>
+        </div>
+
+        <div class="login-form-item">
+          <label for="password"> Password: </label> 
+          <input type="password" id="password" name="password" required />
+          <div class="login-form-icon"><i class="fa-solid fa-lock"></i> | </div>
+          <div class="login-form-pass login-form-pass-hide"><i class="fa-regular fa-eye-slash"></i></div>
+          <div class="login-form-pass login-form-pass-show hidden"><i class="fa-regular fa-eye"></i></div>
+        </div>
+
+        <button type="submit">Log in</button>
+      </form>
+
+    </div>
+
+  </main>
+</body>

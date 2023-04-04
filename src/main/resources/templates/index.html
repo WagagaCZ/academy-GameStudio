@@ -1,40 +1,35 @@
 <!DOCTYPE HTML>
-<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:th="http://www.thymeleaf.com"
-      layout:decorate="~{layout/layoutGameStudio.html}"
-      lang="en">
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.com"
+  layout:decorate="~{layout/layoutGameStudio.html}" lang="en">
+
 <head>
-    <title>GameStudio - every game you can imagine!</title>
+  <title>GameStudio - every game you can imagine!</title>
+
+  <link rel="stylesheet" th:href="@{/styles/gamemenu.css}">
+  <link rel="stylesheet" th:href="@{/styles/hero.css}">
+
+  <script defer th:src="@{/script/gameMenuList.js}"></script>
 </head>
+
 <body>
+  <main layout:fragment="content">
 
-<main layout:fragment="content">
+    <div th:replace="~{fragments/_hero}"></div>
 
-    <h2>Welcome!</h2>
+    <!-- games -->
 
+    <!--
+      add game in:
+      static\script\gameMenuList.js
 
-    <form action="/login" method="post">
-        <label for="login"> Login: </label> <input type="text" id="login" name="login" required/> <br/>
-        <label for="password"> Password: </label> <input type="password" id="password" name="password" required/> <br/>
-        <button type="submit">Log in</button>
-    </form>
+      icons:
+      fontawesome.com/search?o=r&m=free
+     -->
 
-
-    <h2>Games</h2>
-    Please select a game:
-    <ul>
-        <li><a href="/mines">Minesweeper</a></li>
-        <li><a href="/mines/asynch">Minesweeper (asynchronous mode with JavaScript)</a></li>
-        <li><a href="/toe">TIC-TAC-TOE</a></li>
-        <li><a href="/minesweeperJS">MinesweeperJS -stevo</a></li>
-        <li><a href="/game1024">Game1024JS -stevo</a></li>
-        <li><a href="/connect">ConnectFour</a></li>
-        <li><a href="/blackjack">BlackJack</a></li>
-        <li><a href="/ship">Battleship</a></li>
-    </ul>
+    <div class="games-menu"></div>
 
 
-</main>
-
+  </main>
 </body>
+
 </html>
