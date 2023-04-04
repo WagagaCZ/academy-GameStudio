@@ -31,7 +31,7 @@ class ScoreServiceJPATest {
     private EntityManager entityManager;
 
     @Autowired
-    private ScoreService scoreService;
+    private ScoreServiceJPA scoreService;
 
     @Test
     void testAddScore() throws ScoreException {

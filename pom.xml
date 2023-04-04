@@ -123,62 +123,62 @@
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>2.7.2</version>
-                <executions>
-                    <execution>
-                        <id>SERVER</id>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                        <configuration>
-                            <mainClass>${serverMain}</mainClass>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>CONSOLE-CLIENT</id>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                        <configuration>
-                            <mainClass>${clientMain}</mainClass>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>com.maciejwalkowiak.paseq</groupId>
-                <artifactId>paseq-maven-plugin</artifactId>
-                <version>0.1.1</version>
-                <!-- configuration for building the package -->
-                <executions>
-                    <execution>
-                        <id>WEB-CLIENT</id>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                        <configuration>
-                            <tasks>
-                                <task>
-                                    <exec>
-                                        <directory>src/main/web-frontend</directory>
-                                        <command>npm.cmd install</command>
-                                    </exec>
-                                </task>
-                                <task>
-                                    <exec>
-                                        <directory>src/main/web-frontend</directory>
-                                        <command>npm.cmd run build</command>
-                                    </exec>
-                                </task>
-                            </tasks>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>org.springframework.boot</groupId>-->
+<!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
+<!--                <version>2.7.2</version>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>SERVER</id>-->
+<!--                        <goals>-->
+<!--                            <goal>run</goal>-->
+<!--                        </goals>-->
+<!--                        <configuration>-->
+<!--                            <mainClass>${serverMain}</mainClass>-->
+<!--                        </configuration>-->
+<!--                    </execution>-->
+<!--                    <execution>-->
+<!--                        <id>CONSOLE-CLIENT</id>-->
+<!--                        <goals>-->
+<!--                            <goal>run</goal>-->
+<!--                        </goals>-->
+<!--                        <configuration>-->
+<!--                            <mainClass>${clientMain}</mainClass>-->
+<!--                        </configuration>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
+<!--            <plugin>-->
+<!--                <groupId>com.maciejwalkowiak.paseq</groupId>-->
+<!--                <artifactId>paseq-maven-plugin</artifactId>-->
+<!--                <version>0.1.1</version>-->
+<!--                &lt;!&ndash; configuration for building the package &ndash;&gt;-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>WEB-CLIENT</id>-->
+<!--                        <phase>validate</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>exec</goal>-->
+<!--                        </goals>-->
+<!--                        <configuration>-->
+<!--                            <tasks>-->
+<!--                                <task>-->
+<!--                                    <exec>-->
+<!--                                        <directory>src/main/web-frontend</directory>-->
+<!--                                        <command>npm.cmd install</command>-->
+<!--                                    </exec>-->
+<!--                                </task>-->
+<!--                                <task>-->
+<!--                                    <exec>-->
+<!--                                        <directory>src/main/web-frontend</directory>-->
+<!--                                        <command>npm.cmd run build</command>-->
+<!--                                    </exec>-->
+<!--                                </task>-->
+<!--                            </tasks>-->
+<!--                        </configuration>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
         </plugins>
     </build>
 </project>
