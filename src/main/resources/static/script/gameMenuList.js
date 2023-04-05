@@ -49,6 +49,14 @@ const games = [
     creator: "Riso",
     icon: "fa-solid fa-ship",
   },
+  {
+      name: "Pexeso",
+      url: "/pexeso",
+      creator: "Maros",
+      icon: "fa-solid fa-magnifying-glass",
+    },
+
+
 ];
 
 
