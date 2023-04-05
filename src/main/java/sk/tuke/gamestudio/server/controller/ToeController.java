@@ -6,10 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.WebApplicationContext;
-import sk.tuke.gamestudio.client.game.connect.core.GameState;
 import sk.tuke.gamestudio.client.game.tiktaktoe.StateTile;
 import sk.tuke.gamestudio.client.game.tiktaktoe.TiktaktoeWebField;
-import sk.tuke.gamestudio.common.GameStates;
 import sk.tuke.gamestudio.common.entity.Comment;
 import sk.tuke.gamestudio.common.entity.Rating;
 import sk.tuke.gamestudio.common.entity.Score;
@@ -21,7 +19,6 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static sk.tuke.gamestudio.client.game.connect.core.GameState.PLAYING;
 import static sk.tuke.gamestudio.common.Constants.*;
 
 @Controller
@@ -82,7 +79,14 @@ public class ToeController {
         }
         return "toe";
     }
-
+    @PostMapping(value = "/comments")
+    public String addComment(@RequestParam(name = "commentText", required = false) String commentText,
+                             Model model) throws CommentException {
+        if (commentText != null) {
+            commentService.addComment(new Comment(userName, TIC_TAC_TOE, commentText, new Timestamp(System.currentTimeMillis())));
+        }
+        return "toe";
+    }
 
     public String getToeField() {
         List<StateTile> tileList = field.getData();
