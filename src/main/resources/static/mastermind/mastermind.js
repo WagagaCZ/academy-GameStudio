@@ -11,6 +11,8 @@ let colors = ['blue', 'yellow', 'orange', 'green', 'violet', 'purple'];
 let random_code = [];
 let submitTry = 1;
 
+let score = 0;
+
 document.onload = init();
 
 /**
@@ -22,6 +24,7 @@ function init() {
     submitTry = 1;
     main_display.innerHTML = '';
     div_select_colors.innerHTML = '';
+    score = codeLength * 10;
 
     setTries();
     setColorSelection();
@@ -221,6 +224,8 @@ function checkWin(correction_array) {
     } else if (submitTry > tries) {
         alert('GAME OVER');
         init();
+    } else {
+        score -= tries;
     }
 }
 
@@ -231,6 +236,7 @@ function checkWin(correction_array) {
 function setAndStartNewGame() {
     setCodeLength();
     setNumberOfTries();
+    score = codeLength * 10;
 
     init();
 }

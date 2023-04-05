@@ -35,13 +35,13 @@ body {
     transition: 0.5s;
 }
 
-#myFooter,
-#myHeader {
+#gameFooterMastermind,
+#gameTitleMastermind {
     background-color: #2a363b;
     padding: 10px;
 }
 
-#myHeader > h1 {
+#gameTitleMastermind > h1 {
     font-size: 32px;
     font-weight: bold;
 }
