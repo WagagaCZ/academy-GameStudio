@@ -49,7 +49,6 @@ const games = [
     creator: "Riso",
     icon: "fa-solid fa-ship",
   },
-  {
     name: "PUZZLE FIFTEEN",
     url: "/puzzle",
     creator: "Anicka",
