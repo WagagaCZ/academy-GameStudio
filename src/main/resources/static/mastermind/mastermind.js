@@ -1,8 +1,8 @@
+// noinspection JSValidateTypes,JSVoidFunctionReturnValueUsed
 
 const main_display = document.querySelector('#main');
 const div_select_colors = document.getElementById('div-select-color');
 const submit_button = document.getElementById('submit-btn');
-const restart_button = document.getElementById('restart-btn')
 
 let codeLength = 4;
 let tries = 8;
@@ -13,6 +13,10 @@ let submitTry = 1;
 
 document.onload = init();
 
+/**
+ * The initial function that loads all the necessary stuff to the HTML file
+ * and sets the dynamic parts.
+ */
 function init() {
     random_code = [];
     submitTry = 1;
@@ -20,10 +24,13 @@ function init() {
     div_select_colors.innerHTML = '';
 
     setTries();
-    setCodeAndColors();
+    setColorSelection();
     createRandomCode();
 }
 
+/**
+ * Sets the columns for tries and corrections for the HTML file.
+ */
 function setTries() {
     for (let i = 1; i <= tries; i++) {
         let div_try = document.createElement('div');
@@ -49,7 +56,11 @@ function setTries() {
     }
 }
 
-function setCodeAndColors() {
+
+/**
+ * Sets the code selection for the HTML file.
+ */
+function setColorSelection() {
     for (let i = 1; i <= codeLength; i++) {
         let div_select_wrapper = document.createElement('div');
         div_select_wrapper.setAttribute('class', 'select-wrapper');
@@ -75,6 +86,9 @@ function setCodeAndColors() {
 }
 
 
+/**
+ * Sets the length of the random code, the hidden colors.
+ */
 function setCodeLength() {
     let newCodeLength = prompt("Please, enter then number of hidden pegs (4-7)", "4");
     while (!"!/^[1-9]+$/.test(newCodeLength)") {
@@ -95,6 +109,10 @@ function setCodeLength() {
     codeLength = newCodeLength;
 }
 
+/**
+ * Sets the number of tries.
+ * The range of tries is limited (5-20).
+ */
 function setNumberOfTries() {
     let numberOfTries = prompt("Please, enter then number of tries (min 5, max 20)", "4");
     while (!"!/^[4-9]+$/.test(newCodeLength)") {
@@ -115,6 +133,9 @@ function setNumberOfTries() {
     tries = numberOfTries;
 }
 
+/**
+ * Prepares the random code, the hidden colors.
+ */
 function createRandomCode() {
     for (let i = 1; i <= codeLength; i++) {
         let random_color = colors[Math.floor(Math.random() * colors.length)]
@@ -124,12 +145,11 @@ function createRandomCode() {
     console.log(random_code);
 }
 
-/*
-Should load all the input colors from  div-select-color,
-resp. all "selects" in it.
-*
-*/
-submit_button.addEventListener('click', (e) => {
+/**
+ * Adds an even listener to the submit button.
+ * Submits a guess and immediately checks colors and their positions.
+ */
+submit_button.addEventListener('click', () => {
     let input_colors = document.querySelectorAll('.select-wrapper>select');
     let input_colors_arr = [];
     for (let v of input_colors) {
@@ -138,20 +158,32 @@ submit_button.addEventListener('click', (e) => {
 
     show('left', input_colors_arr);
 
-    correction_array = createCorrectionArray(input_colors_arr);
+    let correction_array = createCorrectionArray(input_colors_arr);
     show('right', correction_array);
 
     submitTry++;
     checkWin(correction_array);
 });
 
+/**
+ * Shows the colors submitted by submit_button.
+ * @param type can be 'left' (color input) or 'right' (correction).
+ * @param colors is an array of colors to show.
+ */
 function show(type, colors) {
-    let tryView = document.querySelectorAll('#try-' + submitTry + '>.' + type + '>div')
+    let tryView = document
+        .querySelectorAll('#try-' + submitTry + '>.' + type + '>div')
     tryView.forEach((v, i) => {
         v.setAttribute('style', 'background-color:' + colors[i]);
     });
 }
 
+
+/**
+ * Created the correction array that displays which colors are correctly placed.
+ * @param input_colors_arr is the guess, the array of colors submitted.
+ * @returns {*[]} is the array of displaying which colors are correctly placed.
+ */
 function createCorrectionArray(input_colors_arr) {
     let random_code_copy = [...random_code];
     let correction_array = [];
@@ -161,7 +193,7 @@ function createCorrectionArray(input_colors_arr) {
     and if color is at correct position -> red
     */
     for (let i in random_code_copy) {
-        if (random_code_copy[i] == input_colors_arr[i]) {
+        if (random_code_copy[i] === input_colors_arr[i]) {
             correction_array[i] = 'red';
         } else if (random_code_copy.includes(input_colors_arr[i])) {
             correction_array[i] = 'white';
@@ -171,18 +203,19 @@ function createCorrectionArray(input_colors_arr) {
     return correction_array;
 }
 
-/*
-Check correction_array if all colors are correct
-*/
+/**
+ * Check correction_array if all colors are correct.
+ * @param correction_array is the array to be checked.
+ */
 function checkWin(correction_array) {
     let countCorrect = 0;
     for (let v of correction_array) {
-        if (v == 'red') {
+        if (v === 'red') {
             countCorrect++;
         }
     }
 
-    if (countCorrect == codeLength) {
+    if (countCorrect === codeLength) {
         alert('VICTORY');
         init();
     } else if (submitTry > tries) {
@@ -191,6 +224,10 @@ function checkWin(correction_array) {
     }
 }
 
+/**
+ * Lets the user choose the length of hidden code
+ * and the number of tries.
+ */
 function setAndStartNewGame() {
     setCodeLength();
     setNumberOfTries();
