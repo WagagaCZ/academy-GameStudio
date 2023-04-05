@@ -11,7 +11,7 @@ let colors = ['blue', 'yellow', 'orange', 'green', 'violet', 'purple'];
 let random_code = [];
 let submitTry = 1;
 
-init();
+document.onload = init();
 
 function init() {
     random_code = [];

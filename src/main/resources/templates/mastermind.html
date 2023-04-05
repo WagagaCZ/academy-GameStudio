@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html
+        layout:decorate="~{layout/layoutGameStudio.html}"
+        xmlns:th="http://www.thymeleaf.com"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mastermind</title>
-  <link rel="stylesheet" href="/static/mastermind/mastermind.css">
+  <link rel="stylesheet" th:href="@{mastermind/mastermind.css}">
 </head>
 <body>
+<th:block layout:fragment="content">
 <div id="game">
   <header>
     <h1>Mastermind</h1>
@@ -22,10 +24,13 @@
 
 <div id="menu-btn-container">
   <button class="menu-btn" onclick="init()">Restart</button>
-  <button class="menu-btn" formaction="/index">Home</button>
+  <a href="/">
+  <button class="menu-btn">Home</button>
+  </a>
   <button class="menu-btn" onclick="setAndStartNewGame()">Own Setting</button>
 </div>
 
-<script src="/static/mastermind/mastermind.js"></script>
+<script th:src="@{mastermind/mastermind.js}"></script>
+</th:block>
 </body>
 </html>
