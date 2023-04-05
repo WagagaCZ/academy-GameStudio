@@ -9,28 +9,26 @@
   <link rel="stylesheet" th:href="@{mastermind/mastermind.css}">
 </head>
 <body>
-<th:block layout:fragment="content">
+<main layout:fragment="content">
 <div id="game">
-  <header>
+  <div id="myHeader">
     <h1>Mastermind</h1>
-  </header>
-  <main></main>
-  <footer>
+  </div>
+  <div id="main"></div>
+  <div id="myFooter">
     <div id="div-select-color"></div>
     <input id="submit-btn" type="button" value="Submit" />
-  </footer>
+  </div>
 </div>
 
 
 <div id="menu-btn-container">
   <button class="menu-btn" onclick="init()">Restart</button>
-  <a href="/">
-  <button class="menu-btn">Home</button>
-  </a>
-  <button class="menu-btn" onclick="setAndStartNewGame()">Own Setting</button>
+  <a href="/"><button class="menu-btn">Home</button></a>
+  <button class="menu-btn" onclick="setAndStartNewGame()">Own</button>
 </div>
 
 <script th:src="@{mastermind/mastermind.js}"></script>
-</th:block>
+</main>
 </body>
 </html>

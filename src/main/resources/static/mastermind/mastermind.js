@@ -1,5 +1,5 @@
 
-const main_display = document.querySelector('main');
+const main_display = document.querySelector('#main');
 const div_select_colors = document.getElementById('div-select-color');
 const submit_button = document.getElementById('submit-btn');
 const restart_button = document.getElementById('restart-btn')

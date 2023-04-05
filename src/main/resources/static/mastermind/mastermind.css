@@ -35,13 +35,18 @@ body {
     transition: 0.5s;
 }
 
-header,
-footer {
+#myFooter,
+#myHeader {
     background-color: #2a363b;
     padding: 10px;
 }
 
-main {
+#myHeader > h1 {
+    font-size: 32px;
+    font-weight: bold;
+}
+
+#main {
     margin: 10px auto;
 }
 
