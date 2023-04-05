@@ -91,7 +91,12 @@ public class BlackJackController extends GameController {
     }
 
     public String getCardText(Card card) {
-        return card.toString();
+        if(card!= null){
+            return card.toString();
+        }
+        else {
+            return null;
+        }
     }
 
     public boolean isPlayersTurn() {
