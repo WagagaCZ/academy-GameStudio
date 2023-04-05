@@ -17,6 +17,7 @@ import sk.tuke.gamestudio.server.service.ScoreServiceJPA;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 
 import static sk.tuke.gamestudio.common.Constants.*;
@@ -79,6 +80,7 @@ public class ToeController {
         }
         return "toe";
     }
+
     @PostMapping(value = "/comments")
     public String addComment(@RequestParam(name = "commentText", required = false) String commentText,
                              Model model) throws CommentException {
@@ -165,8 +167,7 @@ public class ToeController {
             Score score = new Score();
             score.setPlayer(userName);
             score.setGame(TIC_TAC_TOE);
-            //todo treba naopak
-            score.setPoints(countOfPlayerMove);
+            score.setPoints(countOfPlayerMove * (-1));
             score.setPlayedOn(Timestamp.valueOf(LocalDateTime.now()));
             scoreController.postScore(score);
         } catch (Exception e) {
@@ -175,7 +176,13 @@ public class ToeController {
     }
 
     public List<Score> getTopScores() {
-        return scoreService.getTopScores(TIC_TAC_TOE).subList(0, 5);
+        List<Score> list;
+        list = scoreService.getTopScores(TIC_TAC_TOE);
+        if (!list.isEmpty()) {
+            return list;
+        } else {
+            return Collections.emptyList();
+        }
     }
 
     public int getAvverageRating() {
