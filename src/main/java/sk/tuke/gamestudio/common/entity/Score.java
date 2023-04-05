@@ -8,6 +8,8 @@ import java.util.Formatter;
 @Entity
 @NamedQuery( name = "Score.getTopScores",
         query = "SELECT s FROM Score s WHERE s.game=:game ORDER BY s.points DESC")
+@NamedQuery( name = "Score.getTopScoresAsc",
+        query = "SELECT s FROM Score s WHERE s.game=:game ORDER BY s.points ASC")
 @NamedQuery( name = "Score.resetScores",
         query = "DELETE FROM Score")
 public class Score {

@@ -76,9 +76,7 @@ public class BattleShipController {
     }
 
     public List<Score> getTopScores() {
-        List<Score> scores = scoreService.getTopScores("battleship");
-        scores.sort(Comparator.comparingInt(Score::getPoints));
-        return scores;
+        return scoreService.getTopScores("battleship");
     }
 
 
