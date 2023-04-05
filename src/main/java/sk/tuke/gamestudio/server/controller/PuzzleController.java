@@ -54,18 +54,24 @@ public class PuzzleController implements PuzzleFieldInit {
 
     @RequestMapping
     public String processUserInput(@RequestParam(required = false) Integer index) {
+        isSaved = false;
+        isLoaded = false;
         startOrUpdateGame(index);
         return "puzzle";
     }
 
     @RequestMapping("/new")
     public String newGame() {
+        isSaved = false;
+        isLoaded = false;
         startNewGame();
         return "puzzle";
     }
 
     @RequestMapping("/save")
     public String saveGame() {
+        isSaved = false;
+        isLoaded = false;
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(SAVED_GAME);
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
@@ -81,8 +87,10 @@ public class PuzzleController implements PuzzleFieldInit {
     }
 
     @RequestMapping("/load")
-    public String getSavedGame() throws IOException {
+        public String getSavedGame() throws IOException {
         ObjectInputStream in = new ObjectInputStream(new FileInputStream(SAVED_GAME));
+        isSaved = false;
+        isLoaded = false;
         try {
             grid = (int[][]) in.readObject();
             isLoaded = true;
