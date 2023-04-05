@@ -2,7 +2,7 @@ console.log("ScoreServiceJS  loaded");
 
 const SCORE_API = 'http://localhost:8080/api/v2/score';
 
-// POST request
+// POST request 
 const apiSendScore = async (player, game, points) => {
   try {
 

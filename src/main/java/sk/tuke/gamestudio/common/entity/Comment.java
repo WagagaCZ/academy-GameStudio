@@ -33,6 +33,7 @@ public class Comment {
         return String.format("%s: %s", player, comment);
     }
 
+    public long getId() { return id; }
     public String getPlayer() {
         return player;
     }
@@ -57,4 +58,6 @@ public class Comment {
     public void setCommentedOn(Timestamp commentedOn) {
         this.commentedOn = commentedOn;
     }
+
+
 }
