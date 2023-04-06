@@ -1,3 +1,4 @@
+
 .cardMaros span {
   display: inline-block;
   width: 80px;
@@ -77,6 +78,17 @@
   content: '\1F414';
 }
 
+.grid-container{
+ display: grid;
+ grid-template-columns: repeat(3, 1fr);
+    align-items: center;
+    justify-content: space-around;
+    gap: 15px;
+    padding: 0 15px;
+    box-sizing: border-box;
+    margin: 0 auto;
+}
+
 table.scoresMaros {
     width: 100%;
     border: black 2px;
@@ -110,7 +122,7 @@ table.comments th{
   padding: 8px;
 }
 table.comments tr:hover {
-  transform: scale(1.2);
+  transform: scale(1.1);
   transition: transform 0.5s ease;
 }
 
@@ -126,4 +138,46 @@ table.comments tr:nth-child(even) {
 .fade-out-color:hover{
   background-color: rgba(255, 0, 0, 0); /* fade out to a completely transparent red color on hover */
 
+}
+
+/* For screens less than or equal to 480px */
+@media (max-width: 779px) {
+  .grid-container {
+   display: grid;
+    grid-template-columns: 1fr;
+    align-items: center;
+        justify-content: space-around;
+        gap: 15px;
+        padding: 0 15px;
+        box-sizing: border-box;
+        margin: 0 auto;
+  }
+}
+
+/* For screens greater than 480px but less than or equal to 768px */
+@media (min-width: 780px) and (max-width: 1023px) {
+  .grid-container {
+   display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    align-items: center;
+        justify-content: space-around;
+        gap: 15px;
+        padding: 0 15px;
+        box-sizing: border-box;
+        margin: 0 auto;
+  }
+}
+
+/* For screens greater than 768px but less than or equal to 1024px */
+@media (min-width: 1024px) and (max-width: 1612px) {
+  .grid-container {
+   display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    align-items: center;
+        justify-content: space-around;
+        gap: 15px;
+        padding: 0 15px;
+        box-sizing: border-box;
+        margin: 0 auto;
+  }
 }
