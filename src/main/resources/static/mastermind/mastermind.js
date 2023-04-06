@@ -17,16 +17,16 @@ let score;
 
 init();
 
+/**
+ * Tables won't appear without this event listener.
+ */
 document.addEventListener('readystatechange', event => {
 
     // When HTML/DOM elements are ready:
-    if (event.target.readyState === "interactive") {   //does same as:  ..addEventListener("DOMContentLoaded"..
-        alert("hi 1");
-    }
+    // if (event.target.readyState === "interactive") { }
 
     // When window loaded ( external resources are loaded too- `css`,`src`, etc...)
     if (event.target.readyState === "complete") {
-        alert("hi 2");
         showScores("Mastermind");
     }
 });

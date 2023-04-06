@@ -1,20 +1,20 @@
-const scoreTableBody = document.querySelector("#score-table-body");
+const scoreTable = document.querySelector("#score-table");
 
 async function showScores(game) {
     let scores = await apiGetScores(game);
 
     if(scores.message) {
-        scoreTableBody.innerHTML = `<tr><td></td><td></td><td style='text-align: end'>${scores.message} </td></tr>`;
+        scoreTable.innerHTML = `<tr><td></td><td></td><td style='text-align: end'>${scores.message} </td></tr>`;
         return;
     }
 
     // clear table first
-    scoreTableBody.innerHTML = '';
+    scoreTable.innerHTML = '';
 
     scores.forEach(score => {
         let date = new Date(score.playedOn);
         date = date.toLocaleDateString("en-GB") + ' ' + date.toLocaleTimeString("en-GB");
-        scoreTableBody.innerHTML += `
+        scoreTable.innerHTML += `
       <tr">
           <td>${score.player}</td>
           <td>${score.points}</td>
@@ -32,5 +32,7 @@ async function sendScoreAndReloadTable(game) {
     if (player != null) {
         await apiSendScore(player, game, countScore());
         await showScores(game)
+    } else {
+        alert("You aren't logged in. Your score won't be saved.")
     }
 }
