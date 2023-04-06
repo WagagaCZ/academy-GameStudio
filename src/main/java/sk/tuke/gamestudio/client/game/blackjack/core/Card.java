@@ -16,7 +16,6 @@ public class Card {
     public int getCategory() {
         return category;
     }
-    //TODO: toString se správným výpisem znaků
 
     @Override
     public String toString() {

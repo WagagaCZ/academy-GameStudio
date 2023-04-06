@@ -58,18 +58,18 @@ public class ToeController {
         if (index != null) {
             updateGame(index);
         }
-        return "toe.html";
+        return "toe";
     }
 
     @GetMapping("/toe")
     public String index(Model model) throws ScoreException, RatingException {
-        return "toe.html";
+        return "toe";
     }
 
     @RequestMapping("/new")
     public String newGame() {
         startNewGame();
-        return "toe";
+        return "redirect:/toe";
     }
 
     @PostMapping("/rating")
