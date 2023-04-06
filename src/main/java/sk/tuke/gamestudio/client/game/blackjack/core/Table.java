@@ -1,13 +1,15 @@
 package sk.tuke.gamestudio.client.game.blackjack.core;
 
 public class Table {
-    private Card[] playerHand;
-    private Card[] dealerHand;
+    private Card[] playerHand = new Card[5];
+    private Card[] dealerHand = new Card[5];
     private int numberOfPlayerCards;
     private int numberOfDealerCards;
     private Deck deck;
     private Turn turn = Turn.END;
     private Card dealerCard;
+    private int bank = 100;
+    private int bet;
 
     public Table() {
         deck = new Deck();
@@ -15,7 +17,12 @@ public class Table {
     }
 
     public void setup() {
-        if(turn == Turn.END) {
+        if (turn == Turn.END) {
+            bet = 10;
+            if (!hasEnough(bet)) {
+                System.out.println("Not enough in bank.");
+                return;
+            }
             System.out.println("Cards in deck: " + deck.getLeftInDeck());
             if (deck.getLeftInDeck() < 10) {
                 shuffle();
@@ -68,10 +75,20 @@ public class Table {
         }
     }
 
+    public void doubleUp() {
+        if (turn == Turn.PLAYER && hasEnough(2 * bet) && playerHand[2] == null) {
+            bet = bet * 2;
+            drawNewCard();
+            switchTurns();
+        }
+    }
+
     private boolean checkIfOut(Card[] hand) {
         int sum = checkSum(hand);
         if (sum > 21) {
             turn = Turn.END;
+            System.out.println("Over");
+            changeBank();
             System.out.println(sum);
             return true;
         }
@@ -81,6 +98,8 @@ public class Table {
         }
         if (numberOfDealerCards == 5 || (turn == Turn.DEALER && sum >= 17)) {
             turn = Turn.END;
+            System.out.println("Dealer");
+            changeBank();
         }
         System.out.println(sum);
         return false;
@@ -115,6 +134,20 @@ public class Table {
         return sum;
     }
 
+    private void changeBank() {
+        if (checkSum(playerHand) <= 21 && (checkSum(playerHand) > checkSum(dealerHand) || checkSum(dealerHand) > 21)) {
+            System.out.println("Bank then: " + bank);
+            bank += bet;
+            System.out.println("Bank now: " + bank);
+            System.out.println("Bet: " + bet);
+        } else {
+            System.out.println("Bank then: " + bank);
+            bank -= bet;
+            System.out.println("Bank now: " + bank);
+            System.out.println("Bet: " + bet);
+        }
+    }
+
     public Card[] getPlayerHand() {
         return playerHand;
     }
@@ -132,6 +165,18 @@ public class Table {
     }
 
     public boolean isPlayerWinner() {
-        return (!checkIfOut(playerHand) && (checkSum(playerHand) > checkSum(dealerHand) || checkIfOut(dealerHand)));
+        return (checkSum(playerHand) <= 21 && (checkSum(playerHand) > checkSum(dealerHand) || checkSum(dealerHand) > 21));
+    }
+
+    private boolean hasEnough(int bet) {
+        return (bet <= bank);
+    }
+
+    public int getBank() {
+        return bank;
+    }
+
+    public int getBet() {
+        return bet;
     }
 }
