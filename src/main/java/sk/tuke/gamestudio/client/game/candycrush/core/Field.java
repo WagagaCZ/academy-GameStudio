@@ -243,7 +243,7 @@ public class Field {
                 TileColor color;
                 if (emptyTilesExist && (i == numRows - 1 || j == numCols - 1) && tiles[i][j] == null) {
                     // Assign a random color that is not the same as the color of adjacent tiles
-                    TileColor adjacentColor = null;
+                    TileColor adjacentColor = TileColor.EMPTY;
                     if (i > 0 && tiles[i - 1][j] != null) {
                         adjacentColor = tiles[i - 1][j].getColor();
                     }

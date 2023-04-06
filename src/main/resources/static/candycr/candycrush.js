@@ -143,32 +143,34 @@ function generateBoard(row,col) {
     const tempTile = gameFieldData.tiles[tile1.row][tile1.col];
     gameFieldData.tiles[tile1.row][tile1.col] = gameFieldData.tiles[tile2.row][tile2.col];
     gameFieldData.tiles[tile2.row][tile2.col] = tempTile;
-  
+
     // Check for matches and remove them
     const matches = findMatches(gameFieldData);
     if (matches.length > 0) {
-      removeMatches(matches, gameFieldData);
-      applyGravity(gameFieldData);
+        removeMatches(matches, gameFieldData);
+        applyGravity(gameFieldData); // apply gravity after removing matches
     } else {
-      // If no matches were found, swap the tiles back
-      gameFieldData.tiles[tile2.row][tile2.col] = gameFieldData.tiles[tile1.row][tile1.col];
-      gameFieldData.tiles[tile1.row][tile1.col] = tempTile;
+        // If no matches were found, swap the tiles back
+        gameFieldData.tiles[tile2.row][tile2.col] = gameFieldData.tiles[tile1.row][tile1.col];
+        gameFieldData.tiles[tile1.row][tile1.col] = tempTile;
     }
-  
+
     // Re-render the game field
     const candyCrushTable = document.getElementById('candyCrushTable');
     for (let row = 0; row < gameFieldData.numRows; row++) {
-      for (let col = 0; col < gameFieldData.numCols; col++) {
-        let tile = gameFieldData.tiles[row][col];
-        const td = candyCrushTable.rows[row].cells[col];
-        if (tile === null) {
-          tile = new Tile(TileColor.EMPTY);
-          gameFieldData.tiles[row][col] = tile;
+        for (let col = 0; col < gameFieldData.numCols; col++) {
+            let tile = gameFieldData.tiles[row][col];
+            const td = candyCrushTable.rows[row].cells[col];
+            if (tile === null) {
+                tile = new Tile(TileColor.EMPTY);
+                gameFieldData.tiles[row][col] = tile;
+            }
+            td.className = (tile.color || TileColor.EMPTY).toLowerCase();
         }
-        td.className = (tile.color || TileColor.EMPTY).toLowerCase();
-      }
     }
-  }
+}
+
+  
   
   
   
@@ -239,7 +241,9 @@ function generateBoard(row,col) {
   function removeMatches(matches, gameFieldData) {
   matches.forEach(match => {
     match.forEach(tile => {
-      gameFieldData.tiles[tile.row][tile.col].color = colors.EMPTY;
+      console.log(gameFieldData.tiles[tile.row][tile.col].color)
+      gameFieldData.tiles[tile.row][tile.col].color = TileColor.EMPTY;
+      console.log(gameFieldData.tiles[tile.row][tile.col].color)
     });
   });
 }
@@ -248,29 +252,37 @@ function generateBoard(row,col) {
   
 function applyGravity(gameFieldData) {
     for (let col = 0; col < gameFieldData.numCols; col++) {
-      let emptyCount = 0;
+      let shiftAmount = 0;
       for (let row = gameFieldData.numRows - 1; row >= 0; row--) {
-        const tile = gameFieldData.tiles[row][col];
-        if (tile.color === TileColor.EMPTY) {
-          emptyCount++;
-        } else if (emptyCount > 0) {
-          gameFieldData.tiles[row + emptyCount][col] = tile;
-          gameFieldData.tiles[row][col] = new Tile(TileColor.EMPTY);
-          emptyCount = 0;
+        let tile = gameFieldData.tiles[row][col];
+        if (tile && tile.color === TileColor.EMPTY) {
+          shiftAmount++;
+        } else if (shiftAmount > 0 && tile) {
+          const tileAbove = gameFieldData.tiles[row + shiftAmount][col];
+          gameFieldData.tiles[row][col] = tileAbove;
+          gameFieldData.tiles[row + shiftAmount][col] = new Tile(TileColor.EMPTY);
+          const tdAbove = document.querySelector(`[data-row='${row + shiftAmount}'][data-col='${col}']`);
+          const td = document.querySelector(`[data-row='${row}'][data-col='${col}']`);
+          td.className = tdAbove.className;
+          tdAbove.className = TileColor.EMPTY;
         }
       }
-    }
-  
-    // Fill any empty spaces with new tiles
-    for (let col = 0; col < gameFieldData.numCols; col++) {
-      for (let row = 0; row < gameFieldData.numRows; row++) {
-        const tile = gameFieldData.tiles[row][col];
-        if (tile.color === TileColor.EMPTY) {
-          gameFieldData.tiles[row][col] = new Tile(getRandomColor());
+      
+      // Check if the top row is empty
+      if (!gameFieldData.tiles[0][col]) {
+        // Generate new tiles with random colors and insert them at the top of the board
+        for (let i = 0; i < gameFieldData.numRows; i++) {
+          const newTile = new Tile(getRandomColor());
+          gameFieldData.tiles[i][col] = newTile;
+          const td = document.querySelector(`[data-row='${i}'][data-col='${col}']`);
+          td.className = newTile.color;
         }
       }
     }
   }
+  
+  
+  
   
   
   function fillEmptyTiles(gameFieldData) {
@@ -286,7 +298,7 @@ function applyGravity(gameFieldData) {
     }
   }
   
-  function getRandomColor(colors) {
+  function getRandomColor() {
     const randomIndex = Math.floor(Math.random() * colors.length);
     return colors[randomIndex];
   }
