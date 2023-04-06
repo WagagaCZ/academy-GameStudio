@@ -251,35 +251,55 @@ function generateBoard(row,col) {
 
   
 function applyGravity(gameFieldData) {
+    // Iterate over columns from left to right
     for (let col = 0; col < gameFieldData.numCols; col++) {
-      let shiftAmount = 0;
+      let emptyTiles = 0;
+  
+      // Iterate over rows from bottom to top
       for (let row = gameFieldData.numRows - 1; row >= 0; row--) {
-        let tile = gameFieldData.tiles[row][col];
-        if (tile && tile.color === TileColor.EMPTY) {
-          shiftAmount++;
-        } else if (shiftAmount > 0 && tile) {
-          const tileAbove = gameFieldData.tiles[row + shiftAmount][col];
-          gameFieldData.tiles[row][col] = tileAbove;
-          gameFieldData.tiles[row + shiftAmount][col] = new Tile(TileColor.EMPTY);
-          const tdAbove = document.querySelector(`[data-row='${row + shiftAmount}'][data-col='${col}']`);
+        const tile = gameFieldData.tiles[row][col];
+  
+        // If the current tile is empty, increment the count of empty tiles
+        if (!tile || tile.color === TileColor.EMPTY) {
+          emptyTiles++;
+        } else if (emptyTiles > 0) {
+          // If there are empty tiles below the current tile, move it down
+          const newRow = row + emptyTiles;
+          gameFieldData.tiles[newRow][col] = tile;
+          gameFieldData.tiles[row][col] = new Tile(TileColor.EMPTY);
+  
+          // Update the DOM
+          const tdAbove = document.querySelector(`[data-row='${newRow}'][data-col='${col}']`);
           const td = document.querySelector(`[data-row='${row}'][data-col='${col}']`);
           td.className = tdAbove.className;
           tdAbove.className = TileColor.EMPTY;
         }
       }
-      
-      // Check if the top row is empty
-      if (!gameFieldData.tiles[0][col]) {
-        // Generate new tiles with random colors and insert them at the top of the board
-        for (let i = 0; i < gameFieldData.numRows; i++) {
-          const newTile = new Tile(getRandomColor());
-          gameFieldData.tiles[i][col] = newTile;
-          const td = document.querySelector(`[data-row='${i}'][data-col='${col}']`);
-          td.className = newTile.color;
-        }
+  
+      // If there are any empty tiles in the column, fill them with new random tiles
+      for (let i = 0; i < emptyTiles; i++) {
+        const newRow = i;
+        const newTile = new Tile(getRandomColor());
+        gameFieldData.tiles[newRow][col] = newTile;
+  
+        // Update the DOM
+        const td = document.querySelector(`[data-row='${newRow}'][data-col='${col}']`);
+        td.className = newTile.color;
       }
     }
+  
+    // Check if there are any matches on the board and call applyGravity recursively if there are
+    const matches = findMatches(gameFieldData);
+    if (matches.length > 0) {
+      removeMatches(matches, gameFieldData);
+      applyGravity(gameFieldData);
+    }
   }
+  
+  
+
+  
+  
   
   
   
