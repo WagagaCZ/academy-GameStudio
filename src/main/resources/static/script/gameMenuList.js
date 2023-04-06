@@ -49,6 +49,12 @@ const games = [
     creator: "Riso",
     icon: "fa-solid fa-ship",
   },
+  {
+      name: "Candy Crush",
+      url: "/candycrush",
+      creator: "Dima",
+      icon: "fa-solid fa-candy",
+    },
 ];
 
 
