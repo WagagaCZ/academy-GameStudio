@@ -237,7 +237,7 @@ function checkWin(correction_array) {
 
     if (countCorrect === codeLength) {
         sendScoreAndReloadTable("Mastermind")
-        alert('VICTORY\nYour score is: ' + countScore());
+        alert('VICTORY\nYour score is: ' + countMastermindScore());
         init();
     } else if (submitTry > tries) {
         alert('GAME OVER');
@@ -256,6 +256,6 @@ function setAndStartNewGame() {
     init();
 }
 
-function countScore() {
+function countMastermindScore() {
     return codeLength * 20 - (submitTry * tries);
 }
