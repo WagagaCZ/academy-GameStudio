@@ -10,9 +10,14 @@ import sk.tuke.gamestudio.client.game.poker.core.Deck;
 import sk.tuke.gamestudio.client.game.poker.core.Hand;
 import sk.tuke.gamestudio.client.game.poker.core.Logic;
 import sk.tuke.gamestudio.client.game.poker.core.PokerGameState;
+import sk.tuke.gamestudio.common.entity.Comment;
+import sk.tuke.gamestudio.common.entity.Rating;
 import sk.tuke.gamestudio.common.entity.Score;
+import sk.tuke.gamestudio.common.service.CommentService;
+import sk.tuke.gamestudio.common.service.RatingService;
 import sk.tuke.gamestudio.common.service.ScoreService;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -79,6 +84,19 @@ public class PokerController {
 
     @Autowired
     private ScoreService scoreService;
+    @Autowired
+    private CommentService commentService;
+    @Autowired
+    private RatingService ratingService;
+    @Autowired UserController userController;
+
+    public List<Comment> getComments() {
+        return commentService.getComments("poker");
+    }
+
+    public double getAvgRating() {
+        return ratingService.getAverageRating("poker");
+    }
 
     public List<Score> getTopScores() {
         return scoreService.getTopScores("poker");
@@ -90,6 +108,27 @@ public class PokerController {
         return "poker";
 
     }
+
+    @RequestMapping("/setrating")
+    public String setRating(@RequestParam String name, @RequestParam String rating) {
+        int value = Integer.parseInt(rating);
+        Rating ratingToAdd = new Rating("poker", name, value);
+        ratingService.setRating(ratingToAdd);
+        return "poker";
+    }
+
+    @RequestMapping("/comment")
+    public String addComment(@RequestParam String name, @RequestParam String comment) {
+        Comment commentToAdd = new Comment();
+        commentToAdd.setComment(comment);
+        commentToAdd.setPlayer(name);
+        commentToAdd.setGame("poker");
+        java.sql.Timestamp ts = new Timestamp(System.currentTimeMillis());
+        commentToAdd.setCommentedOn(ts);
+        commentService.addComment(commentToAdd);
+        return "poker";
+    }
+
 
     private void startOrUpdateGame(Integer i) {
         startNewGameIfDeckNull();
@@ -146,13 +185,19 @@ public class PokerController {
 
     @RequestMapping("/finish")
     private String finishGame(@RequestParam(required = false) String name) {
+        String username;
+        if(name == null){
+            username = "Anonymous user";
+        } else {username = userController.getLoggedUser();}
         state = PokerGameState.FINISHED;
         startNewGameIfDeckNull();
         deck = null;
         hand = null;
         logic = null;
-        Score dbScore = new Score("poker", name, score, new Date());
-        scoreService.addScore(dbScore);
+        if (score > 0) {
+            Score dbScore = new Score("poker", username, score, new Date());
+            scoreService.addScore(dbScore);
+        }
         return "poker";
     }
 
