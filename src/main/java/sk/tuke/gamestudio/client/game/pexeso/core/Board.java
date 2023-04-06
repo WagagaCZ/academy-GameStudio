@@ -13,25 +13,27 @@ public class Board {
         this.column = column;
         // Initialize the cards and flipped arrays
         this.cards = new Card[row][column];
-        int numPairs = (row * column)/2;
+        int numPairs = (row * column) / 2;
 
         // Generate a new board with randomized cards
         generateBoard(numPairs);
     }
 
-    public void setCard(int x, int y, Card card){
+    public void setCard(int x, int y, Card card) {
         if (x >= 0 && x < row && y >= 0 && y < column) {
             cards[x][y] = card;
         } else {
             throw new IllegalArgumentException("Invalid coordinates: (" + x + ", " + y + ")");
         }
     }
+
     public Card getCard(int x, int y) {
         if (x < 0 || x >= row || y < 0 || y >= column) {
             return null;
         }
         return cards[x][y];
     }
+
     public boolean isFlipped(int x, int y) {
         return x >= 0 && x < row && y >= 0 && y < column && cards[x][y].isFlipped();
 
@@ -72,17 +74,16 @@ public class Board {
 
     public void flipCard(int x, int y) {
         if (x < 0 || x >= row || y < 0 || y >= column) {
-            // Coordinates are out of bounds, do something (throw an exception, return, etc.)
             throw new ArrayIndexOutOfBoundsException();
         }
 
         cards[x][y].flip(); // Flip the card (or unflip it if it's already flipped)
 
     }
+
     public boolean isSolved() {
         for (int x = 0; x < row; x++) {
             for (int y = 0; y < column; y++) {
-                // If any card is not flipped, the game is not solved yet
                 if (!cards[x][y].isFlipped()) {
                     return false;
                 }

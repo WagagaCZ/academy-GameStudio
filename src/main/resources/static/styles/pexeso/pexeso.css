@@ -1,4 +1,6 @@
-
+body{
+background-color: #d4cfcf;
+}
 .cardMaros span {
   display: inline-block;
   width: 80px;
@@ -121,6 +123,9 @@ table.comments th{
 
   padding: 8px;
 }
+table.comment{
+background-color: #d4cfcf;
+}
 table.comments tr:hover {
   transform: scale(1.1);
   transition: transform 0.5s ease;
@@ -130,17 +135,17 @@ table.comments tr:nth-child(even) {
     background-color: #dddddd;
   }
 .fade-out-color{
-  background-color: rgba(0, 0, 255, 1); /* start with a solid red color */
-  transition: background-color 1s ease-out; /* transition the background-color property over 1 second with an ease-out timing function */
+  background-color: rgba(0, 0, 255, 1);
+  transition: background-color 1s ease-out;
   color: grey;
+  border-radius: 15px;
 }
 
 .fade-out-color:hover{
-  background-color: rgba(255, 0, 0, 0); /* fade out to a completely transparent red color on hover */
+  background-color: rgba(255, 0, 0, 0);
 
 }
 
-/* For screens less than or equal to 480px */
 @media (max-width: 779px) {
   .grid-container {
    display: grid;
@@ -154,7 +159,6 @@ table.comments tr:nth-child(even) {
   }
 }
 
-/* For screens greater than 480px but less than or equal to 768px */
 @media (min-width: 780px) and (max-width: 1023px) {
   .grid-container {
    display: grid;
@@ -168,7 +172,6 @@ table.comments tr:nth-child(even) {
   }
 }
 
-/* For screens greater than 768px but less than or equal to 1024px */
 @media (min-width: 1024px) and (max-width: 1612px) {
   .grid-container {
    display: grid;
@@ -180,4 +183,13 @@ table.comments tr:nth-child(even) {
         box-sizing: border-box;
         margin: 0 auto;
   }
+
 }
+form textarea {
+
+     background: none;
+
+   }
+form select {
+    background: none;
+  }
