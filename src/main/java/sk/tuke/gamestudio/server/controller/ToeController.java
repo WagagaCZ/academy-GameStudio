@@ -69,7 +69,7 @@ public class ToeController {
     @RequestMapping("/new")
     public String newGame() {
         startNewGame();
-        return "toe";
+        return "redirect:/toe";
     }
 
     @PostMapping("/rating")
