@@ -7,7 +7,7 @@ body {
     background-color: antiquewhite;
 }
 
-#game {
+#game-window {
     text-align: center;
     color: #18cdca7c;
     border: 5px solid #18cdca7b;
@@ -37,13 +37,13 @@ body {
     box-shadow: 5px 5px 5px gray;
 }
 
-#gameFooterMastermind,
-#gameTitleMastermind {
+#game-footer-mastermind,
+#game-title-mastermind {
     background-color: #2a363b;
     padding: 10px;
 }
 
-#gameTitleMastermind > h1 {
+#game-title-mastermind > h1 {
     font-size: 32px;
     font-weight: bold;
 }
