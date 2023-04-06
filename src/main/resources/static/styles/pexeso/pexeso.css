@@ -77,3 +77,53 @@
   content: '\1F414';
 }
 
+table.scoresMaros {
+    width: 100%;
+    border: black 2px;
+}
+
+table.scoresMaros th {
+    border: 2px solid #dddfff;
+
+      text-align: left;
+
+      padding: 8px;
+}
+
+table.scoresMaros tr:nth-child(even) {
+    background-color: lightgray
+}
+table.scoresMaros tr:hover {
+  transform: scale(1.2);
+  transition: transform 0.5s ease;
+}
+
+table.scoresMaros tr:nth-child(odd) {
+    background-color: white;
+}
+
+table.comments th{
+ border: 2px solid #dddfff;
+
+  text-align: left;
+
+  padding: 8px;
+}
+table.comments tr:hover {
+  transform: scale(1.2);
+  transition: transform 0.5s ease;
+}
+
+table.comments tr:nth-child(even) {
+    background-color: #dddddd;
+  }
+.fade-out-color{
+  background-color: rgba(0, 0, 255, 1); /* start with a solid red color */
+  transition: background-color 1s ease-out; /* transition the background-color property over 1 second with an ease-out timing function */
+  color: grey;
+}
+
+.fade-out-color:hover{
+  background-color: rgba(255, 0, 0, 0); /* fade out to a completely transparent red color on hover */
+
+}
