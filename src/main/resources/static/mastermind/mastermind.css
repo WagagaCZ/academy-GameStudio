@@ -4,7 +4,7 @@
 }
 
 body {
-    background-color: gray;
+    background-color: antiquewhite;
 }
 
 #game {
@@ -16,6 +16,7 @@ body {
     max-width: 500px;
     margin: 10px auto;
     margin-top: 25px;
+    box-shadow: 10px 10px 5px gray;
 }
 
 #menu-btn-container {
@@ -24,15 +25,16 @@ body {
 
 .menu-btn {
     text-align: center;
-    background-color: #18cdca7c;
+    background-color: darkslategray;
     cursor: pointer;
-    color: gray;
+    color: white;
     border-radius: 12px;
     height: 35px;
     width: 100px;
     margin: 5px auto;
     margin-inline: 20px;
     transition: 0.5s;
+    box-shadow: 5px 5px 5px gray;
 }
 
 #gameFooterMastermind,
@@ -86,7 +88,7 @@ body {
 .select-wrapper select {
     width: 35px;
     height: 35px;
-    border: 0px;
+    border: 0;
     outline: none;
 }
 
@@ -102,7 +104,7 @@ input[type=button] {
 }
 
 select:hover,
-inpt:hover {
+input:hover {
     opacity: 0.8;
 }
 
