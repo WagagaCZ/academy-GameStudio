@@ -1,10 +1,10 @@
 // noinspection JSValidateTypes,JSVoidFunctionReturnValueUsed
 
+console.log("Mastermind script loaded");
+
 const main_display = document.querySelector('#main');
 const div_select_colors = document.getElementById('div-select-color');
 const submit_button = document.getElementById('submit-btn');
-
-const scoreTableBody = document.querySelector("#score-table");
 
 let codeLength = 4;
 let tries = 8;
@@ -16,7 +16,21 @@ let submitTry = 1;
 let score;
 
 init();
-showScores("Minesweeper");
+
+document.addEventListener('readystatechange', event => {
+
+    // When HTML/DOM elements are ready:
+    if (event.target.readyState === "interactive") {   //does same as:  ..addEventListener("DOMContentLoaded"..
+        alert("hi 1");
+    }
+
+    // When window loaded ( external resources are loaded too- `css`,`src`, etc...)
+    if (event.target.readyState === "complete") {
+        alert("hi 2");
+        showScores("Mastermind");
+    }
+});
+
 
 /**
  * The initial function that loads all the necessary stuff to the HTML file
@@ -222,6 +236,7 @@ function checkWin(correction_array) {
     }
 
     if (countCorrect === codeLength) {
+        sendScoreAndReloadTable("Mastermind")
         alert('VICTORY\nYour score is: ' + countScore());
         init();
     } else if (submitTry > tries) {

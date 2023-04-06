@@ -123,13 +123,19 @@ input[type=button]:active {
 }
 
 /* Styling for tables that shows data from database */
+#table-container {
+    align-self: center;
+    margin: 10px auto;
+}
+
 .db-table {
     border-collapse: collapse;
-    margin: 25px 0;
+    border: 5px #2d2d2d solid;
+    margin: 25px auto;
     font-size: 0.9em;
     font-family: sans-serif;
     min-width: 400px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    box-shadow: 10px 10px 5px gray;
 }
 
 .db-table thead tr {

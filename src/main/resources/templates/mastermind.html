@@ -7,6 +7,11 @@
 <head>
     <title>Mastermind</title>
     <link rel="stylesheet" th:href="@{mastermind/mastermind.css}">
+
+    <script defer th:src="@{/script/userServiceJS.js}"></script>
+    <script defer th:src="@{/script/scoreServiceJS.js}"></script>
+
+    <script defer th:src="@{/mastermind/mastermindTables.js}"></script>
 </head>
 <body>
 <main layout:fragment="content">
@@ -35,13 +40,22 @@
             <li>Colors may repeat, or be absent in the code</li>
             <li> Press "Own" to change the code's length and the number of tries</li>
             <li>Your guesses appear in the left column
-                and their corrections in the right column</li>
+                and their corrections in the right column
+            </li>
             <li>In corrections, red means it's the right color in the right place
-                while white means the color is present in the code but the particular place is wrong</li>
+                while white means the color is present in the code but the particular place is wrong
+            </li>
         </ul>
+    </div>
+
+    <div id="table-container">
+        <table id="score-table-body" class="db-table"></table>
+
     </div>
 
     <script th:src="@{mastermind/mastermind.js}"></script>
 </main>
+
+<div th:replace="~{fragments/_serviceTables :: serviceTables(game=${'Mastermind'}) }"></div>
 </body>
 </html>
