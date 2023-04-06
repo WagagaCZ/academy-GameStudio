@@ -1,5 +1,7 @@
 const scoreTable = document.querySelector("#score-table");
 
+// Used Stefan's services and functions loading tables with minimal changes
+
 async function showScores(game) {
     let scores = await apiGetScores(game);
 
