@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.com"
+      layout:decorate="~{layout/layoutGameStudio.html}"
+      lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pexeso Game</title>
+<!--    <link rel="stylesheet" type="text/css" href="styles/pexeso.css">-->
+<link th:href="@{/styles/pexeso/pexeso.css}" rel="stylesheet"/>
+</head>
+<body>
+<main layout:fragment="content">
+
+
+    <h1>Pexeso Game</h1>
+    <p>Click on a card to reveal its image.</p>
+    <a href = "/pexeso/new">New Game</a>
+    <div th:if="${@pexesoController.isSolved()}" id="win-message" class="bg-success text-white p-3 mb-3">You won!</div>
+    <table>
+        <tr th:each="row: ${@pexesoController.getCards()}">
+            <td th:each="card: ${row}" th:attr="class='c' + ${@pexesoController.getCardText(card)}">
+                <div class="cardMaros" th:classappend="${card.isFlipped} ? 'flipped' : 'notFlipped'">
+                <a th:if="${!card.isFlipped()}"
+                   th:href="@{/pexeso(row=${rowStat.index}, column=${cardStat.index})}">
+                    <span th:text="${@pexesoController.getCardText(card)}"></span>
+                </a>
+                    <span th:if="${card.isFlipped()}"
+                         >
+                     </span>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+        </main>
+        </body>
+        </html>

@@ -1,0 +1,114 @@
+create table if not exists rating
+(
+    ident    bigint       not null
+        primary key,
+    game     varchar(64)  not null,
+    rated_at timestamp(6) not null,
+    rating   integer
+        constraint rating_rating_check
+            check ((rating >= 1) AND (rating <= 5)),
+    username varchar(64)  not null,
+    constraint ukrek1i22lg80le5n7edsckufbi
+        unique (game, username)
+);
+
+create table if not exists score
+(
+    id        bigserial
+        primary key,
+    game      varchar(255),
+    played_on timestamp(6),
+    player    varchar(255),
+    points    integer not null
+);
+
+create table if not exists comments
+(
+    id          bigserial
+        primary key,
+    comment     varchar(255),
+    commentedon timestamp(6),
+    game        varchar(255),
+    player      varchar(255)
+);
+
+INSERT INTO public.comments (id, comment, commentedon, game, player) VALUES (1, 'Very bad', '2023-03-31 05:38:52.000000', 'TIC-TAC-TOE', 'Joko');
+INSERT INTO public.comments (id, comment, commentedon, game, player) VALUES (2, 'Gooooood', '2023-04-03 13:26:29.000000', 'PUZZLE FIFTEEN', 'Joko');
+INSERT INTO public.comments (id, comment, commentedon, game, player) VALUES (3, e'comment
+', '2023-04-03 14:48:33.474000', 'PUZZLE FIFTEEN', 'AnnaBorets');
+INSERT INTO public.comments (id, comment, commentedon, game, player) VALUES (4, 'comment', '2023-04-03 15:03:15.164000', 'TIC-TAC-TOE', 'AnnaBorets');
+INSERT INTO public.comments (id, comment, commentedon, game, player) VALUES (5, 'test input comment', '2023-04-04 17:12:08.076000', 'PUZZLE FIFTEEN', 'AnnaBorets');
+INSERT INTO public.comments (id, comment, commentedon, game, player) VALUES (6, 'Not very bad', '2023-04-04 17:19:50.845000', 'TIC-TAC-TOE', 'AnnaBorets');
+INSERT INTO public.comments (id, comment, commentedon, game, player) VALUES (7, 'Not good', '2023-04-04 17:24:48.047000', 'TIC-TAC-TOE', 'AnnaBorets');
+INSERT INTO public.comments (id, comment, commentedon, game, player) VALUES (8, 'kuu', '2023-04-05 11:38:59.944000', 'Minesweeper', 'Greta');
+INSERT INTO public.comments (id, comment, commentedon, game, player) VALUES (9, 'new test comment', '2023-04-05 11:39:28.106000', 'Minesweeper', 'Joko');
+INSERT INTO public.comments (id, comment, commentedon, game, player) VALUES (10, 'joko test', '2023-04-05 11:40:30.649000', 'TIC-TAC-TOE', 'AnnaBorets');
+
+INSERT INTO public.rating (ident, game, rated_at, rating, username) VALUES (1, 'TIC-TAC-TOE', '2023-03-29 08:56:03.000000', 2, 'Player');
+INSERT INTO public.rating (ident, game, rated_at, rating, username) VALUES (153, 'PUZZLE FIFTEEN', '2023-04-03 10:31:56.000000', 5, 'Joko');
+INSERT INTO public.rating (ident, game, rated_at, rating, username) VALUES (154, 'PUZZLE FIFTEEN', '2023-04-03 10:38:16.000000', 1, 'Anna Borets');
+INSERT INTO public.rating (ident, game, rated_at, rating, username) VALUES (202, 'PUZZLE FIFTEEN', '2023-04-04 17:11:54.640000', 3, 'AnnaBorets');
+INSERT INTO public.rating (ident, game, rated_at, rating, username) VALUES (152, 'TIC-TAC-TOE', '2023-04-05 11:40:22.856000', 3, 'AnnaBorets');
+
+INSERT INTO public.score (id, game, played_on, player, points) VALUES (1, 'TIC-TAC-TOE', '2023-03-29 10:25:05.930000', 'AnnaBorets', 5);
+INSERT INTO public.score (id, game, played_on, player, points) VALUES (2, 'TIC-TAC-TOE', '2023-03-29 10:26:35.878000', 'AnnaBorets', 7);
+INSERT INTO public.score (id, game, played_on, player, points) VALUES (3, 'TIC-TAC-TOE', '2023-03-30 08:13:12.191000', 'AnnaBorets', 3);
+INSERT INTO public.score (id, game, played_on, player, points) VALUES (4, 'TIC-TAC-TOE', '2023-03-30 08:14:25.263000', 'AnnaBorets', 4);
+INSERT INTO public.score (id, game, played_on, player, points) VALUES (5, 'TIC-TAC-TOE', '2023-03-30 08:14:25.950000', 'AnnaBorets', 5);
+INSERT INTO public.score (id, game, played_on, player, points) VALUES (6, 'TIC-TAC-TOE', '2023-03-30 08:14:26.326000', 'AnnaBorets', 6);
+INSERT INTO public.score (id, game, played_on, player, points) VALUES (7, 'TIC-TAC-TOE', '2023-03-30 08:56:40.582000', 'AnnaBorets', 3);
+INSERT INTO public.score (id, game, played_on, player, points) VALUES (8, 'TIC-TAC-TOE', '2023-03-30 08:56:41.610000', 'AnnaBorets', 4);
+INSERT INTO public.score (id, game, played_on, player, points) VALUES (9, 'TIC-TAC-TOE', '2023-03-30 08:56:42.114000', 'AnnaBorets', 5);
+INSERT INTO public.score (id, game, played_on, player, points) VALUES (10, 'TIC-TAC-TOE', '2023-03-30 08:56:42.741000', 'AnnaBorets', 6);
+INSERT INTO public.score (id, game, played_on, player, points) VALUES (11, 'TIC-TAC-TOE', '2023-03-30 08:56:43.185000', 'AnnaBorets', 7);
+INSERT INTO public.score (id, game, played_on, player, points) VALUES (12, 'TIC-TAC-TOE', '2023-03-30 09:09:28.273000', 'AnnaBorets', 4);
+INSERT INTO public.score (id, game, played_on, player, points) VALUES (13, 'TIC-TAC-TOE', '2023-03-30 09:13:55.445000', 'AnnaBorets', 5);
+INSERT INTO public.score (id, game, played_on, player, points) VALUES (14, 'TIC-TAC-TOE', '2023-03-30 09:23:56.779000', 'AnnaBorets', 4);
+INSERT INTO public.score (id, game, played_on, player, points) VALUES (15, 'TIC-TAC-TOE', '2023-03-30 09:23:57.380000', 'AnnaBorets', 5);
+INSERT INTO public.score (id, game, played_on, player, points) VALUES (16, 'TIC-TAC-TOE', '2023-03-30 09:23:58.572000', 'AnnaBorets', 6);
+INSERT INTO public.score (id, game, played_on, player, points) VALUES (17, 'TIC-TAC-TOE', '2023-03-30 09:51:46.289000', 'AnnaBorets', 3);
+INSERT INTO public.score (id, game, played_on, player, points) VALUES (18, 'TIC-TAC-TOE', '2023-03-30 09:52:36.227000', 'AnnaBorets', 7);
+INSERT INTO public.score (id, game, played_on, player, points) VALUES (19, 'TIC-TAC-TOE', '2023-03-30 09:52:49.195000', 'AnnaBorets', 11);
+INSERT INTO public.score (id, game, played_on, player, points) VALUES (20, 'TIC-TAC-TOE', '2023-03-30 09:52:50.073000', 'AnnaBorets', 12);
+INSERT INTO public.score (id, game, played_on, player, points) VALUES (21, 'TIC-TAC-TOE', '2023-03-30 09:52:50.803000', 'AnnaBorets', 13);
+INSERT INTO public.score (id, game, played_on, player, points) VALUES (22, 'TIC-TAC-TOE', '2023-03-30 09:53:09.440000', 'AnnaBorets', 17);
+INSERT INTO public.score (id, game, played_on, player, points) VALUES (23, 'TIC-TAC-TOE', '2023-03-30 09:53:23.095000', 'AnnaBorets', 22);
+INSERT INTO public.score (id, game, played_on, player, points) VALUES (24, 'TIC-TAC-TOE', '2023-03-30 10:38:21.904000', 'AnnaBorets', 4);
+INSERT INTO public.score (id, game, played_on, player, points) VALUES (25, 'TIC-TAC-TOE', '2023-03-30 10:38:23.154000', 'AnnaBorets', 5);
+INSERT INTO public.score (id, game, played_on, player, points) VALUES (26, 'TIC-TAC-TOE', '2023-03-30 10:38:23.840000', 'AnnaBorets', 6);
+INSERT INTO public.score (id, game, played_on, player, points) VALUES (27, 'TIC-TAC-TOE', '2023-03-30 10:44:09.345000', 'AnnaBorets', 4);
+INSERT INTO public.score (id, game, played_on, player, points) VALUES (28, 'TIC-TAC-TOE', '2023-03-30 10:46:34.525000', 'AnnaBorets', 4);
+INSERT INTO public.score (id, game, played_on, player, points) VALUES (29, 'TIC-TAC-TOE', '2023-03-30 10:46:45.725000', 'AnnaBorets', 7);
+INSERT INTO public.score (id, game, played_on, player, points) VALUES (30, 'TIC-TAC-TOE', '2023-03-30 13:05:27.725000', 'AnnaBorets', 4);
+INSERT INTO public.score (id, game, played_on, player, points) VALUES (31, 'TIC-TAC-TOE', '2023-03-30 13:07:58.597000', 'AnnaBorets', 9);
+INSERT INTO public.score (id, game, played_on, player, points) VALUES (32, 'TIC-TAC-TOE', '2023-03-30 13:21:17.952000', 'AnnaBorets', 3);
+INSERT INTO public.score (id, game, played_on, player, points) VALUES (33, 'TIC-TAC-TOE', '2023-03-30 13:21:19.254000', 'AnnaBorets', 4);
+INSERT INTO public.score (id, game, played_on, player, points) VALUES (34, 'TIC-TAC-TOE', '2023-03-30 13:21:20.008000', 'AnnaBorets', 5);
+INSERT INTO public.score (id, game, played_on, player, points) VALUES (35, 'TIC-TAC-TOE', '2023-03-30 13:21:20.771000', 'AnnaBorets', 6);
+INSERT INTO public.score (id, game, played_on, player, points) VALUES (36, 'TIC-TAC-TOE', '2023-03-30 13:21:21.472000', 'AnnaBorets', 7);
+INSERT INTO public.score (id, game, played_on, player, points) VALUES (37, 'TIC-TAC-TOE', '2023-03-30 13:23:52.580000', 'AnnaBorets', 3);
+INSERT INTO public.score (id, game, played_on, player, points) VALUES (38, 'TIC-TAC-TOE', '2023-03-30 13:36:50.374000', 'AnnaBorets', 4);
+INSERT INTO public.score (id, game, played_on, player, points) VALUES (39, 'TIC-TAC-TOE', '2023-03-30 13:36:50.970000', 'AnnaBorets', 5);
+INSERT INTO public.score (id, game, played_on, player, points) VALUES (40, 'TIC-TAC-TOE', '2023-03-30 13:54:16.524000', 'AnnaBorets', 4);
+INSERT INTO public.score (id, game, played_on, player, points) VALUES (41, 'TIC-TAC-TOE', '2023-03-30 16:21:36.292000', 'AnnaBorets', 4);
+INSERT INTO public.score (id, game, played_on, player, points) VALUES (42, 'TIC-TAC-TOE', '2023-03-30 16:21:37.104000', 'AnnaBorets', 5);
+INSERT INTO public.score (id, game, played_on, player, points) VALUES (43, 'TIC-TAC-TOE', '2023-03-30 16:21:37.667000', 'AnnaBorets', 6);
+INSERT INTO public.score (id, game, played_on, player, points) VALUES (44, 'TIC-TAC-TOE', '2023-03-31 05:58:25.603000', 'AnnaBorets', 4);
+INSERT INTO public.score (id, game, played_on, player, points) VALUES (45, 'TIC-TAC-TOE', '2023-03-31 05:59:24.617000', 'AnnaBorets', 3);
+INSERT INTO public.score (id, game, played_on, player, points) VALUES (46, 'TIC-TAC-TOE', '2023-03-31 05:59:27.964000', 'AnnaBorets', 4);
+INSERT INTO public.score (id, game, played_on, player, points) VALUES (47, 'TIC-TAC-TOE', '2023-03-31 10:31:31.778000', 'AnnaBorets', 4);
+INSERT INTO public.score (id, game, played_on, player, points) VALUES (48, 'TIC-TAC-TOE', '2023-03-31 10:31:32.564000', 'AnnaBorets', 5);
+INSERT INTO public.score (id, game, played_on, player, points) VALUES (49, 'TIC-TAC-TOE', '2023-03-31 10:31:33.330000', 'AnnaBorets', 6);
+INSERT INTO public.score (id, game, played_on, player, points) VALUES (50, 'TIC-TAC-TOE', '2023-03-31 10:31:45.189000', 'AnnaBorets', 9);
+INSERT INTO public.score (id, game, played_on, player, points) VALUES (51, 'TIC-TAC-TOE', '2023-03-31 10:31:45.747000', 'AnnaBorets', 10);
+INSERT INTO public.score (id, game, played_on, player, points) VALUES (52, 'TIC-TAC-TOE', '2023-03-31 10:31:46.355000', 'AnnaBorets', 11);
+INSERT INTO public.score (id, game, played_on, player, points) VALUES (53, 'TIC-TAC-TOE', '2023-03-31 10:31:46.858000', 'AnnaBorets', 12);
+INSERT INTO public.score (id, game, played_on, player, points) VALUES (54, 'TIC-TAC-TOE', '2023-03-31 10:31:47.358000', 'AnnaBorets', 13);
+INSERT INTO public.score (id, game, played_on, player, points) VALUES (55, 'PUZZLE FIFTEEN', '2023-04-03 12:00:34.000000', 'AnnaBorets', 25);
+INSERT INTO public.score (id, game, played_on, player, points) VALUES (56, 'TIC-TAC-TOE', '2023-04-03 15:03:43.906000', 'AnnaBorets', 3);
+INSERT INTO public.score (id, game, played_on, player, points) VALUES (57, 'TIC-TAC-TOE', '2023-04-03 15:03:52.188000', 'AnnaBorets', 7);
+INSERT INTO public.score (id, game, played_on, player, points) VALUES (58, 'TIC-TAC-TOE', '2023-04-04 17:39:39.937000', 'AnnaBorets', 3);
+INSERT INTO public.score (id, game, played_on, player, points) VALUES (59, 'TIC-TAC-TOE', '2023-04-05 11:24:12.878000', 'AnnaBorets', 4);
+INSERT INTO public.score (id, game, played_on, player, points) VALUES (60, 'TIC-TAC-TOE', '2023-04-05 11:24:13.569000', 'AnnaBorets', 5);
+INSERT INTO public.score (id, game, played_on, player, points) VALUES (61, 'TIC-TAC-TOE', '2023-04-05 11:24:14.105000', 'AnnaBorets', 6);
+INSERT INTO public.score (id, game, played_on, player, points) VALUES (62, 'TIC-TAC-TOE', '2023-04-05 11:24:29.546000', 'AnnaBorets', 10);
