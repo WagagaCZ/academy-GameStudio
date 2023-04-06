@@ -50,12 +50,18 @@ const games = [
     icon: "fa-solid fa-ship",
   },
   {
+    name: "Mastermind",
+    url: "/mastermind",
+    creator: "Mila",
+    icon: "fa-solid fa-brain",
+  },   
+  {
     name: "PUZZLE FIFTEEN",
     url: "/puzzle",
     creator: "Anicka",
     icon: "fa-solid fa-puzzle-piece",
   },
-{
+  {
     name: "Pexeso",
     url: "/pexeso",
     creator: "Maros",
