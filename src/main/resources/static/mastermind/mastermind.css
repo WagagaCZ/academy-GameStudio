@@ -121,3 +121,41 @@ input[type=button]:active {
     margin: 10px auto;
     margin-top: 25px;
 }
+
+/* Styling for tables that shows data from database */
+.db-table {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.db-table thead tr {
+    background-color: #009879;
+    color: #ffffff;
+    text-align: left;
+}
+
+.db-table th,
+.db-table td {
+    padding: 12px 15px;
+}
+
+.db-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.db-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.db-table tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
+}
+
+.db-table tbody tr.active-row {
+    font-weight: bold;
+    color: #009879;
+}
