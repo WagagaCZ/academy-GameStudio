@@ -2,65 +2,79 @@ table.minefield td.tile0 {
     background-color: #797979;
 }
 table.minefield td.tile2 {
-    font-size : 4vw;
+    font-size : 22px;
     background-color: #eee4da;
     color: #776e65;
 }
 table.minefield td.tile4 {
-    font-size : 4vw;
+    font-size : 22px;
     background-color: #ede0c8;
     color: #776e65;
 }
 table.minefield td.tile8 {
-    font-size : 4vw;
+    font-size : 22px;
     background-color: #f2b179;
     color: #f9f6f2;
 }
 table.minefield td.tile16 {
-    font-size : 4vw;
+    font-size : 22px;
     background-color: #f59563;
     color: #f9f6f2;
 }
 table.minefield td.tile32 {
-    font-size : 4vw;
+    font-size : 22px;
     background-color: #f67c5f;
     color: #f9f6f2;
 }
 table.minefield td.tile64 {
-    font-size : 4vw;
+    font-size : 22px;
     background-color: #f65e3b;
     color: #f9f6f2;
 }
 table.minefield td.tile128 {
-    font-size : 3vw;
+    font-size : 17px;
     background-color: #edcf72;
     color: #f9f6f2;
 }
 table.minefield td.tile256 {
-    font-size : 3vw;
+    font-size : 17px;
     background-color: #edcc61;
     color: #f9f6f2;
 }
 table.minefield td.tile512 {
-    font-size : 3vw;
+    font-size : 17px;
     background-color: #edc850;
     color: #f9f6f2;
 }
 table.minefield td.tile1024 {
-    font-size : 2.5vw;
+    font-size : 13px;
     background-color: #edc53f;
     color: #f9f6f2;
 }
 table.minefield td.tile2048 {
-    font-size : 2.5vw;
+    font-size : 13px;
     background-color: #edc22e;
     color: #f9f6f2;
 }
 
 table.minefield td {
-    text-justify: auto;
+    width : 60px;
+    height : 60px;
 }
 
-.game-lost {
+.center {
+    margin : auto;
+    text-align : center;
+}
+
+.play {
+    color : black;
+}
+
+.won {
+    color : green;
+}
+
+.lost {
     color : red;
 }

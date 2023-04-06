@@ -4,12 +4,12 @@ document.addEventListener('keydown',  (e) => {
     } else if (e.code === "ArrowDown") {
         makeMove("DOWN").then();
     } else if (e.code === "ArrowLeft") {
-        console.log("moving left");
         makeMove("LEFT").then();
     } else if (e.code === "ArrowRight") {
         makeMove("RIGHT").then();
     }
 });
+
 
 const API_URL = "/api/2048";
 let field;
@@ -18,7 +18,7 @@ let gameEnd = false;
 const renderField = () => {
     const mineFieldElem = document.getElementById("minefield");
     renderGameState();
-    let resultTable = `<table class="minefield"><tbody>`;
+    let resultTable = `<table class="minefield center"><tbody>`;
     for( let r = 0; r < 4; ++r ) {
         mineFieldElem.innerHTML += `<tr>`;
         for( let c = 0; c < 4; ++c ) {
@@ -39,10 +39,13 @@ const renderGameState = () => {
     const stateElem = document.getElementById("gamestate");
     if( field.state === "PLAYING" ) {
         stateElem.innerHTML = "PLAYING";
+        stateElem.style.color = "violet";
     } else if( field.state === "FAILED" ) {
-        stateElem.innerHTML = "YOU LOST";
+        stateElem.innerHTML = "YOU LOST!!!";
+        stateElem.style.color = "red";
     } else if( field.state === "SOLVED" ) {
         stateElem.innerHTML = "YOU WON!";
+        stateElem.style.color = "green";
     }
 };
 
