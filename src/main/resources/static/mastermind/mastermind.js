@@ -24,7 +24,7 @@ function init() {
     submitTry = 1;
     main_display.innerHTML = '';
     div_select_colors.innerHTML = '';
-    score = codeLength * 10;
+    score = codeLength * 20;
 
     setTries();
     setColorSelection();
@@ -219,7 +219,7 @@ function checkWin(correction_array) {
     }
 
     if (countCorrect === codeLength) {
-        alert('VICTORY');
+        alert('VICTORY\nYour score is: ' + score);
         init();
     } else if (submitTry > tries) {
         alert('GAME OVER');
@@ -236,7 +236,7 @@ function checkWin(correction_array) {
 function setAndStartNewGame() {
     setCodeLength();
     setNumberOfTries();
-    score = codeLength * 10;
+    score = codeLength * 20;
 
     init();
 }
