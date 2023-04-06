@@ -1,0 +1,74 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layoutGameStudio.html}">
+
+<head>
+    <title>GameStudio - Poker</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- this is where we refer the css file from src/main/resources/static/styles/tailwind.css -->
+    <link th:href="@{/styles/poker.css}" rel="stylesheet"/>
+</head>
+<body>
+<main layout:fragment="content">
+<!--/*@thymesVar id="pokerController" type="sk.tuke.gamestudio.server.controller.PokerController"*/-->
+<h2>Poker</h2>
+
+<a class="abutton newgame_button" href="/poker/new">New game</a>
+
+<section>
+    <div class="pokerhand" th:if="${@pokerController.getState().toString().toLowerCase()} == dealt">
+        <a th:href="@{/poker(i=${cardStat.index})}" th:each="card: ${@pokerController.hand.getHand()}">
+        <div class="card" th:classappend="${card.isSelected()} ? card_selected">
+
+            <div class="rank" th:text="${card.getValueString()}"></div>
+            <div th:class="${'suit ' + (card.getType().toString().toLowerCase()) + ' ' + (card.getColor().toString().toLowerCase())}"></div>
+
+        </div>
+        </a>
+
+    </div>
+
+    <div class="pokerhand_grayed pokerhand" th:if="${@pokerController.getState().toString().toLowerCase()} == cards_swapped">
+        <div th:each="card: ${@pokerController.hand.getHand()}">
+            <div class="card_grayed card" th:classappend="${card.isSelected()} ? card_selected">
+
+                <div class="rank" th:text="${card.getValueString()}"></div>
+                <div th:class="${'suit ' + (card.getType().toString().toLowerCase()) + ' ' + (card.getColor().toString().toLowerCase())}"></div>
+
+            </div>
+        </div>
+
+    </div><div class="options">
+    <a class="abutton" href="/poker/confirm" th:if="${@pokerController.getState().toString().toLowerCase()} == dealt">Confirm</a>
+    <a class="abutton" href="/poker/continue" th:if="${@pokerController.getState().toString().toLowerCase()} == cards_swapped">Continue</a>
+    <a class="abutton" href="/poker/finish">Finish</a>
+    </div>
+    <p th:text="${@pokerController.getScore()}"></p>
+</section>
+
+<section>
+    <h3>Best Scores</h3>
+
+    <table class="scores">
+        <thead>
+        <tr>
+            <th>Number</th>
+            <th>Name</th>
+            <th>Score</th>
+            <th>Date and time</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="score: ${@pokerController.getTopScores()}">
+            <td th:text="${scoreStat.index+1}"></td>
+            <td th:text="${score.player}"></td>
+            <td th:text="${score.getPoints()}"></td>
+            <td th:text="${score.getPlayedOn()}"></td>
+        </tr>
+        </tbody>
+    </table>
+</section>
+</main>
+</body>
+</html>

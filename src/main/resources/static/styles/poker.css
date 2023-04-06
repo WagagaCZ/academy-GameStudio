@@ -1,0 +1,235 @@
+body {
+    background-color: #ffffff;
+    font-size: 1rem;
+    font-family: Arial, "Arial CE", "Helvetica CE", sans-serif;
+    color: #000000;
+    max-width: 30rem;
+    margin: auto;
+    padding: 1em;
+}
+.options{
+display: flex;
+justify-content: space-between;
+padding: 0.5rem 0.5rem;
+}
+h1 {
+    font-size: 1.6em
+}
+
+h2 {
+    font-size: 1.4em
+}
+
+h3 {
+    font-size: 1.2em
+}
+
+a:link, a:visited {
+    color: #045491;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+a:link:hover, a:visited:hover {
+    color: #045491;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+
+
+/*Properties of the form elements*/
+
+label {
+    vertical-align: top;
+    display: inline-block; /*instead of inline (default)*/
+    min-width: 5em;
+}
+
+
+
+/*Properties of the tables with scores*/
+
+table.scores {
+    width: 100%;
+    border: black 2px;
+}
+
+table.scores th {
+    font-weight: bold;
+    color: #FFFFFF;
+    background-color: dimgray;
+
+}
+
+table.scores tr:nth-child(even) {
+    background-color: lightgray
+}
+
+table.scores tr:nth-child(odd) {
+    background-color: white;
+}
+
+/*Properties of the control block above the minefield*/
+div.minesControl{
+    border: 1px solid darkgrey;
+    border-radius: 0.4em;
+    padding: 0.5em;
+    min-width: 13em;
+}
+
+div.minesControl span.gameInfo{
+    width:13em;
+    display: inline-block;
+}
+
+/*Properties of the elements we want to look like customized buttons*/
+
+.abutton {
+    border: 1px solid darkslategrey;
+    display: inline-block;
+    width: 8em;
+    margin: 0.1em;
+    padding: 0.1em;
+    border-radius: 0.2em;
+    background-color: white;
+    font-weight: normal;
+}
+
+.abutton:hover {
+    background-color: springgreen;
+    text-decoration: none;
+    font-weight: normal;
+}
+
+
+
+
+
+/*adjustment for smaller screens/viewports*/
+@media (max-width: 600px)/*,
+(min-resolution: 1.8dppx) */ {
+    body {
+        max-width: 95vw;
+    }
+
+    table.minefield td {
+        font-size: calc(1em + 4vw);
+        width: 10vw;
+        height: 10vw;
+        min-width: 1em;
+        min-height: 1em;
+    }
+}
+
+@media (max-height: 780px),
+(max-width: 600px) and (orientation: landscape)/*,
+(min-resolution: 1.8dppx)  and (orientation:landscape)*/ {
+
+    table.minefield td {
+        font-size: calc(1em + 2vh);
+        width: 5vh;
+        height: 5vh;
+    }
+}
+
+/*some animation for mine*/
+table.minefield td.mine {
+    animation-name: explosion;
+    animation-direction: normal;
+    animation-duration: 2s;
+    animation-timing-function: linear;
+}
+
+@keyframes explosion{
+    from {
+        background-image: none;
+        background-color: white;
+    }
+    20%{
+        background-color: darkgray;
+    }
+    30%{
+        background-color: yellow;
+    }
+    to{
+        background-color: red;
+        background-image: url("/images/mines/mine.svg");
+    }
+}
+.pokerhand{
+display: flex;
+justify-content: space-evenly;
+padding-top: 2rem;
+padding-left: 0.5rem;
+padding-right: 0.5rem;
+}
+.card {
+
+      transition: top ease 1s;
+      width: 70px;
+      height: 100px;
+      border: 1px solid black;
+      border-radius: 5px;
+      position: relative;
+    }
+.card:hover {
+top: -2rem;
+border: 3px solid #D4AF37;
+}
+.card_selected:hover {border: 3px solid #D4AF37;}
+.card_selected {
+    top: -2rem;
+    margin-top:0;
+}
+
+    .rank {
+      font-size: 25px;
+      position: absolute;
+      top: 5px;
+      left: 5px;
+    }
+
+    .suit {
+      font-size: 25px;
+      position: absolute;
+      bottom: 5px;
+      right: 5px;
+    }
+
+    .red {
+      color: red;
+    }
+
+    .black {
+      color: black;
+    }
+
+    .spades:before {
+      content: "♠";
+    }
+
+    .hearts:before {
+      content: "♥";
+      color: red;
+    }
+
+    .diamonds:before {
+      content: "♦";
+      color: red;
+    }
+
+    .clubs:before {
+      content: "♣";
+    }
+.pokerhand_grayed{
+background-color: #AAAAAA;}
+.card_grayed{
+background-color:#909090;}
+.newgame_button{
+margin-left:0.7rem;
+}
+
+
+
+
