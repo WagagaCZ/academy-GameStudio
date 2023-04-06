@@ -12,54 +12,11 @@
 <main layout:fragment="content">
 
     <div class="grid-container">
-        <section class="pexeso">
-            <h1>Pexeso Game</h1>
-            <p>Click on a card to reveal its image.</p>
 
-            <a href="/pexeso/new">New Game</a>
-            <div th:if="${@pexesoController.isSolved()}" id="win-message" class="bg-success text-white p-3 mb-3">You
-                won!
-            </div>
-            <table>
-                <tr th:each="row: ${@pexesoController.getCards()}">
-                    <td th:each="card: ${row}" th:attr="class='c' + ${@pexesoController.getCardText(card)}">
-                        <div class="cardMaros" th:classappend="${card.isFlipped} ? 'flipped' : 'notFlipped'">
-                            <a th:if="${!card.isFlipped()}"
-                               th:href="@{/pexeso(row=${rowStat.index}, column=${cardStat.index})}">
-                                <span th:text="${@pexesoController.getCardText(card)}"></span>
-                            </a>
-                            <span th:if="${card.isFlipped()}"></span>
-                        </div>
-                    </td>
-                </tr>
-            </table>
-        </section>
-        <section class="scoreMaros">
-            <h3>Best Scores</h3>
-            <table class="scoresMaros">
-                <thead>
-                <tr>
-                    <th>Number</th>
-                    <th>Name</th>
-                    <th>Score</th>
-                    <th>Date and time</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="score: ${@pexesoController.getTopScores()}">
-                    <td th:text="${scoreStat.index+1}"></td>
-                    <td th:text="${score.getPlayer()}"></td>
-                    <td th:text="${score.getPoints()}"></td>
-                    <td th:text="${score.getPlayedOn()}"></td>
-                </tr>
-                </tbody>
-            </table>
-        </section>
         <section class="comment-form">
             <div>
-                <h3>Write a comment</h3>
+                <h3 style="font-size: 36px;font-weight: bold;">Write a comment</h3>
                 <form th:action="@{/pexeso/submitComment}" method="post">
-                    <label for="comment" style="font-family;">Comment</label>
                     <textarea name="commentText" id="comment" rows="5" cols="50"
                               th:value="${commentText}"></textarea><br>
                     <input class="fade-out-color" type="submit" value="Submit">
@@ -84,10 +41,56 @@
                 </tbody>
             </table>
         </section>
+        <section class="pexeso">
+            <h1 style="font-size: 36px;font-weight: bold;">Pexeso Game</h1>
+            <p>Click on a card to reveal its image.</p>
 
+            <a href="/pexeso/new">New Game</a>
+            <div th:if="${@pexesoController.isSolved()}" id="win-message" class="bg-success text-white p-3 mb-3">You
+                won!
+            </div>
+            <table>
+                <tr th:each="row: ${@pexesoController.getCards()}">
+                    <td th:each="card: ${row}" th:attr="class='c' + ${@pexesoController.getCardText(card)}">
+                        <div class="cardMaros" th:classappend="${card.isFlipped} ? 'flipped' : 'notFlipped'">
+                            <a th:if="${!card.isFlipped()}"
+                               th:href="@{/pexeso(row=${rowStat.index}, column=${cardStat.index})}">
+                                <span th:text="${@pexesoController.getCardText(card)}"></span>
+                            </a>
+                            <span th:if="${card.isFlipped()}"></span>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <br>
+            <div class="score-result">
+                <h3>Number of moves:
+                <span th:text="${@pexesoController.getScore()}"></span>
+                </h3>
+            </div>
+            <h3 style="font-size: 36px;font-weight: bold;">Best Scores</h3>
+            <table class="scoresMaros">
+                <thead>
+                <tr>
+                    <th>Number</th>
+                    <th>Name</th>
+                    <th>Score</th>
+                    <th>Date and time</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="score: ${@pexesoController.getTopScores()}">
+                    <td th:text="${scoreStat.index+1}"></td>
+                    <td th:text="${score.getPlayer()}"></td>
+                    <td th:text="${score.getPoints()}"></td>
+                    <td th:text="${score.getPlayedOn()}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </section>
         <section class="rating-form">
             <div>
-                <h3>Rate this game</h3>
+                <h3 style="font-size: 36px;font-weight: bold;">Rate this game</h3>
                 <form th:action="@{/pexeso/submitRating}" method="post">
                     <label for="rating">Rating</label>
                     <select name="rating" id="rating">
