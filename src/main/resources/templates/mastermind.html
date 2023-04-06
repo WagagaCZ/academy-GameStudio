@@ -5,30 +5,43 @@
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
         lang="en">
 <head>
-  <title>Mastermind</title>
-  <link rel="stylesheet" th:href="@{mastermind/mastermind.css}">
+    <title>Mastermind</title>
+    <link rel="stylesheet" th:href="@{mastermind/mastermind.css}">
 </head>
 <body>
 <main layout:fragment="content">
-<div id="game-window">
-  <div id="game-title-mastermind">
-    <h1>Mastermind</h1>
-  </div>
-  <div id="main"></div>
-  <div id="game-footer-mastermind">
-    <div id="div-select-color"></div>
-    <input id="submit-btn" type="button" value="Submit" />
-  </div>
-</div>
+    <div id="game-window">
+        <div id="game-title-mastermind">
+            <h1>Mastermind</h1>
+        </div>
+        <div id="main"></div>
+        <div id="game-footer-mastermind">
+            <div id="div-select-color"></div>
+            <input id="submit-btn" type="button" value="Submit"/>
+        </div>
+    </div>
 
 
-<div id="menu-btn-container">
-  <button class="menu-btn" onclick="init()">Restart</button>
-  <a href="/"><button class="menu-btn">Home</button></a>
-  <button class="menu-btn" onclick="setAndStartNewGame()">Own</button>
-</div>
+    <div id="menu-btn-container">
+        <button class="menu-btn" onclick="init()">Restart</button>
+        <a href="/"><button class="menu-btn">Home</button></a>
+        <button class="menu-btn" onclick="setAndStartNewGame()">Own</button>
+    </div>
 
-<script th:src="@{mastermind/mastermind.js}"></script>
+    <div id="manual">
+        <h2>How it works</h2>
+        <ul>
+            <li>Your goal is to guess the hidden color code</li>
+            <li>Colors may repeat, or be absent in the code</li>
+            <li> Press "Own" to change the code's length and the number of tries</li>
+            <li>Your guesses appear in the left column
+                and their corrections in the right column</li>
+            <li>In corrections, red means it's the right color in the right place
+                while white means the color is present in the code but the particular place is wrong</li>
+        </ul>
+    </div>
+
+    <script th:src="@{mastermind/mastermind.js}"></script>
 </main>
 </body>
 </html>

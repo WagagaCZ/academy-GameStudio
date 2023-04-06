@@ -1,5 +1,5 @@
 * {
-    margin: 0px;
+    margin: 0;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
@@ -9,10 +9,10 @@ body {
 
 #game-window {
     text-align: center;
-    color: #18cdca7c;
-    border: 5px solid #18cdca7b;
+    color: #323232;
+    border: 5px solid darkslategray;
     border-radius: 12px;
-    background-color: #2a363b ;
+    background-color: #9bb4b5;
     max-width: 500px;
     margin: 10px auto;
     margin-top: 25px;
@@ -39,7 +39,7 @@ body {
 
 #game-footer-mastermind,
 #game-title-mastermind {
-    background-color: #2a363b;
+    background-color: #9bb4b5;
     padding: 10px;
 }
 
@@ -95,7 +95,7 @@ body {
 input[type=button] {
     background-color: white;
     cursor: pointer;
-    color: black;
+    color: #323232;
     border-radius: 12px;
     height: 35px;
     width: 100px;
@@ -110,4 +110,14 @@ input:hover {
 
 input[type=button]:active {
     background-color: yellow;
+}
+
+#manual {
+    align-self: center;
+    text-align: left;
+    font-size: 10px;
+    color: #323232;
+    max-width: 450px;
+    margin: 10px auto;
+    margin-top: 25px;
 }
