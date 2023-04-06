@@ -1,0 +1,66 @@
+body {
+    background-image: url("/images/blackjack/tableBackground.jpg");
+    background-size:100% 100%;
+    color: #FFFFFF;
+}
+.container{
+    display: flex;
+    padding-left: 0px;
+    padding-right: 0px;
+    border-top: 3px solid white;
+}
+.center {
+    margin: auto;
+    width: 50%;
+    border-left: 3px solid white;
+    border-right: 3px solid white;
+    padding: 10px;
+    height: 100vh;
+}
+.left{
+    width: 25%;
+    height: 100vh;
+}
+.right{
+    text-align: right;
+    width: 25%;
+    height: 100vh;
+}
+.bjbutton{
+    text-align: center;
+    border: 2px solid white;
+    display: inline-block;
+    width: 8em;
+    margin: 0.1em;
+    padding: 0.1em;
+    border-radius: 0.2em;
+    background-color: black;
+    font-weight: normal;
+}
+
+table.blackjack {
+    text-align: center;
+    width: 95%;
+    border: white solid 2px;
+}
+
+table.blackjack th {
+    font-weight: bold;
+    color: #FFFFFF;
+    background-color: darkgreen;
+}
+
+table.blackjack tr:nth-child(even) {
+    background-color: lightgreen
+    border: white solid 2px;
+}
+
+table.blackjack tr:nth-child(odd) {
+    background-color: green;
+    border: white solid 2px;
+}
+th.hand {
+    font-weight: bold;
+    color: #FFFFFF;
+    border: white solid 2px;
+}
