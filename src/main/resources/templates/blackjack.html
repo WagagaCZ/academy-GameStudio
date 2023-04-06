@@ -1,48 +1,133 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.com"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns="http://www.w3.org/1999/html"
       layout:decorate="~{layout/layoutGameStudio.html}"
       lang="en">>
 <head>
     <title>GameStudio - BlackJack</title>
+    <link rel="stylesheet" href="/styles/blackjack.css"/>
 </head>
 <body>
-
 <main layout:fragment="content">
-    <h2>Turn: <span th:text="${@blackJackController.getTurn().toString()}"></span></h2>
-    <br>
-    <h3>Dealers hand</h3>
-    <section>
-        <tr th:each="hand: ${@blackJackController.dealersHand}">
-            <td th:each="card: ${hand}">
-                <span th:text="${@blackJackController.getCardText(card)}"></span>
-            </td>
-        </tr>
-    </section>
-    <br>
-    <h3>Players hand</h3>
-    <section>
-        <tr th:each="hand: ${@blackJackController.playersHand}">
-            <td th:each="card: ${hand}">
-                <span th:text="${@blackJackController.getCardText(card)}"></span>
-            </td>
-        </tr>
-    </section>
-    <br>
-    <h2 th:if="${@blackJackController.isEnd}">
-        <span th:if="${@blackJackController.isPlayerWinner()}">Player WINS!</span>
-        <span th:if=" not ${@blackJackController.isPlayerWinner()}">Dealer WINS!</span>
-    </h2>
-    <br>
-    <a class="abutton" th:href="@{/blackjack(move=1)}" th:if="not ${@blackJackController.isEnd}">Next Card</a>
-    <a class="abutton" th:href="@{/blackjack(move=2)}" th:if="${@blackJackController.isPlayersTurn}">Stop</a>
-    <a class="abutton" th:href="@{/blackjack/new}" th:if="${@blackJackController.isEnd}">New Hand</a>
-    <a class="abutton" th:href="@{/blackjack/shuffle}" th:if="${@blackJackController.isEnd}">Shuffle Deck</a>
-    <br>
-    <br>
-    <a class="abutton" th:href="@{/}">Back Home</a>
+    <h1 style="text-align: center; font-size: 3em; padding: 10px;"><span style="color: #000;">Black</span><span style="color: #DC143C">Jack</span></h1>
+    <div class="container">
+        <div class="left">
+            <h3>Best Scores</h3>
 
+            <table class="blackjack">
+                <thead>
+                <tr>
+                    <th style="width: 5%">No.</th>
+                    <th style="width: 35%">Name</th>
+                    <th style="width: 25%">Score</th>
+                    <th style="width: 35%">Date and time</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="score: ${@blackJackController.getTopScores()}">
+                    <td th:text="${scoreStat.index+1}"></td>
+                    <td th:text="${score.player}"></td>
+                    <td th:text="${score.getPoints()}"></td>
+                    <td th:text="${score.getPlayedOn()}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="center">
+        <h2>Turn: <span th:text="${@blackJackController.getTurn().toString()}"></span></h2>
+        <br>
+        <h3>Bank: <span th:text="${@blackJackController.getBank()}"></span></h3>
+        <br>
+        <h3>Dealers hand</h3>
+        <table class="blackjack">
+            <thead>
+            <tr>
+                <th style="width: 20%" class="hand">1</th>
+                <th style="width: 20%" class="hand">2</th>
+                <th style="width: 20%" class="hand">3</th>
+                <th style="width: 20%" class="hand">4</th>
+                <th style="width: 20%" class="hand">5</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th class="hand" th:each="hand: ${@blackJackController.dealersHand}" th:text="${@blackJackController.getCardText(hand)}"></th>
+            </tr>
+            </tbody>
+        </table>
+        <br>
+        <h3>Players hand</h3>
+        <table class="blackjack">
+            <thead>
+            <tr>
+                <th style="width: 20%" class="hand">1</th>
+                <th style="width: 20%" class="hand">2</th>
+                <th style="width: 20%" class="hand">3</th>
+                <th style="width: 20%" class="hand">4</th>
+                <th style="width: 20%" class="hand">5</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th class="hand" th:each="hand: ${@blackJackController.playersHand}" th:text="${@blackJackController.getCardText(hand)}"></th>
+            </tr>
+            </tbody>
+        </table>
+        <br>
+        <h2 th:if="${@blackJackController.isEnd}">
+            <span th:if="${@blackJackController.isPlayerWinner()}">Player WINS!</span>
+            <span th:if=" not ${@blackJackController.isPlayerWinner()}">Dealer WINS!</span>
+        </h2>
+        <br>
+        <a class="bjbutton" th:href="@{/blackjack(move=1)}" th:if="not ${@blackJackController.isEnd}">Next Card</a>
+        <a class="bjbutton" th:href="@{/blackjack(move=2)}" th:if="${@blackJackController.isPlayersTurn}">Stop</a>
+        <a class="bjbutton" th:href="@{/blackjack/new}" th:if="${@blackJackController.isEnd}">New Hand</a>
+        <a class="bjbutton" th:href="@{/blackjack/shuffle}" th:if="${@blackJackController.isEnd}">Shuffle Deck</a>
+        <a class="bjbutton" th:href="@{/blackjack/double}" th:if="${@blackJackController.canDouble}">Double</a>
+        <a class="bjbutton" th:href="@{/blackjack/end}" th:if="${@blackJackController.isEnd}">End game and submit</a>
+        <br>
+        <br>
+        <a class="bjbutton" th:href="@{/}">Back Home</a>
+
+        </div>
+        <div class="right">
+            <h3>Comments</h3>
+
+            <table class="blackjack">
+                <thead>
+                <tr>
+                    <th style="width: 30%">Name</th>
+                    <th style="width: 50%">Comment</th>
+                    <th style="width: 20%">Date and time</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="comment: ${@blackJackController.getComments()}">
+                    <td th:text="${comment.player}"></td>
+                    <td th:text="${comment.getComment()}"></td>
+                    <td th:text="${comment.getCommentedOn()}"></td>
+                </tr>
+                </tbody>
+            </table>
+            <span th:if="${@userController.isLogged()}">
+                <br>
+                <form action="/blackjack/comment" method="post">
+                    Leave a comment: <input type="text" name="comment"/><br/>
+                    <input type="submit"/>
+                </form>
+            </span>
+            <br>
+            <h4>User rating:</h4>
+            <span th:text="${@blackJackController.getAverageRating()}"></span>
+            <span th:if="${@userController.isLogged()}">
+                <br>
+                <form action="/blackjack/rating" method="post">
+                    Leave a rating: <input type="number" name="rating" min="1" max="5" required /><br/>
+                    <input type="submit"/>
+                </form>
+            </span>
+        </div>
+    </div>
 </main>
-
 </body>
 </html>

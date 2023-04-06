@@ -43,8 +43,8 @@ function updateTimer() {
   ml += time
   let minutes = Math.floor(ml / 60000).toString().padStart(2, "0")
   let seconds = Math.floor((ml % 60000) / 1000).toString().padStart(2, "0")
-  let mili = (ml % 1000).toString().padStart(3, "0")
-  timerDisplay.innerHTML = (minutes + "m:") + (seconds + "s:") + (mili + "ms")
+  let mili = (ml % 1000)
+  timerDisplay.innerHTML = (minutes + "m:") + (seconds + "s:") + ((+mili).toFixed(0).padStart(3,"0") + "ms")
 }
 
 function getTime() {

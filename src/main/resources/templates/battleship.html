@@ -1,122 +1,199 @@
 <!DOCTYPE html>
-<html  xmlns:th="http://www.thymeleaf.com" lang="en">
+<html xmlns:th="http://www.thymeleaf.com" lang="en">
 <head>
-  <title>GameStudio - Battleship</title>
-  <link th:href="@{/styles/battleship/main.css}" rel="stylesheet" />
+    <title>GameStudio - Battleship</title>
+    <link th:href="@{/styles/battleship/main.css}" rel="stylesheet"/>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+		window.onload = function() {
+			checkGameResult();
+		};
+	</script>
 </head>
 <body>
 
-
 <div class="top-bar">
-  <h1>Battleship</h1>
-  <div class="login-user" th:if="${@userController.logged}">
-    <a th:href="@{/logout}" style="text-decoration:none;color:white;">
-      <span th:text="${@userController.loggedUser}"></span>
+    <a href="/" onclick="startNewGame()">
+        <h1>Battleship</h1>
     </a>
-  </div>
-  <div class="login-user" th:if="not ${@userController.logged}">
-    Logged out
-  </div>
+    <div class="login-user" th:if="${@userController.logged}">
+        <a th:href="@{/logout}" onclick="startNewGame()" style="text-decoration:none;color:white;">
+            <span th:text="${@userController.loggedUser}"></span>
+        </a>
+        <script th:inline="javascript">
+            var loggedIn = true;
+
+        </script>
+    </div>
+    <div class="login-user" th:if="not ${@userController.logged}">
+        Logged out
+        <script th:inline="javascript">
+            var loggedIn = false;
+
+        </script>
+    </div>
 </div>
 
-  <div class="titles">
+<div class="titles">
     <h2>Enemy</h2>
     <h2>Player</h2>
-  </div>
-  <div class="comments-field">
+</div>
+<div class="comments-field">
     <div class="comments">
-      <h2>Comments</h2>
-      <ul>
-        <li th:each="comment: ${@battleShipController.showComments()}">
-          <div class="comment">
-            <div class="date" th:text="${comment.getCommentedOn()}"></div>
-            <div class="author" th:text="${comment.getPlayer()}"></div>
-            <div class="content" th:text="${comment.getComment()}"></div>
-          </div>
-        </li>
-      </ul>
+        <h2>Comments</h2>
+        <ul>
+            <li th:each="comment: ${@battleShipController.showComments()}">
+                <div class="comment">
+                    <div class="date" th:text="${comment.getCommentedOn()}"></div>
+                    <div class="author" th:text="${comment.getPlayer()}"></div>
+                    <div class="content" th:text="${comment.getComment()}"></div>
+                </div>
+            </li>
+        </ul>
     </div>
 
-
     <section class="seafield">
-      <table class='minefield'>
-        <tr th:each="row: ${@battleShipController.getEnemyFieldTiles()}">
-          <td th:each="tile: ${row}" th:attr="class=${@battleShipController.getTileClass(tile)}">
-            <a th:if="${tile.isNotOpen()} and ${@battleShipController.isPlaying()}"
-               th:href="@{/ship(row=${rowStat.index}, column=${tileStat.index})}">
-              <span th:text="${@battleShipController.getTileText(tile)}"></span>
-            </a>
-            <span th:if="not(${tile.isNotOpen()} and ${@battleShipController.isPlaying()})"
-                  th:text="${@battleShipController.getTileText(tile)}">
+        <table class='minefield'>
+            <tr th:each="row: ${@battleShipController.getEnemyFieldTiles()}">
+                <td th:each="tile: ${row}" th:attr="class=${@battleShipController.getTileClass(tile)}">
+                    <a th:if="${tile.isNotOpen()} and ${@battleShipController.isPlaying()}"
+                       th:href="@{/ship(row=${rowStat.index}, column=${tileStat.index})}">
+                        <span th:text="${@battleShipController.getTileText(tile)}"></span>
+                    </a>
+                    <span th:if="not(${tile.isNotOpen()} and ${@battleShipController.isPlaying()})"
+                          th:text="${@battleShipController.getTileText(tile)}">
                   <span th:if="${tile.getState() == 'WATER'}"></span>
             </span>
-          </td>
-        </tr>
-      </table>
+                </td>
+            </tr>
+        </table>
 
-      <table class='minefield'>
-        <tr th:each="row: ${@battleShipController.getPlayerFieldTiles()}">
-          <td th:each="tile: ${row}" th:attr="class=${@battleShipController.getTileClassPlayer(tile)}">
-          </td>
-        </tr>
-      </table>
+        <table class='minefield'>
+            <tr th:each="row: ${@battleShipController.getPlayerFieldTiles()}">
+                <td th:each="tile: ${row}" th:attr="class=${@battleShipController.getTileClassPlayer(tile)}">
+                </td>
+            </tr>
+        </table>
     </section>
 
     <div class="comment-form">
-      <div class="game">
-        <h2>Leave a Comment</h2>
-        <form th:action="@{/ship/submitComment}" method="post">
-          <label for="comment" style="font-family: impact, sans-serif;">Comment:</label><br>
-          <textarea id="comment" name="commentText" th:value="${commentText}"></textarea><br>
-          <input type="submit" style="font-family: impact, sans-serif;" value="Submit">
-        </form>
+        <div class="game">
+            <h2>Leave a Comment</h2>
+            <form th:action="@{/ship/submitComment}" method="post">
+                <label for="comment" style="font-family: impact, sans-serif;">Comment:</label><br>
+                <textarea id="comment" name="commentText" th:value="${commentText}"></textarea><br>
+                <input type="submit" style="font-family: impact, sans-serif;" value="Submit">
+            </form>
 
-      </div>
+        </div>
     </div>
-  </div>
+</div>
 
-  <div class ="buttons-fields">
-    <h2 th:text="${@battleShipController.getNumberOfEnemyTiles()}"></h2>
+<div class="buttons-fields">
+    <h2 id="numberOfEnemyTiles" th:text="${@battleShipController.getNumberOfEnemyTiles()}" ></h2>
     <a href="/ship/new" class="play-btn">New Game</a>
-    <h2 th:text="${@battleShipController.getNumberOfPlayerTiles()}"></h2>
-  </div>
+    <h2 id="numberOfPlayerTiles" th:text="${@battleShipController.getNumberOfPlayerTiles()}"></h2>
+</div>
 
-
-  <div class="slide-rating">
+<div class="slide-rating">
     <h2>Rate a Game</h2>
-    <form th:action="@{/ship/rating}" method="post">
-      <input type="range" min="1" max="5" value="1" class="slider" id="myRange" name="ratingValue">
-      <div class="rating-btn">
-        <input type="submit" style="font-family: impact, sans-serif;" value="Submit" name="submitRating">
-        <input type="submit" style="font-family: impact, sans-serif;" value="Get Rating" name="getRating">
-        <input type="submit" style="font-family: impact, sans-serif;" value="Average Rating" name="getAverageRating">
-      </div>
+    <form id="rating-form" method="post">
+        <input type="range" min="1" max="5" value="1" class="slider" id="myRange" name="ratingValue">
+        <div class="rating-btn">
+            <button type="button" style="font-family: impact, sans-serif;" onclick="getRating()">Get Rating</button>
+            <button type="button" style="font-family: impact, sans-serif;" onclick="getAverageRating()">Average Rating
+            </button>
+            <input type="submit" style="font-family: impact, sans-serif;" value="Submit" name="submitRating">
+        </div>
     </form>
     <div class="rating-value">
-      <h3 th:text="${ratingValue != null ? 'Value: ' + ratingValue : 'Value:'}"></h3>
+        <h3 id="rating-value"></h3>
     </div>
-  </div>
+</div>
 
 
-  <div class="table-score">
+<div class="table-score">
     <h2>Top 10 Scores</h2>
     <table>
-      <thead>
-      <tr class="table-head">
-        <th class="column1">Player</th>
-        <th class="column2">Score</th>
-        <th class="column3">Date</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr th:each="score: ${@battleShipController.getTopScores()}">
-        <td class="column1" th:text="${score.getPlayer()}"></td>
-        <td class="column2" th:text="${score.getPoints()}"></td>
-        <td class="column3" th:text="${score.getPlayedOn()}"></td>
-      </tr>
-      </tbody>
+        <thead>
+        <tr class="table-head">
+            <th class="column1">Player</th>
+            <th class="column2">Score</th>
+            <th class="column3">Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="score: ${@battleShipController.getTopScores()}">
+            <td class="column1" th:text="${score.getPlayer()}"></td>
+            <td class="column2" th:text="${score.getPoints()}"></td>
+            <td class="column3" th:text="${score.getPlayedOn()}"></td>
+        </tr>
+        </tbody>
     </table>
-  </div>
+</div>
+
+<script>
+
+function getRating() {
+  $.get("/ship/rating?getRating=true", function(data, status) {
+    if (status === "success") {
+      $("#rating-value").text("Your rating: " + (data.ratingValue || 0));
+    } else {
+      console.log("Failed to get rating");
+    }
+  });
+}
+
+function getAverageRating() {
+  $.get("/ship/average-rating?getAverageRating=true", function(data, status) {
+    if (status === "success") {
+      $("#rating-value").text("Average rating: " + (data.averageRating || 0));
+    } else {
+      console.log("Failed to get average rating");
+    }
+  });
+}
+
+$(document).ready(function() {
+  $("#rating-form").submit(function(event) {
+    event.preventDefault();
+    if (!loggedIn) {
+      alert("Please log in if you want to submit your rating");
+      return;
+    }
+    $.post("/ship/rating", $(this).serialize(), function(data, status) {
+      if (status === "success") {
+        alert("Rating submitted successfully!");
+      } else {
+        console.log("Failed to submit rating");
+      }
+    });
+  });
+});
+
+
+function startNewGame() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.open("POST", "/ship/start", true);
+        xhttp.send();
+    }
+
+function checkGameResult() {
+  var numberOfEnemyTiles = document.getElementById("numberOfEnemyTiles").textContent;
+  var numberOfPlayerTiles = document.getElementById("numberOfPlayerTiles").textContent;
+
+  if (numberOfEnemyTiles == 0) {
+    setTimeout(function() {
+      alert("Congratulations! You won!");
+    }, 100);
+  } else if (numberOfPlayerTiles == 0) {
+    setTimeout(function() {
+      alert("Game over. You lost.");
+    }, 100);
+  }
+}
+
+</script>
 
 </body>
 </html>

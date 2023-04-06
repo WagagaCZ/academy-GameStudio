@@ -5,12 +5,17 @@
 <head>
     <meta charset="UTF-8">
     <title>Gamestudio</title>
-    <link rel="stylesheet" href="/static/styles/gamestudio.css"/>
-    <link rel="stylesheet" href="/static/styles/styles.css"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="/styles/toe/toe.css"/>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <style>
+        body {
+            max-width: 100rem;
+        }
+    </style>
 </head>
-<body>
+<body class="toe">
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
@@ -28,55 +33,83 @@
             <div class="col-12"></div>
             <h1>TIC-TAC-TOE</h1>
         </div>
+        <div class="w3-container w3-light-grey">
+            <h2 style="text-shadow:1px 1px 0 #444">TIC-TAC-TOE</h2>
+        </div>
     </div>
-
 
     <div class="row content">
         <div class="col-sm-5 sidenav">
             <a href="toe/new" class="btn btn-warning btn-lg btn-block "
                role="button" aria-pressed="true">NEW GAME</a>
         </div>
-
         <div class="col-sm-7 center-l">
-
             <div th:utext="${@toeController.getToeField()}"></div>
         </div>
-    </div>
-    </div>
+
+        <div class="w3-col s3 w3-center">
+            <div class="w3-container w3-light-grey">
+                <h2 style="text-shadow:1px 1px 0 #444">RATING</h2>
+            </div>
+            <table class="w3-table-all w3-xlarge">
+                <thead class="thead-dark">
+                <tr>
+                    <th>Game</th>
+                    <th>Rating</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>TIC-TAC-TOE</td>
+                    <td th:text="${@toeController.getAvverageRating()}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col">
+            <div>
+                <form class="w3-container" action="#" th:action="@{/toe/rating}" th:method="post">
+                    <div class="w3-container w3-light-grey">
+                        <h2 style="text-shadow:1px 1px 0 #444">INPUT YOUR RATING</h2>
+                    </div>
+                    <select name="game" style="border-bottom-color: #42ab3e">
+                        <option th:value="'TIC_TAC_TOE'" th:text="TIC-TAC-TOE"></option>
+                    </select>
+                    <select name="ratingValue">
+                        <option th:each="i : ${#numbers.sequence(1,5)}" th:value="${i}" th:text="${i}"></option>
+                    </select>
+                    <input type="submit" value="Pridaj">
+                </form>
+            </div>
+        </div>
 
 
-    <div class="alert alert-danger" role="alert" th:if="${@toeController.checkWin()}"
-         th:text="${@toeController.getGameResult()}">
-    </div>
+        <div class="alert alert-danger" role="alert" th:if="${@toeController.checkWin()}"
+             th:text="${@toeController.getGameResult()}">
+        </div>
 
-    <div class="alert alert-success" role="alert" th:if="${@toeController.checkWin()}">
-        <span>Your game time in sec:</span>
-        <span th:text="${@toeController.getTime()}"></span>
-    </div>
+        <div class="alert alert-primary" role="alert" th:if="${@toeController.gameOver}"
+             th:text="${@toeController.getGameResult()}">
+        </div>
 
-    <div class="alert alert-primary" role="alert" th:if="${@toeController.gameOver}"
-         th:text="${@toeController.getGameResult()}">
-    </div>
-
-    <div class="mx-auto" style="width: 200px;">
-
-    </div>
-
-    <div class="container overflow-hidden m-5">
-        <div class="row gy-5">
-            <div class="col">
-                <h2>Score</h2>
-                <table class="table table-bordered table-sm table-striped">
+        <div class="w3-row">
+            <div class="w3-col s6 w3-center">
+                <div class="w3-container w3-light-grey">
+                    <h2 style="text-shadow:1px 1px 0 #444">SCORE</h2>
+                </div>
+                <table class="w3-table w3-striped w3-border">
                     <thead class="thead-dark">
                     <tr>
-                        <th>player</th>
-                        <th>game</th>
-                        <th>score</th>
+                        <th></th>
+                        <th>Player</th>
+                        <th>Game</th>
+                        <th>Score</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="score : ${list}">
-                        <td th:text="${scoreStat.index}" scope="col"></td>
+                    <tr th:each="score : ${@toeController.getTopScores()}">
+                        <td th:text="${scoreStat.index+1}" scope="col"></td>
                         <td th:text="${score.player}" scope="col"></td>
                         <td th:text="${score.game}"></td>
                         <td th:text="${score.points}"></td>
@@ -84,16 +117,42 @@
                     </tbody>
                 </table>
             </div>
+        </div>
 
-            <div class="row gy-5 m-5">
-                <div class="col">
-                    <h2 class="text-center text-primary">RATING</h2>
+        <div class="w3-row">
+            <div class="w3-col s6 w3-center">
+                <div class="w3-container w3-light-grey">
+                    <h2 style="text-shadow:1px 1px 0 #444">COMMENTS</h2>
                 </div>
+                <table class="w3-table w3-striped w3-border">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th>Player</th>
+                        <th>Game</th>
+                        <th>Comment</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="comment: ${@toeController.getToeComments()}">
+                        <td th:text="${comment.player}" scope="col"></td>
+                        <td th:text="${comment.game}"></td>
+                        <td th:text="${comment.comment}"></td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
-
-
-</div>
+            <div class="w3-col s6 w3-center">
+                <div class="w3-container w3-light-grey">
+                    <h2 style="text-shadow:1px 1px 0 #444">INPUT YOUR COMMENT</h2>
+                </div>
+                <form class="w3-container" th:action="@{/toe/comments}" method="post">
+                    <textarea id="comment" name="commentText" th:value="${commentText}"></textarea><br>
+                    <input type="submit" value="Submit">
+                </form>
+            </div>
+        </div>
     </div>
+
 </main>
 
 </body>

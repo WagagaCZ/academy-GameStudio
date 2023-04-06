@@ -1,0 +1,44 @@
+body.puzzle a {
+    background-color: #ffffff;
+    font-size: 1rem;
+    font-family: Arial, "Arial CE", "Helvetica CE", sans-serif;
+    margin: auto;
+    width: 100em;
+    padding: 5em;
+    align-items: center;
+}
+
+table.puzzle th, table.puzzle td {
+    text-align: center;
+    background-color: #B676B1;
+    border-radius: 1em;
+    font-size: 2.1em;
+    width: 8vw;
+    height: 8vw;
+    min-width: 1em;
+    min-height: 1em;
+    align-items: center;
+
+}
+
+table.puzzle a {
+    display: grid;
+    grid-template-columns: repeat(9, 10px);
+    grid-template-rows: repeat(4, 10px);
+    grid-gap: 10px;
+    margin: auto;
+    max-width: 1200px;
+    justify-content: center;
+    text-align: center;
+    border-radius: 1em;
+}
+
+
+.backIMg .greeting-container {
+    height: 10vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+button {margin: 20px;}

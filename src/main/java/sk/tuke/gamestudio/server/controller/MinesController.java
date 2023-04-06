@@ -22,7 +22,6 @@ import java.util.List;
 @RequestMapping("/mines")
 @Scope(WebApplicationContext.SCOPE_SESSION)
 public class MinesController {
-
     private Field field = null;
     private boolean marking = false;
 

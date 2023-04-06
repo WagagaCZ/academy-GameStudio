@@ -249,7 +249,8 @@ li{
   cursor: pointer;
 }
 
-.slide-rating input[type="submit"] {
+.slide-rating input[type="submit"],
+.slide-rating button[type="button"] {
   background-color: black;
   color: #fff;
   border: none;
@@ -258,7 +259,8 @@ li{
   cursor: pointer;
 }
 
-.slide-rating input[type="submit"] {
+.slide-rating input[type="submit"],
+.slide-rating button[type="button"] {
   position: relative;
   top: 8px;
 }
@@ -551,6 +553,15 @@ table.minefield td.ship span {
     display: flex;
     gap: 400px;
 }
+
+h1:hover {
+  color: blue;
+}
+
+a {
+    text-decoration: none;
+}
+
 
 
 

@@ -1,13 +1,15 @@
 package sk.tuke.gamestudio.client.game.blackjack.core;
 
 public class Table {
-    private Card[] playerHand;
-    private Card[] dealerHand;
+    private Card[] playerHand = new Card[5];
+    private Card[] dealerHand = new Card[5];
     private int numberOfPlayerCards;
     private int numberOfDealerCards;
     private Deck deck;
-    private Turn turn;
+    private Turn turn = Turn.END;
     private Card dealerCard;
+    private int bank = 100;
+    private int bet;
 
     public Table() {
         deck = new Deck();
@@ -15,21 +17,28 @@ public class Table {
     }
 
     public void setup() {
-        System.out.println("Cards in deck: " + deck.getLeftInDeck());
-        if (deck.getLeftInDeck() < 10) {
-            shuffle();
+        if (turn == Turn.END) {
+            bet = 10;
+            if (!hasEnough(bet)) {
+                System.out.println("Not enough in bank.");
+                return;
+            }
+            System.out.println("Cards in deck: " + deck.getLeftInDeck());
+            if (deck.getLeftInDeck() < 10) {
+                shuffle();
+            }
+            playerHand = new Card[5];
+            dealerHand = new Card[5];
+            turn = Turn.PLAYER;
+            for (int i = 0; i < 2; i++) {
+                playerHand[i] = deck.drawCard();
+                dealerHand[i] = deck.drawCard();
+            }
+            dealerCard = dealerHand[1];
+            dealerHand[1] = new Card(-1, -1);
+            numberOfDealerCards = 2;
+            numberOfPlayerCards = 2;
         }
-        playerHand = new Card[5];
-        dealerHand = new Card[5];
-        turn = Turn.PLAYER;
-        for (int i = 0; i < 2; i++) {
-            playerHand[i] = deck.drawCard();
-            dealerHand[i] = deck.drawCard();
-        }
-        dealerCard = dealerHand[1];
-        dealerHand[1] = new Card(-1, -1);
-        numberOfDealerCards = 2;
-        numberOfPlayerCards = 2;
     }
 
     public void drawNewCard() {
@@ -49,7 +58,7 @@ public class Table {
     }
 
     public void shuffle() {
-        if (turn == Turn.END) {
+        if (turn == Turn.END || turn == null) {
             deck = new Deck();
         } else {
             System.out.println("Can't shuffle, not the end of game.");
@@ -57,7 +66,6 @@ public class Table {
     }
 
     public void switchTurns() {
-        System.out.println("Switching");
         if (turn == Turn.PLAYER) {
             dealerHand[1] = dealerCard;
             turn = Turn.DEALER;
@@ -67,10 +75,20 @@ public class Table {
         }
     }
 
+    public void doubleUp() {
+        if (turn == Turn.PLAYER && hasEnough(2 * bet) && playerHand[2] == null) {
+            bet = bet * 2;
+            drawNewCard();
+            switchTurns();
+        }
+    }
+
     private boolean checkIfOut(Card[] hand) {
         int sum = checkSum(hand);
         if (sum > 21) {
             turn = Turn.END;
+            System.out.println("Over");
+            changeBank();
             System.out.println(sum);
             return true;
         }
@@ -80,6 +98,8 @@ public class Table {
         }
         if (numberOfDealerCards == 5 || (turn == Turn.DEALER && sum >= 17)) {
             turn = Turn.END;
+            System.out.println("Dealer");
+            changeBank();
         }
         System.out.println(sum);
         return false;
@@ -114,6 +134,20 @@ public class Table {
         return sum;
     }
 
+    private void changeBank() {
+        if (checkSum(playerHand) <= 21 && (checkSum(playerHand) > checkSum(dealerHand) || checkSum(dealerHand) > 21)) {
+            System.out.println("Bank then: " + bank);
+            bank += bet;
+            System.out.println("Bank now: " + bank);
+            System.out.println("Bet: " + bet);
+        } else {
+            System.out.println("Bank then: " + bank);
+            bank -= bet;
+            System.out.println("Bank now: " + bank);
+            System.out.println("Bet: " + bet);
+        }
+    }
+
     public Card[] getPlayerHand() {
         return playerHand;
     }
@@ -131,6 +165,18 @@ public class Table {
     }
 
     public boolean isPlayerWinner() {
-        return (!checkIfOut(playerHand) && (checkSum(playerHand) > checkSum(dealerHand) || checkIfOut(dealerHand)));
+        return (checkSum(playerHand) <= 21 && (checkSum(playerHand) > checkSum(dealerHand) || checkSum(dealerHand) > 21));
+    }
+
+    private boolean hasEnough(int bet) {
+        return (bet <= bank);
+    }
+
+    public int getBank() {
+        return bank;
+    }
+
+    public int getBet() {
+        return bet;
     }
 }
