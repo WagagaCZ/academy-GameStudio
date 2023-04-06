@@ -32,7 +32,7 @@ async function sendScoreAndReloadTable(game) {
     const player = res.loggedUser;
 
     if (player != null) {
-        await apiSendScore(player, game, countScore());
+        await apiSendScore(player, game, countMastermindScore());
         await showScores(game)
     } else {
         alert("You aren't logged in. Your score won't be saved.")
