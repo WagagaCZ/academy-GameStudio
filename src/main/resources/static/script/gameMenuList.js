@@ -67,6 +67,12 @@ const games = [
     creator: "Maros",
     icon: "fa-solid fa-magnifying-glass",
   },
+  {
+      name: "Poker",
+      url: "/poker",
+      creator: "Martin",
+      icon: "fa-solid fa-heart",
+    },
 ];
 
 
