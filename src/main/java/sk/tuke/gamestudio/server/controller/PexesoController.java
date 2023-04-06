@@ -2,6 +2,7 @@ package sk.tuke.gamestudio.server.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -51,7 +52,14 @@ public class PexesoController {
     public String newGame() {
             startNewGame();
         score = 0;
+        flippedCards.clear();
         return "pexeso";
+    }
+
+    @PostMapping("start")
+    public ResponseEntity<Void> startNewPexesoGame(){
+        newGame();
+        return ResponseEntity.ok().build();
     }
 
     private void startOrUpdateGame(Integer row, Integer column) {
@@ -86,17 +94,6 @@ public class PexesoController {
 
     private void startNewGame() {
         board = new Board(6, 5);
-    }
-
-    @PostMapping
-    public String flipCard(@RequestParam int x, @RequestParam int y, Model model) {
-
-        board.flipCard(x, y);
-        model.addAttribute("board", board);
-        if (board.isSolved()) {
-            return "pexeso";
-        }
-        return "pexeso";
     }
     public List<Score> getTopScores() {
         return scoreService.getTopScores("pexeso");

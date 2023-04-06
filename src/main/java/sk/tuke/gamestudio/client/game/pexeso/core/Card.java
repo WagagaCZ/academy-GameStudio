@@ -32,9 +32,6 @@ public class Card {
     }
 
 
-
-
-
     @Override
     public boolean equals(Object obj) {
         if (obj == this) {
