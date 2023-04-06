@@ -4,6 +4,8 @@ const main_display = document.querySelector('#main');
 const div_select_colors = document.getElementById('div-select-color');
 const submit_button = document.getElementById('submit-btn');
 
+const scoreTableBody = document.querySelector("#score-table");
+
 let codeLength = 4;
 let tries = 8;
 let colors = ['blue', 'yellow', 'orange', 'green', 'violet', 'purple'];
@@ -11,9 +13,10 @@ let colors = ['blue', 'yellow', 'orange', 'green', 'violet', 'purple'];
 let random_code = [];
 let submitTry = 1;
 
-let score = 0;
+let score;
 
-document.onload = init();
+init();
+showScores("Minesweeper");
 
 /**
  * The initial function that loads all the necessary stuff to the HTML file
@@ -219,13 +222,11 @@ function checkWin(correction_array) {
     }
 
     if (countCorrect === codeLength) {
-        alert('VICTORY\nYour score is: ' + score);
+        alert('VICTORY\nYour score is: ' + countScore());
         init();
     } else if (submitTry > tries) {
         alert('GAME OVER');
         init();
-    } else {
-        score -= tries;
     }
 }
 
@@ -236,7 +237,10 @@ function checkWin(correction_array) {
 function setAndStartNewGame() {
     setCodeLength();
     setNumberOfTries();
-    score = codeLength * 20;
 
     init();
+}
+
+function countScore() {
+    return codeLength * 20 - (submitTry * tries);
 }
