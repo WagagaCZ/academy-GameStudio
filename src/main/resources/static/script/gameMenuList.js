@@ -54,6 +54,7 @@ const games = [
     url: "/mastermind",
     creator: "Mila",
     icon: "fa-solid fa-brain",
+  },   
   {
     name: "PUZZLE FIFTEEN",
     url: "/puzzle",
