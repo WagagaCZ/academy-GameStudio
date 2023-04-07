@@ -1,5 +1,9 @@
 package sk.tuke.gamestudio.client.game.game2048.core;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import sk.tuke.gamestudio.common.entity.Score;
+import sk.tuke.gamestudio.common.service.ScoreService;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Formatter;
@@ -7,18 +11,21 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Field implements Serializable {
-
     private final Tile[][] tiles;
     private final int rowCount;
     private final int columnCount;
     private GameState state = GameState.PLAYING;
+    /**
+     * Largest value in array, used for game win logic
+     */
     private int currLargest;
-    // largest value in array
+    /**
+     * Scores is sum of all tiles minus number of moves
+     */
     private int score;
+    private int numOfMoves;
     private final int WIN_VALUE = 2048;
-
     private boolean moveHappened = false;
-
     /**
      * Constructor for Field class
      *
@@ -28,6 +35,8 @@ public class Field implements Serializable {
     public Field(int rowCount, int columnCount) {
         this.rowCount = rowCount;
         this.columnCount = columnCount;
+        this.numOfMoves = 0;
+        this.score = 0;
         currLargest = 0;
         tiles = new Tile[rowCount][columnCount];
         generate();
@@ -53,7 +62,6 @@ public class Field implements Serializable {
      */
     private List<Coord> findFreeSpaces() {
         List<Coord> free_spaces = new ArrayList<>();
-        score = 0;
         for (int i = 0; i < getRowCount(); ++i) {
             for (int j = 0; j < getColumnCount(); ++j) {
                 if (tiles[i][j].isEmpty()) {
@@ -62,7 +70,6 @@ public class Field implements Serializable {
                 }
                 if (tiles[i][j].getValue() > currLargest)
                     currLargest = tiles[i][j].getValue();
-                score += tiles[i][j].getValue();
             }
         }
         return free_spaces;
@@ -104,7 +111,7 @@ public class Field implements Serializable {
      * Main game loop method, moves the board and if tiles shifted generates new ones, also checks if game is solved or failed
      * @param direction direction in which the board will shift
      */
-    public void doMove(Direction direction) {
+    public boolean doMove(Direction direction) {
         // TODO this can be done much cheaper with more brain power
         int[][] tilesBeforeMove = new int[getRowCount()][getColumnCount()];
         for (int i = 0; i < getRowCount(); ++i) {
@@ -120,20 +127,33 @@ public class Field implements Serializable {
             case RIGHT -> calculateMoveRIGHT();
         }
 
+        // last compute score before game end
+        score = computeScore();
+
         if (currLargest == WIN_VALUE)
             state = GameState.SOLVED;
 
         // if something in tiles[][] changed its position we can generate new tiles
-        if (moveHappened(tilesBeforeMove, tiles))
+        if (moveHappened(tilesBeforeMove, tiles)) {
+            numOfMoves++;
             generateRound();
+        }
 
         // the board is full and we cant move in the next move
         if (findFreeSpaces().size() == 0 && !isMovePossible()) {
             state = GameState.FAILED;
-            return;
+            return false;
         }
-    }
 
+        return true;
+    }
+    private int computeScore() {
+        int res = 0;
+        for ( int i = 0; i < getRowCount(); ++i )
+            for ( int j = 0; j < getColumnCount(); ++j )
+                res += tiles[i][j].getValue();
+        return ( (2 * res) - numOfMoves );
+    }
     /**
      * Checks if two arrays are the same in terms of contents
      * @return false if the arrays have the same contents, true if they have at least one different tile value
@@ -310,6 +330,13 @@ public class Field implements Serializable {
      */
     public Tile[][] getTiles() {
         return tiles;
+    }
+
+    /**
+     * @return score
+     */
+    public int getScore() {
+        return score;
     }
 
     /**

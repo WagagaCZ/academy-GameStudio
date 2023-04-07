@@ -18,6 +18,7 @@ let gameEnd = false;
 const renderField = () => {
     const mineFieldElem = document.getElementById("minefield");
     renderGameState();
+    renderScore();
     let resultTable = `<table class="minefield center"><tbody>`;
     for( let r = 0; r < 4; ++r ) {
         mineFieldElem.innerHTML += `<tr>`;
@@ -33,6 +34,11 @@ const renderField = () => {
     }
     resultTable += `</tbody></table>`;
     mineFieldElem.innerHTML = resultTable;
+};
+
+const renderScore = () => {
+    const scoreField = document.getElementById("scoreCount");
+    scoreField.innerHTML = "Score : " + field.score;
 };
 
 const renderGameState = () => {
