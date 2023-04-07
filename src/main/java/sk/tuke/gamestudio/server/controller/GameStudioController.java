@@ -23,4 +23,6 @@ public class GameStudioController {
     @RequestMapping("/test")
     public String testpage(){return "testpage";}
 
+    @RequestMapping("/2048")
+    public String game2048REST(){return "2048Rest";}
 }

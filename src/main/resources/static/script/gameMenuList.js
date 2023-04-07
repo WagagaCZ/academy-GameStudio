@@ -67,6 +67,12 @@ const games = [
     creator: "Maros",
     icon: "fa-solid fa-magnifying-glass",
   },
+  {
+      name: "2048",
+      url: "/2048",
+      creator: "Honza",
+      icon: "fa-solid fa-grid",
+    },
 ];
 
 
