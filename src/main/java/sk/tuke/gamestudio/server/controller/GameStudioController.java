@@ -15,10 +15,11 @@ public class GameStudioController {
     @RequestMapping("/game1024")
     public String game1024(){return "game1024";}
 
+    @RequestMapping("/candrycrush")
+    public String candycr(){return "candrycrush";}
+    
     @RequestMapping("/mastermind")
-    public String mastermind() {
-        return "mastermind";
-    }
+    public String mastermind() { return "mastermind"; }
 
     @RequestMapping("/test")
     public String testpage(){return "testpage";}
