@@ -1,5 +1,7 @@
 // noinspection JSValidateTypes,JSVoidFunctionReturnValueUsed
 
+console.log("Mastermind script loaded");
+
 const main_display = document.querySelector('#main');
 const div_select_colors = document.getElementById('div-select-color');
 const submit_button = document.getElementById('submit-btn');
@@ -11,9 +13,24 @@ let colors = ['blue', 'yellow', 'orange', 'green', 'violet', 'purple'];
 let random_code = [];
 let submitTry = 1;
 
-let score = 0;
+let score;
 
-document.onload = init();
+init();
+
+/**
+ * Tables won't appear without this event listener.
+ */
+document.addEventListener('readystatechange', event => {
+
+    // When HTML/DOM elements are ready:
+    // if (event.target.readyState === "interactive") { }
+
+    // When window loaded ( external resources are loaded too- `css`,`src`, etc...)
+    if (event.target.readyState === "complete") {
+        showScores("Mastermind");
+    }
+});
+
 
 /**
  * The initial function that loads all the necessary stuff to the HTML file
@@ -219,13 +236,12 @@ function checkWin(correction_array) {
     }
 
     if (countCorrect === codeLength) {
-        alert('VICTORY\nYour score is: ' + score);
+        sendScoreAndReloadTable("Mastermind")
+        alert('VICTORY\nYour score is: ' + countMastermindScore());
         init();
     } else if (submitTry > tries) {
         alert('GAME OVER');
         init();
-    } else {
-        score -= tries;
     }
 }
 
@@ -236,7 +252,10 @@ function checkWin(correction_array) {
 function setAndStartNewGame() {
     setCodeLength();
     setNumberOfTries();
-    score = codeLength * 20;
 
     init();
+}
+
+function countMastermindScore() {
+    return codeLength * 20 - (submitTry * tries);
 }

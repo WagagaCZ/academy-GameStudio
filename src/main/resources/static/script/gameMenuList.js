@@ -72,6 +72,12 @@ const games = [
       url: "/poker",
       creator: "Martin",
       icon: "fa-solid fa-heart",
+   },
+   {
+      name: "2048",
+      url: "/2048",
+      creator: "Honza",
+      icon: "fa-solid fa-grid",
     },
 ];
 
