@@ -1,0 +1,124 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layoutGameStudio.html}">
+
+<head>
+    <title>GameStudio - Poker</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- this is where we refer the css file from src/main/resources/static/styles/tailwind.css -->
+    <link th:href="@{/styles/poker.css}" rel="stylesheet"/>
+</head>
+<body>
+<main layout:fragment="content">
+<!--/*@thymesVar id="pokerController" type="sk.tuke.gamestudio.server.controller.PokerController"*/-->
+<h2>Poker</h2>
+
+<a class="abutton newgame_button" href="/poker/new">New game</a>
+
+<section>
+    <div class="pokerhand" th:if="${@pokerController.getState().toString().toLowerCase()} == dealt">
+        <a th:href="@{/poker(i=${cardStat.index})}" th:each="card: ${@pokerController.hand.getHand()}">
+        <div class="card" th:classappend="${card.isSelected()} ? card_selected">
+
+            <div class="rank" th:text="${card.getValueString()}"></div>
+            <div th:class="${'suit ' + (card.getType().toString().toLowerCase()) + ' ' + (card.getColor().toString().toLowerCase())}"></div>
+
+        </div>
+        </a>
+
+    </div>
+
+    <div class="pokerhand_grayed pokerhand" th:if="${@pokerController.getState().toString().toLowerCase()} == cards_swapped">
+        <div th:each="card: ${@pokerController.hand.getHand()}">
+            <div class="card_grayed card" th:classappend="${card.isSelected()} ? card_selected">
+
+                <div class="rank" th:text="${card.getValueString()}"></div>
+                <div th:class="${'suit ' + (card.getType().toString().toLowerCase()) + ' ' + (card.getColor().toString().toLowerCase())}"></div>
+
+            </div>
+        </div>
+
+    </div><div class="options">
+    <a class="abutton" href="/poker/confirm" th:if="${@pokerController.getState().toString().toLowerCase()} == dealt">Confirm</a>
+    <a class="abutton" href="/poker/continue" th:if="${@pokerController.getState().toString().toLowerCase()} == cards_swapped">Continue</a>
+    <a class="abutton" href="/poker/finish" th:unless="${@pokerController.getState().toString().toLowerCase()} == finished">Finish</a></div>
+    <p th:text="${@pokerController.getScore()}"></p>
+</section>
+
+<section>
+    <h3>Best Scores</h3>
+
+    <table class="scores">
+        <thead>
+        <tr>
+            <th>Number</th>
+            <th>Name</th>
+            <th>Score</th>
+            <th>Date and time</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="score: ${@pokerController.getTopScores()}">
+            <td th:text="${scoreStat.index+1}"></td>
+            <td th:text="${score.player}"></td>
+            <td th:text="${score.getPoints()}"></td>
+            <td th:text="${score.getPlayedOn()}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="form-container">
+
+        <form class="comment-form" th:action="@{/poker/comment}" method="post" target="dummyframe">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" th:value="*{name}" required>
+
+            <label for="comment">Comment:</label>
+            <textarea id="comment" name="comment" th:value="*{comment}" required></textarea>
+            <input type="submit" value="Submit">
+        </form>
+        <table class="scores">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Comment</th>
+                <th>Date and time</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="comment: ${@pokerController.getComments()}">
+
+                <td th:text="${comment.player}"></td>
+                <td th:text="${comment.comment}"></td>
+                <td th:text="${comment.commentedOn}"></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <form class="rating-form" th:action="@{/poker/setrating}">
+            <label for="name">Name:</label>
+            <input type="text" name="name" th:value="*{name}" required>
+            <div class="rating-container">
+
+                <label >Rating:</label>
+                <input type="radio" id="rating1" name="rating" value="1" required th:value="*{rating}">
+                <label for="rating1">1</label>
+                <input type="radio" id="rating2" name="rating" value="2">
+                <label for="rating2">2</label>
+                <input type="radio" id="rating3" name="rating" value="3">
+                <label for="rating3">3</label>
+                <input type="radio" id="rating4" name="rating" value="4">
+                <label for="rating4">4</label>
+                <input type="radio" id="rating5" name="rating" value="5">
+                <label for="rating5">5</label>
+            </div>
+
+            <input type="submit" value="Submit">
+        </form>
+        <div><p>Average score for this game is: </p><p th:text="${@pokerController.getAvgRating()}"></p></div>
+
+    </div>
+</section>
+</main>
+</body>
+</html>

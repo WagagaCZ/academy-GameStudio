@@ -1,0 +1,252 @@
+body {
+    background-color: #ffffff;
+    font-size: 1rem;
+    font-family: Arial, "Arial CE", "Helvetica CE", sans-serif;
+    color: #000000;
+    margin: auto;
+    padding: 1em;
+    max-width: 50em;
+}
+.options{
+display: flex;
+justify-content: space-between;
+padding: 0.5rem 0.5rem;
+}
+h1 {
+    font-size: 1.6em
+}
+
+h2 {
+    font-size: 1.4em
+}
+
+h3 {
+    font-size: 1.2em
+}
+
+a:link, a:visited {
+    color: #045491;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+a:link:hover, a:visited:hover {
+    color: #045491;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+
+
+/*Properties of the form elements*/
+
+label {
+    vertical-align: top;
+    display: inline-block; /*instead of inline (default)*/
+    min-width: 5em;
+}
+
+
+
+/*Properties of the tables with scores*/
+
+table.scores {
+    width: 100%;
+    border: black 2px;
+}
+
+table.scores th {
+    font-weight: bold;
+    color: #FFFFFF;
+    background-color: dimgray;
+
+}
+
+table.scores tr:nth-child(even) {
+    background-color: lightgray
+}
+
+table.scores tr:nth-child(odd) {
+    background-color: white;
+}
+
+/*Properties of the elements we want to look like customized buttons*/
+
+.abutton {
+    border: 1px solid darkslategrey;
+    display: inline-block;
+    width: 8em;
+    margin: 0.1em;
+    padding: 0.1em;
+    border-radius: 0.2em;
+    background-color: white;
+    font-weight: normal;
+}
+
+.abutton:hover {
+    background-color: springgreen;
+    text-decoration: none;
+    font-weight: normal;
+}
+
+
+
+
+
+/*adjustment for smaller screens/viewports*/
+@media (max-width: 600px)/*,
+(min-resolution: 1.8dppx) */ {
+    body {
+        max-width: 95vw;
+    }
+}
+
+@media (max-height: 780px),
+(max-width: 600px) and (orientation: landscape)/*,
+(min-resolution: 1.8dppx)  and (orientation:landscape)*/ {}
+
+
+
+
+.pokerhand{
+display: flex;
+justify-content: space-evenly;
+padding-top: 2rem;
+padding-left: 0.5rem;
+padding-right: 0.5rem;
+}
+.card {
+
+      transition: top ease 1s;
+      width: 70px;
+      height: 100px;
+      border: 1px solid black;
+      border-radius: 5px;
+      position: relative;
+    }
+.card:hover {
+top: -2rem;
+border: 3px solid #D4AF37;
+}
+.card_selected:hover {border: 3px solid #D4AF37;}
+.card_selected {
+    top: -2rem;
+    margin-top:0;
+}
+
+    .rank {
+      font-size: 25px;
+      position: absolute;
+      top: 5px;
+      left: 5px;
+    }
+
+    .suit {
+      font-size: 25px;
+      position: absolute;
+      bottom: 5px;
+      right: 5px;
+    }
+
+    .red {
+      color: red;
+    }
+
+    .black {
+      color: black;
+    }
+
+    .spades:before {
+      content: "♠";
+    }
+
+    .hearts:before {
+      content: "♥";
+      color: red;
+    }
+
+    .diamonds:before {
+      content: "♦";
+      color: red;
+    }
+
+    .clubs:before {
+      content: "♣";
+    }
+.pokerhand_grayed{
+background-color: #AAAAAA;}
+.card_grayed{
+background-color:#909090;}
+.newgame_button{
+margin-left:0.7rem;
+}
+.form-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin: 50px auto;
+            width: 800px;
+        }
+
+        .form-container form {
+            flex: 0 0 calc(50% - 20px);
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        input[type="text"], textarea, input[type="radio"] {
+            padding: 10px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-size: 16px;
+            width: 100%;
+        }
+
+        textarea {
+            height: 150px;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #3e8e41;
+        }
+
+        .rating-container {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .rating-container label {
+            font-size: 20px;
+            margin-right: 5px;
+            cursor: pointer;
+        }
+
+        input[type="radio"] {
+            display: none;
+        }
+
+        input[type="radio"] + label:before {
+            content: "\2605";
+            font-size: 30px;
+            color: #ccc;
+        }
+
+        input[type="radio"]:checked + label:before {
+            color: #FFD700;
+        }
