@@ -21,7 +21,7 @@ public class GameStudioClient {
     //start as a standard app - no web server
     public static void main(String[] args) {
         new SpringApplicationBuilder(GameStudioClient.class)
-                .web(WebApplicationType.NONE).run(args);
+                .web(WebApplicationType.NONE).  run(args);
     }
 
     @Bean
