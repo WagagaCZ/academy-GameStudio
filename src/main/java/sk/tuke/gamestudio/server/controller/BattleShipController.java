@@ -2,11 +2,10 @@ package sk.tuke.gamestudio.server.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.WebApplicationContext;
 import sk.tuke.gamestudio.client.game.battleship.core.GameState;
 import sk.tuke.gamestudio.client.game.battleship.core.SeaField;
@@ -21,8 +20,8 @@ import sk.tuke.gamestudio.common.service.ScoreService;
 
 
 import java.sql.Timestamp;
-import java.util.Date;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Controller
 @RequestMapping("/ship")
@@ -60,7 +59,7 @@ public class BattleShipController {
                 seaField.openTile(row, column);
                 if (seaField.getState() == GameState.WON && stateBeforeMove != seaField.getState()) {
                     if (userController.isLogged()) {
-                        scoreService.addScore(new Score("battleship", userController.getLoggedUser(), seaField.getNumberOfTries(), new Timestamp(System.currentTimeMillis())));
+                        scoreService.addScore(new Score("battleship", userController.getLoggedUser(), seaField.getNumberOfTries(), Timestamp.valueOf(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Timestamp(new Date().getTime())))));
                         return;
                     }
                     return;
@@ -70,13 +69,16 @@ public class BattleShipController {
         }
     }
 
-    private void startNewGame() {
+    @PostMapping("/start")
+    public ResponseEntity<Void> startNewGame() {
         seaField = new SeaField();
+        return ResponseEntity.ok().build();
     }
 
     public List<Score> getTopScores() {
         return scoreService.getTopScores("battleship");
     }
+
 
     public List<Comment> showComments() {
         return commentService.getComments("battleship");
@@ -85,28 +87,43 @@ public class BattleShipController {
     @PostMapping("/submitComment")
     public String submitComment(@RequestParam("commentText") String commentText) {
         if (userController.isLogged()) {
-            commentService.addComment(new Comment(userController.getLoggedUser(), "battleship", commentText, new Timestamp(System.currentTimeMillis())));
+            commentService.addComment(new Comment(userController.getLoggedUser(), "battleship", commentText, Timestamp.valueOf(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Timestamp(new Date().getTime())))));
         }
         return "redirect:/ship";
+    }
+
+    @GetMapping("/rating")
+    @ResponseBody
+    public Map<String, Object> getRating(@RequestParam(name = "getRating", required = false) String getRating) {
+        Map<String, Object> responseData = new HashMap<>();
+        if (getRating != null && userController.isLogged()) {
+            Integer rating = ratingService.getRating("battleship", userController.getLoggedUser());
+            responseData.put("ratingValue", rating);
+        }
+        return responseData;
+    }
+
+    @GetMapping("/average-rating")
+    @ResponseBody
+    public Map<String, Object> getAverageRating(@RequestParam(name = "getAverageRating", required = false) String getAverageRating) {
+        Map<String, Object> responseData = new HashMap<>();
+        if (getAverageRating != null && userController.isLogged()) {
+            Integer averageRating = ratingService.getAverageRating("battleship");
+            responseData.put("averageRating", averageRating);
+        }
+        return responseData;
     }
 
     @PostMapping("/rating")
     public String addRating(@RequestParam(name = "ratingValue", required = false) Integer ratingValue,
                             @RequestParam(name = "submitRating", required = false) String submitRating,
-                            @RequestParam(name = "getRating", required = false) String getRating,
-                            @RequestParam(name = "getAverageRating", required = false) String getAverageRating,
                             Model model) {
-        if (submitRating != null && ratingValue != null && userController.isLogged()) {
+        if (ratingValue != null && userController.isLogged()) {
             ratingService.setRating(new Rating("battleship", userController.getLoggedUser(), ratingValue));
-        } else if (getRating != null && userController.isLogged()) {
-            Integer rating = ratingService.getRating("battleship", userController.getLoggedUser());
-            model.addAttribute("ratingValue", rating);
-        } else if (getAverageRating != null && userController.isLogged()) {
-            Integer averageRating = ratingService.getAverageRating("battleship");
-            model.addAttribute("ratingValue", averageRating);
         }
-        return "battleship";
+        return "redirect:/ship#rating-form";
     }
+
 
     public Tile[][] getPlayerFieldTiles() {
         if (seaField == null) {
@@ -155,12 +172,12 @@ public class BattleShipController {
 
 
     public String getTileClass(Tile tile) {
-        if(seaField.getState() == GameState.WON) {
+        if (seaField.getState() == GameState.WON) {
             if (tile.getState() == Tile.State.WATER) {
                 return "water-endgame";
             }
-        } else if(seaField.getState() == GameState.FAILED) {
-            if(tile.getState() == Tile.State.WATER && tile instanceof Ship) {
+        } else if (seaField.getState() == GameState.FAILED) {
+            if (tile.getState() == Tile.State.WATER && tile instanceof Ship) {
                 return "ship";
             } else {
                 switch (tile.getState()) {
@@ -217,8 +234,6 @@ public class BattleShipController {
     public String getNumberOfEnemyTiles() {
         return Integer.toString(seaField.getNumberOfEnemyShip());
     }
-
-
 
 }
 

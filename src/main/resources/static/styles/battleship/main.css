@@ -249,7 +249,8 @@ li{
   cursor: pointer;
 }
 
-.slide-rating input[type="submit"] {
+.slide-rating input[type="submit"],
+.slide-rating button[type="button"] {
   background-color: black;
   color: #fff;
   border: none;
@@ -258,7 +259,8 @@ li{
   cursor: pointer;
 }
 
-.slide-rating input[type="submit"] {
+.slide-rating input[type="submit"],
+.slide-rating button[type="button"] {
   position: relative;
   top: 8px;
 }

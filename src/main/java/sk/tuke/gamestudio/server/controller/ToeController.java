@@ -6,10 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.WebApplicationContext;
-import sk.tuke.gamestudio.client.game.connect.core.GameState;
 import sk.tuke.gamestudio.client.game.tiktaktoe.StateTile;
 import sk.tuke.gamestudio.client.game.tiktaktoe.TiktaktoeWebField;
-import sk.tuke.gamestudio.common.GameStates;
 import sk.tuke.gamestudio.common.entity.Comment;
 import sk.tuke.gamestudio.common.entity.Rating;
 import sk.tuke.gamestudio.common.entity.Score;
@@ -19,9 +17,9 @@ import sk.tuke.gamestudio.server.service.ScoreServiceJPA;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 
-import static sk.tuke.gamestudio.client.game.connect.core.GameState.PLAYING;
 import static sk.tuke.gamestudio.common.Constants.*;
 
 @Controller
@@ -60,18 +58,18 @@ public class ToeController {
         if (index != null) {
             updateGame(index);
         }
-        return "toe.html";
+        return "toe";
     }
 
     @GetMapping("/toe")
     public String index(Model model) throws ScoreException, RatingException {
-        return "toe.html";
+        return "toe";
     }
 
     @RequestMapping("/new")
     public String newGame() {
         startNewGame();
-        return "toe";
+        return "redirect:/toe";
     }
 
     @PostMapping("/rating")
@@ -83,6 +81,14 @@ public class ToeController {
         return "toe";
     }
 
+    @PostMapping(value = "/comments")
+    public String addComment(@RequestParam(name = "commentText", required = false) String commentText,
+                             Model model) throws CommentException {
+        if (commentText != null) {
+            commentService.addComment(new Comment(userName, TIC_TAC_TOE, commentText, new Timestamp(System.currentTimeMillis())));
+        }
+        return "toe";
+    }
 
     public String getToeField() {
         List<StateTile> tileList = field.getData();
@@ -161,8 +167,7 @@ public class ToeController {
             Score score = new Score();
             score.setPlayer(userName);
             score.setGame(TIC_TAC_TOE);
-            //todo treba naopak
-            score.setPoints(countOfPlayerMove);
+            score.setPoints(countOfPlayerMove * (-1));
             score.setPlayedOn(Timestamp.valueOf(LocalDateTime.now()));
             scoreController.postScore(score);
         } catch (Exception e) {
@@ -171,7 +176,13 @@ public class ToeController {
     }
 
     public List<Score> getTopScores() {
-        return scoreService.getTopScores(TIC_TAC_TOE).subList(0, 5);
+        List<Score> list;
+        list = scoreService.getTopScores(TIC_TAC_TOE);
+        if (!list.isEmpty()) {
+            return list;
+        } else {
+            return Collections.emptyList();
+        }
     }
 
     public int getAvverageRating() {

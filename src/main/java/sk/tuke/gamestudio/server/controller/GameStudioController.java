@@ -17,8 +17,13 @@ public class GameStudioController {
 
     @RequestMapping("/candrycrush")
     public String candycr(){return "candrycrush";}
+    
+    @RequestMapping("/mastermind")
+    public String mastermind() { return "mastermind"; }
 
     @RequestMapping("/test")
     public String testpage(){return "testpage";}
 
+    @RequestMapping("/2048")
+    public String game2048REST(){return "2048Rest";}
 }

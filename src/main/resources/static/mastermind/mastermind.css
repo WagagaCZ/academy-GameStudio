@@ -1,0 +1,167 @@
+* {
+    margin: 0;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+body {
+    background-color: antiquewhite;
+}
+
+#game-window {
+    text-align: center;
+    color: #323232;
+    border: 5px solid darkslategray;
+    border-radius: 12px;
+    background-color: #9bb4b5;
+    max-width: 500px;
+    margin: 10px auto;
+    margin-top: 25px;
+    box-shadow: 10px 10px 5px gray;
+}
+
+#menu-btn-container {
+    text-align: center;
+}
+
+.menu-btn {
+    text-align: center;
+    background-color: darkslategray;
+    cursor: pointer;
+    color: white;
+    border-radius: 12px;
+    height: 35px;
+    width: 100px;
+    margin: 5px auto;
+    margin-inline: 20px;
+    transition: 0.5s;
+    box-shadow: 5px 5px 5px gray;
+}
+
+#game-footer-mastermind,
+#game-title-mastermind {
+    background-color: #9bb4b5;
+    padding: 10px;
+}
+
+#game-title-mastermind > h1 {
+    font-size: 32px;
+    font-weight: bold;
+}
+
+#main {
+    margin: 10px auto;
+}
+
+.try {
+    display: flex;
+    justify-content: space-around;
+}
+
+.left,
+.right {
+    display: flex;
+}
+
+.left > div {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background-color: gray;
+    margin: 5px;
+}
+
+.right > div {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background-color: gray;
+    margin: 5px;
+}
+
+.select-wrapper {
+    border-radius: 50%;
+    display: inline-block;
+    overflow: hidden;
+    margin-inline: 5px;
+}
+
+.select-wrapper select {
+    width: 35px;
+    height: 35px;
+    border: 0;
+    outline: none;
+}
+
+input[type=button] {
+    background-color: white;
+    cursor: pointer;
+    color: #323232;
+    border-radius: 12px;
+    height: 35px;
+    width: 100px;
+    margin: 5px auto;
+    transition: 0.5s;
+}
+
+select:hover,
+input:hover {
+    opacity: 0.8;
+}
+
+input[type=button]:active {
+    background-color: yellow;
+}
+
+#manual {
+    align-self: center;
+    text-align: left;
+    font-size: 10px;
+    color: #323232;
+    max-width: 450px;
+    margin: 10px auto;
+    margin-top: 25px;
+}
+
+/* Styling for tables that shows data from database */
+#table-container {
+    align-self: center;
+    margin: 10px auto;
+}
+
+.db-table {
+    border-collapse: collapse;
+    border: 5px #2d2d2d solid;
+    margin: 25px auto;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 10px 10px 5px gray;
+}
+
+.db-table thead tr {
+    background-color: #009879;
+    color: #ffffff;
+    text-align: left;
+}
+
+.db-table th,
+.db-table td {
+    padding: 12px 15px;
+}
+
+.db-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.db-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.db-table tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
+}
+
+.db-table tbody tr.active-row {
+    font-weight: bold;
+    color: #009879;
+}

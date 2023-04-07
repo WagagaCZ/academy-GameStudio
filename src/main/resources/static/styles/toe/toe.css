@@ -1,11 +1,11 @@
-table.toe th,table.toe td {
+table.toe th, table.toe td {
     text-align: center;
     background-color: #C5E1A5;
     width: 3em;
     height: 3em;
     font-size: 2.1em;
     border-radius: 1em;
- }
+}
 
 table.toe a:link,
 table.toe a:visited,
@@ -43,4 +43,15 @@ table.toe a {
     justify-content: center;
     width: 100%;
     height: 100%;
+}
+
+body.toe {
+    background-color: #ffffff;
+    font-size: 1rem;
+    font-family: Arial, "Arial CE", "Helvetica CE", sans-serif;
+    color: #000000;
+    margin: auto;
+    text-align: center;
+    width: 10em;
+    padding: 1em;
 }

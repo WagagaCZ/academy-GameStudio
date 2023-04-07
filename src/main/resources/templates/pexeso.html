@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.com"
+      layout:decorate="~{layout/layoutGameStudio.html}"
+      lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pexeso Game</title>
+    <link th:href="@{/styles/pexeso/pexeso.css}" rel="stylesheet"/>
+
+</head>
+<body>
+<main layout:fragment="content">
+
+    <div class="grid-container">
+
+        <section class="comment-form">
+            <div>
+                <h3 style="font-size: 36px;font-weight: bold;">Write a comment</h3>
+                <form th:action="@{/pexeso/submitComment}" method="post">
+                    <textarea name="commentText" id="comment" rows="5" cols="50"
+                              th:value="${commentText}"></textarea><br>
+                    <input class="fade-out-color" type="submit" value="Submit">
+                </form>
+            </div>
+
+            <h3>Comments</h3>
+            <table class="comments">
+                <thead>
+                <tr>
+                    <th>Comment</th>
+                    <th>Name</th>
+                    <th>Date and time</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="comment:${@pexesoController.getComments()}">
+                    <td th:text="${comment.getPlayer()}"></td>
+                    <td th:text="${comment.getComment()}"></td>
+                    <td th:text="${comment.getCommentedOn()}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </section>
+        <section class="pexeso">
+            <h1 style="font-size: 36px;font-weight: bold;">Pexeso Game</h1>
+            <p>Click on a card to reveal its image.</p>
+
+            <a href="/pexeso/new">New Game</a>
+            <div th:if="${@pexesoController.isSolved()}" id="win-message" class="bg-success text-white p-3 mb-3">You
+                won!
+            </div>
+            <table>
+                <tr th:each="row: ${@pexesoController.getCards()}">
+                    <td th:each="card: ${row}" th:attr="class='c' + ${@pexesoController.getCardText(card)}">
+                        <div class="cardMaros" th:classappend="${card.isFlipped} ? 'flipped' : 'notFlipped'">
+                            <a th:if="${!card.isFlipped()}"
+                               th:href="@{/pexeso(row=${rowStat.index}, column=${cardStat.index})}">
+                                <span th:text="${@pexesoController.getCardText(card)}"></span>
+                            </a>
+                            <span th:if="${card.isFlipped()}"></span>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <br>
+            <div class="score-result">
+                <h3>Number of moves:
+                    <span th:text="${@pexesoController.getScore()}"></span>
+                </h3>
+            </div>
+            <h3 style="font-size: 36px;font-weight: bold;">Best Scores</h3>
+            <table class="scoresMaros">
+                <thead>
+                <tr>
+                    <th>Number</th>
+                    <th>Name</th>
+                    <th>Score</th>
+                    <th>Date and time</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="score: ${@pexesoController.getTopScores()}">
+                    <td th:text="${scoreStat.index+1}"></td>
+                    <td th:text="${score.getPlayer()}"></td>
+                    <td th:text="${score.getPoints()}"></td>
+                    <td th:text="${score.getPlayedOn()}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </section>
+        <section class="rating-form">
+            <div>
+                <h3 style="font-size: 36px;font-weight: bold;">Rate this game</h3>
+                <form th:action="@{/pexeso/submitRating}" method="post">
+                    <label for="rating">Rating</label>
+                    <select name="rating" id="rating">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                    <input class="fade-out-color" type="submit" value="Submit">
+                </form>
+            </div>
+            <div class="rating-result">
+                <h3>Average rating:</h3>
+                <span th:text="${@pexesoController.getRating()}"></span>
+            </div>
+        </section>
+    </div>
+</main>
+</body>
+</html>

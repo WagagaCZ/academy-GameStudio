@@ -50,10 +50,40 @@ const games = [
     icon: "fa-solid fa-ship",
   },
   {
-      name: "Candy Crush",
-      url: "/candycrush",
-      creator: "Dima",
-      icon: "fa-solid fa-candy",
+    name: "Candy Crush",
+    url: "/candycrush",
+    creator: "Dima",
+    icon: "fa-solid fa-candy",
+  },
+  {
+    name: "Mastermind",
+    url: "/mastermind",
+    creator: "Mila",
+    icon: "fa-solid fa-brain",
+  },   
+  {
+    name: "PUZZLE FIFTEEN",
+    url: "/puzzle",
+    creator: "Anicka",
+    icon: "fa-solid fa-puzzle-piece",
+  },
+  {
+    name: "Pexeso",
+    url: "/pexeso",
+    creator: "Maros",
+    icon: "fa-solid fa-magnifying-glass",
+  },
+  {
+      name: "Poker",
+      url: "/poker",
+      creator: "Martin",
+      icon: "fa-solid fa-heart",
+   },
+   {
+      name: "2048",
+      url: "/2048",
+      creator: "Honza",
+      icon: "fa-solid fa-grid",
     },
 ];
 

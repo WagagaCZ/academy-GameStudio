@@ -18,7 +18,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/connect")
 @Scope(WebApplicationContext.SCOPE_SESSION)
-public class ConnectController {
+public class ConnectController extends GameController{
 
     private Field field = null;
     private GameState state = GameState.PLAYING;
@@ -84,9 +84,6 @@ public class ConnectController {
         return new Date().toString();
     }
 
-    public List<Score> getTopScores(){
-        return scoreService.getTopScores("connect");
-    }
 
     public Tile[][] getFieldTiles() {
         if(field==null){
@@ -164,5 +161,10 @@ public class ConnectController {
 
     public GameState getState() {
         return state;
+    }
+
+    @Override
+    protected String getGameName() {
+        return "connect";
     }
 }
