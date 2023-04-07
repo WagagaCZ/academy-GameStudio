@@ -14,7 +14,7 @@ import sk.tuke.gamestudio.server.service.ScoreServiceJPA;
 
 @SpringBootApplication
 @EntityScan(basePackages = "sk.tuke.gamestudio.common.entity")
-public class    GameStudioServer {
+public class GameStudioServer {
     public static void main(String[] args) {
         SpringApplication.run(GameStudioServer.class);
         System.out.println("\n*** Server started ***\n");
