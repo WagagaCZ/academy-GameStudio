@@ -1,5 +1,13 @@
 const candyField = document.getElementById("candyField");
 const scoresTableBody = document.getElementById("scoresTableBody");
+const winWindow = document.querySelector(".win-window");
+const sendScoreButton = document.getElementById("send-score-button");
+const winMessage = document.getElementById("win-message");
+
+console.log(winWindow);
+console.log(sendScoreButton);
+console.log(winMessage);
+
 
 //const serverUrl="http://localhost:8080";
 const serverUrl = "";//if from the same server as this page
@@ -12,6 +20,7 @@ const numRows = 10; // number of rows in the game field
 const numCols = 10; // number of columns in the game field
 
 let score = 0;
+let gameStatus = "playing";
 const scoreBox = document.getElementById('score');
 
 function updateScore(newScore) {
@@ -20,7 +29,9 @@ function updateScore(newScore) {
 }
 
 updateScore(0);
-
+showScores("CandyCrush");
+showComments("CandyCrush");
+showRatings("CandyCrush");
 
 const TileColor = {
     RED: 'red',
@@ -104,7 +115,6 @@ function renderGameField(gameFieldData, renderTo) {
     renderTo.appendChild(candyCrushTable);
 }
 
-
 //TODO: AFTER A COUPLE OF SWAPS, GAMEFIELD SEEMS TO BE BROKEN,NEED TO FIX
 function swapTiles(tile1, tile2, gameFieldData) {
     // Swap the tiles in the array
@@ -117,24 +127,25 @@ function swapTiles(tile1, tile2, gameFieldData) {
     if (matches.length > 0) {
         removeMatches(matches, gameFieldData);
         applyGravity(gameFieldData); // apply gravity after removing matches
+        const candyCrushTable = document.getElementById('candyCrushTable');
+        for (let row = 0; row < gameFieldData.numRows; row++) {
+            for (let col = 0; col < gameFieldData.numCols; col++) {
+                let tile = gameFieldData.tiles[row][col];
+                let td = candyCrushTable.rows[row].cells[col];
+                if (tile == null) {
+                    tile = new Tile(TileColor.EMPTY);
+                    gameFieldData.tiles[row][col] = tile;
+                }
+                td.className = (tile.color || TileColor.EMPTY).toLowerCase();
+                td.setAttribute("data-row", row);
+                td.setAttribute("data-col", col);
+                
+            }
+        }
     } else {
         // If no matches were found, swap the tiles back
         gameFieldData.tiles[tile2.row][tile2.col] = gameFieldData.tiles[tile1.row][tile1.col];
         gameFieldData.tiles[tile1.row][tile1.col] = tempTile;
-    }
-
-    // Re-render the game field
-    const candyCrushTable = document.getElementById('candyCrushTable');
-    for (let row = 0; row < gameFieldData.numRows; row++) {
-        for (let col = 0; col < gameFieldData.numCols; col++) {
-            let tile = gameFieldData.tiles[row][col];
-            let td = candyCrushTable.rows[row].cells[col];
-            if (tile == null) {
-                tile = new Tile(TileColor.EMPTY);
-                gameFieldData.tiles[row][col] = tile;
-            }
-            td.className = (tile.color || TileColor.EMPTY).toLowerCase();
-        }
     }
 }
 
@@ -299,7 +310,36 @@ function removeMatches(matches, gameFieldData) {
         }
     });
     updateScore(score);
+    if(isWon(score)){
+    winWindow.classList.remove('hidden');
+    winMessage.textContent = "You Won! Your score: " + score;
+
+    sendScoreButton.addEventListener("click", () => {
+        sendScoreAndReloadTable("CandyCrush", score);
+      });
+
+    gameState = "won";
+    return;
+    }
 }
+  
+  function isWon(score) {
+    return score >= 500;
+  }
+  
+  function sendScoreAndReloadTable(game, score) {
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", "/api/score", true);
+    xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    xhr.send(JSON.stringify({ game, score }));
+    xhr.onload = function() {
+      if (xhr.status === 200) {
+        window.location.href = window.location.href.replace('/new', '');
+      }
+    };
+  }
+  
+  
 
 function applyGravity(gameFieldData) {
     // Iterate over columns from left to right
