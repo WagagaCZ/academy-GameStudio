@@ -82,7 +82,7 @@ async function showComments() {
     COMMENT_TABLE.innerHTML += `
     <thead>
             <tr>
-                <th>Player and played on</th>
+                <th>Player & Time</th>
                 <th>Comment</th>
             </tr>
     </thead>
