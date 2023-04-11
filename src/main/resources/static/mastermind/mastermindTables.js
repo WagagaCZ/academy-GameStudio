@@ -13,6 +13,16 @@ async function showScores(game) {
     // clear table first
     scoreTable.innerHTML = '';
 
+    scoreTable.innerHTML += `
+    <thead>
+            <tr>
+                <th>Player</th>
+                <th>Score</th>
+                <th>Played on</th>
+            </tr>
+    </thead>
+    `;
+
     scores.forEach(score => {
         let date = new Date(score.playedOn);
         date = date.toLocaleDateString("en-GB") + ' ' + date.toLocaleTimeString("en-GB");
