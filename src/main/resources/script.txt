@@ -112,3 +112,7 @@ INSERT INTO public.score (id, game, played_on, player, points) VALUES (59, 'TIC-
 INSERT INTO public.score (id, game, played_on, player, points) VALUES (60, 'TIC-TAC-TOE', '2023-04-05 11:24:13.569000', 'AnnaBorets', 5);
 INSERT INTO public.score (id, game, played_on, player, points) VALUES (61, 'TIC-TAC-TOE', '2023-04-05 11:24:14.105000', 'AnnaBorets', 6);
 INSERT INTO public.score (id, game, played_on, player, points) VALUES (62, 'TIC-TAC-TOE', '2023-04-05 11:24:29.546000', 'AnnaBorets', 10);
+
+INSERT INTO public.score (id, game, played_on, player, points) VALUES (1, 'CandyCrush', '2023-03-29 10:25:05.930000', 'Dima', 5);
+INSERT INTO public.score (id, game, played_on, player, points) VALUES (2, 'CandyCrush', '2023-03-29 10:25:05.930000', 'Dima', 2);
+INSERT INTO public.score (id, game, played_on, player, points) VALUES (3, 'CandyCrush', '2023-03-29 10:25:05.930000', 'Dima', 1);
