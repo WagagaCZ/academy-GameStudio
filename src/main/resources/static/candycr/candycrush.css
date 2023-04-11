@@ -22,7 +22,7 @@
   }
   
   .red:before {
-    content: "\1F534";
+    content: "🍄";
     font-size: 40px;
     display: block;
     text-align: center;
@@ -30,7 +30,7 @@
   }
   
   .blue:before {
-    content: "\1F535";
+    content: "🌊";
     font-size: 40px;
     display: block;
     text-align: center;
@@ -38,7 +38,7 @@
   }
   
   .green:before {
-    content: "\1F7E2";
+    content: "🌿";
     font-size: 40px;
     display: block;
     text-align: center;
@@ -46,7 +46,7 @@
   }
   
   .yellow:before {
-    content: "\1F7E1";
+    content: "🍋";
     font-size: 40px;
     display: block;
     text-align: center;
@@ -54,7 +54,7 @@
   }
   
   .purple:before {
-    content: "\1F7E3";
+    content: "🍇";
     font-size: 40px;
     display: block;
     text-align: center;
