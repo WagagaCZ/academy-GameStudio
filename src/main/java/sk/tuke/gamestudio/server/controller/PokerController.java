@@ -184,11 +184,12 @@ public class PokerController {
     }
 
     @RequestMapping("/finish")
-    private String finishGame(@RequestParam(required = false) String name) {
-        String username;
-        if(name == null){
+    private String finishGame() {
+
+        String username = userController.getLoggedUser();
+        if(username == null){
             username = "Anonymous user";
-        } else {username = userController.getLoggedUser();}
+        }
         state = PokerGameState.FINISHED;
         startNewGameIfDeckNull();
         deck = null;
