@@ -1,15 +1,17 @@
+
 const SCORE_TABLE = document.querySelector("#score-table");
+
 const COMMENT_TABLE = document.querySelector("#comment-table");
 const COMMENT_FORM = document.querySelector("#comment-form");
 
 
-// Used Stefan's services and functions loading tables with minimal changes
+// Used Stefan's services and functions loading tables with a few changes
 
 /*
 SCORE TABLE
  */
-async function showScores(game) {
-    let scores = await apiGetScores(game);
+async function showScores() {
+    let scores = await apiGetScores(GAME_NAME);
 
     if(scores.message) {
         SCORE_TABLE.innerHTML = `<tr><td></td><td></td><td style='text-align: end'>${scores.message} </td></tr>`;
@@ -44,13 +46,13 @@ async function showScores(game) {
     });
 }
 
-async function sendScoreAndReloadTable(game) {
+async function sendScoreAndReloadTable() {
     const res = await apiGetUser();
     const player = res.loggedUser;
 
     if (player != null) {
-        await apiSendScore(player, game, countMastermindScore());
-        await showScores(game)
+        await apiSendScore(player, GAME_NAME, countMastermindScore());
+        await showScores(GAME_NAME)
     } else {
         alert("You aren't logged in. Your score won't be saved.")
     }
@@ -60,8 +62,8 @@ async function sendScoreAndReloadTable(game) {
 /*
 COMMENT TABLE
  */
-async function showComments(game) {
-    let comments = await apiGetComments(game);
+async function showComments() {
+    let comments = await apiGetComments(GAME_NAME);
     // clear table first
     COMMENT_TABLE.innerHTML = '';
 
@@ -107,9 +109,9 @@ async function submitComment() {
     if (player != null) {
         if (comment.length > 0) {
 
-            await apiSendComment(player, "Mastermind", comment);
+            await apiSendComment(player, GAME_NAME, comment);
             COMMENT_FORM[0].value = '';
-            showComments("Mastermind");
+            showComments(GAME_NAME);
         }
     } else {
         alert("You aren't logged in. Your comment won't be saved.")
