@@ -10,9 +10,10 @@ async function showScores(game) {
         return;
     }
 
-    // clear table first
+    // Clear table first
     scoreTable.innerHTML = '';
 
+    // Add headers
     scoreTable.innerHTML += `
     <thead>
             <tr>
@@ -23,6 +24,7 @@ async function showScores(game) {
     </thead>
     `;
 
+    // Add score data
     scores.forEach(score => {
         let date = new Date(score.playedOn);
         date = date.toLocaleDateString("en-GB") + ' ' + date.toLocaleTimeString("en-GB");
