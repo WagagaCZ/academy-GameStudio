@@ -206,7 +206,7 @@ function show(type, colors) {
 /**
  * Created the correction array that displays which colors are correctly placed.
  * Color is in solution but not correctly placed -> white
- * Color is at correct position -> greenyellow
+ * Color is correct and placing is correct  -> greenyellow
  * Color isn't in the hidden code -> red
  * @param input_colors_arr is the guess, the array of colors submitted.
  * @returns {*[]} is the array of displaying which colors are correctly placed.
