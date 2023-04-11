@@ -205,6 +205,9 @@ function show(type, colors) {
 
 /**
  * Created the correction array that displays which colors are correctly placed.
+ * Color is in solution but not correctly placed -> white
+ * Color is at correct position -> greenyellow
+ * Color isn't in the hidden code -> red
  * @param input_colors_arr is the guess, the array of colors submitted.
  * @returns {*[]} is the array of displaying which colors are correctly placed.
  */
@@ -212,15 +215,13 @@ function createCorrectionArray(input_colors_arr) {
     let random_code_copy = [...random_code];
     let correction_array = [];
 
-    /*
-    Check if color is in solution -> white
-    and if color is at correct position -> red
-    */
     for (let i in random_code_copy) {
         if (random_code_copy[i] === input_colors_arr[i]) {
-            correction_array[i] = 'red';
+            correction_array[i] = 'greenyellow';
         } else if (random_code_copy.includes(input_colors_arr[i])) {
             correction_array[i] = 'white';
+        } else {
+            correction_array[i] = 'red'
         }
     }
 
@@ -235,7 +236,7 @@ function createCorrectionArray(input_colors_arr) {
 function checkWin(correction_array) {
     let countCorrect = 0;
     for (let v of correction_array) {
-        if (v === 'red') {
+        if (v === 'greenyellow') {
             countCorrect++;
         }
     }
