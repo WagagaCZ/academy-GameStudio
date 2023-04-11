@@ -65,7 +65,7 @@ public class PuzzleController implements PuzzleFieldInit {
         isSaved = false;
         isLoaded = false;
         startNewGame();
-        return "puzzle";
+        return "redirect:/puzzle";
     }
 
     @RequestMapping("/save")
@@ -82,7 +82,7 @@ public class PuzzleController implements PuzzleFieldInit {
             isSaved = false;
             System.out.println("Game was not saved" + e.getMessage());
         } finally {
-            return "puzzle";
+            return "redirect:/puzzle";
         }
     }
 
@@ -100,7 +100,7 @@ public class PuzzleController implements PuzzleFieldInit {
             isLoaded = false;
             startNewGame();
         } finally {
-            return "puzzle";
+            return "redirect:/puzzle";
         }
     }
 
@@ -155,6 +155,7 @@ public class PuzzleController implements PuzzleFieldInit {
     void startNewGame() {
         grid = new int[size][size];
         countOfMove = 0;
+
         PuzzleFieldInit.baseArrayInit(grid);
         do {
             PuzzleFieldInit.initRandomTiles(grid);

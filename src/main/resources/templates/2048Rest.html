@@ -1,0 +1,86 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.com"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layoutGameStudio.html}"
+      lang="en">
+<head>
+    <title>GameStudio - 2048</title>
+    <link th:href="@{styles/game2048Honza/style2048.css}" rel="stylesheet"/>
+
+</head>
+<body>
+
+<main layout:fragment="content">
+    <div class="center">
+        <h1>2048</h1>
+        <a class="newgamebutton" onclick="newGame()"><button>New game</button></a>
+        <div id="gamestate"></div>
+        <div id="scoreCount"></div>
+        <div id="minefield" class="minefield"></div>
+        <p> Controls : Arrows </p>
+        <button class="controls" onclick="makeMove('UP', this)">UP</button>
+        <button class="controls" onclick="makeMove('DOWN', this)">DOWN</button>
+        <button class="controls" onclick="makeMove('LEFT', this)">LEFT</button>
+        <button class="controls" onclick="makeMove('RIGHT', this)">RIGHT</button>
+    </div>
+
+    <!--
+        <section>
+            <h3>Scores</h3>
+
+            <table class="scores">
+                <thead>
+                <tr>
+                    <th>Index</th>
+                    <th>Player</th>
+                    <th>Score</th>
+                    <th>Timestamp</th>
+                </tr>
+                </thead>
+                <tbody id="scoresTableBody">
+                </tbody>
+            </table>
+        </section>
+
+        <section>
+            <h3>Ratings</h3>
+
+            <table class="ratings">
+                <thead>
+                <tr>
+                    <th>Index</th>
+                    <th>Player</th>
+                    <th>Rating</th>
+                    <th>Timestamp</th>
+                </tr>
+                </thead>
+                <tbody id="ratingTableBody">
+                </tbody>
+            </table>
+        </section>
+
+        <section>
+            <h3>Comments</h3>
+
+            <table class="comments">
+                <thead>
+                <tr>
+                    <th>Index</th>
+                    <th>Player</th>
+                    <th>Comment</th>
+                    <th>Timestamp</th>
+                </tr>
+                </thead>
+                <tbody id="commentsTableBody">
+                </tbody>
+            </table>
+        </section>
+
+    -->
+
+    <script type="text/javascript" th:src="@{script/game2048Honza/2048.js}"></script>
+    <script type="text/javascript" th:src="@{script/game2048Honza/services.js}"></script>
+</main>
+
+</body>
+</html>

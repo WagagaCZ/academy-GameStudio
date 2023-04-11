@@ -2,6 +2,7 @@ package sk.tuke.gamestudio.server.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,11 +11,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.WebApplicationContext;
 import sk.tuke.gamestudio.client.game.pexeso.core.Board;
 import sk.tuke.gamestudio.client.game.pexeso.core.Card;
+import sk.tuke.gamestudio.common.entity.Comment;
+import sk.tuke.gamestudio.common.entity.Rating;
 import sk.tuke.gamestudio.common.entity.Score;
+import sk.tuke.gamestudio.common.service.CommentService;
+import sk.tuke.gamestudio.common.service.RatingService;
 import sk.tuke.gamestudio.common.service.ScoreService;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -27,6 +33,10 @@ public class PexesoController {
     UserController userController;
     @Autowired
     ScoreService scoreService;
+    @Autowired
+    RatingService ratingService;
+    @Autowired
+    CommentService commentService;
 
     private List<Card> flippedCards = new ArrayList<>();
 
@@ -42,7 +52,14 @@ public class PexesoController {
     public String newGame() {
             startNewGame();
         score = 0;
+        flippedCards.clear();
         return "pexeso";
+    }
+
+    @PostMapping("start")
+    public ResponseEntity<Void> startNewPexesoGame(){
+        newGame();
+        return ResponseEntity.ok().build();
     }
 
     private void startOrUpdateGame(Integer row, Integer column) {
@@ -78,16 +95,30 @@ public class PexesoController {
     private void startNewGame() {
         board = new Board(6, 5);
     }
+    public List<Score> getTopScores() {
+        return scoreService.getTopScores("pexeso");
+    }
 
-    @PostMapping
-    public String flipCard(@RequestParam int x, @RequestParam int y, Model model) {
-
-        board.flipCard(x, y);
-        model.addAttribute("board", board);
-        if (board.isSolved()) {
-            return "pexeso"; // Return the name of the pexeso-win.html template if the game is solved
+    public double getRating() {
+        return ratingService.getAverageRating("pexeso");
+    }
+    @PostMapping("/submitComment")
+    public String submitComment(@RequestParam("commentText") String commentText) {
+        if (userController.isLogged()) {
+            commentService.addComment(new Comment(commentText, "pexeso", userController.getLoggedUser(), new Timestamp(System.currentTimeMillis())));
         }
-        return "pexeso";
+        return "redirect:/pexeso";
+    }
+    @PostMapping("/submitRating")
+    public String submitRating(@RequestParam("rating") int rating) {
+        if (userController.isLogged()) {
+            ratingService.setRating(new Rating("pexeso",userController.getLoggedUser(),rating));
+        }
+        return "redirect:/pexeso";
+    }
+    public List<Comment> getComments() {
+        return commentService.getComments("pexeso");
+
     }
     public Board getBoard() {
         return board;

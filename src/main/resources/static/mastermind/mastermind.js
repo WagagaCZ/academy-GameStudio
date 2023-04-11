@@ -244,7 +244,7 @@ function checkWin(correction_array) {
     }
 
     if (countCorrect === codeLength) {
-        let winScore = countMastermindScore() + tries
+        let winScore = countMastermindScore() + tries;
         sendScoreAndReloadTable(winScore);
         alert('VICTORY\nYour score is: ' + winScore);
         init();

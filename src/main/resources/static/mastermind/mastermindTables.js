@@ -59,7 +59,7 @@ async function sendScoreAndReloadTable(score) {
 
     if (player != null) {
         await apiSendScore(player, GAME_NAME, score);
-        await showScores(GAME_NAME)
+        await showScores(GAME_NAME);
     } else {
         alert("You aren't logged in. Your score won't be saved.")
     }

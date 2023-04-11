@@ -1,3 +1,6 @@
+body{
+background-color: #d4cfcf;
+}
 .cardMaros span {
   display: inline-block;
   width: 80px;
@@ -77,3 +80,116 @@
   content: '\1F414';
 }
 
+.grid-container{
+ display: grid;
+ grid-template-columns: repeat(3, 1fr);
+    align-items: center;
+    justify-content: space-around;
+    gap: 15px;
+    padding: 0 15px;
+    box-sizing: border-box;
+    margin: 0 auto;
+}
+
+table.scoresMaros {
+    width: 100%;
+    border: black 2px;
+}
+
+table.scoresMaros th {
+    border: 2px solid #dddfff;
+
+      text-align: left;
+
+      padding: 8px;
+}
+
+table.scoresMaros tr:nth-child(even) {
+    background-color: lightgray
+}
+table.scoresMaros tr:hover {
+  transform: scale(1.2);
+  transition: transform 0.5s ease;
+}
+
+table.scoresMaros tr:nth-child(odd) {
+    background-color: white;
+}
+
+table.comments th{
+ border: 2px solid #dddfff;
+
+  text-align: left;
+
+  padding: 8px;
+}
+table.comment{
+background-color: #d4cfcf;
+}
+table.comments tr:hover {
+  transform: scale(1.1);
+  transition: transform 0.5s ease;
+}
+
+table.comments tr:nth-child(even) {
+    background-color: #dddddd;
+  }
+.fade-out-color{
+  background-color: rgba(0, 0, 255, 1);
+  transition: background-color 1s ease-out;
+  color: grey;
+  border-radius: 15px;
+}
+
+.fade-out-color:hover{
+  background-color: rgba(255, 0, 0, 0);
+
+}
+
+@media (max-width: 779px) {
+  .grid-container {
+   display: grid;
+    grid-template-columns: 1fr;
+    align-items: center;
+        justify-content: space-around;
+        gap: 15px;
+        padding: 0 15px;
+        box-sizing: border-box;
+        margin: 0 auto;
+  }
+}
+
+@media (min-width: 780px) and (max-width: 1023px) {
+  .grid-container {
+   display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    align-items: center;
+        justify-content: space-around;
+        gap: 15px;
+        padding: 0 15px;
+        box-sizing: border-box;
+        margin: 0 auto;
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 1612px) {
+  .grid-container {
+   display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    align-items: center;
+        justify-content: space-around;
+        gap: 15px;
+        padding: 0 15px;
+        box-sizing: border-box;
+        margin: 0 auto;
+  }
+
+}
+form textarea {
+
+     background: none;
+
+   }
+form select {
+    background: none;
+  }
