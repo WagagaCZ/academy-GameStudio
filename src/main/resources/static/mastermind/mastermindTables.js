@@ -1,4 +1,4 @@
-const scoreTable = document.querySelector("#score-table");
+const SCORE_TABLE = document.querySelector("#score-table");
 
 // Used Stefan's services and functions loading tables with minimal changes
 
@@ -6,15 +6,15 @@ async function showScores(game) {
     let scores = await apiGetScores(game);
 
     if(scores.message) {
-        scoreTable.innerHTML = `<tr><td></td><td></td><td style='text-align: end'>${scores.message} </td></tr>`;
+        SCORE_TABLE.innerHTML = `<tr><td></td><td></td><td style='text-align: end'>${scores.message} </td></tr>`;
         return;
     }
 
     // Clear table first
-    scoreTable.innerHTML = '';
+    SCORE_TABLE.innerHTML = '';
 
     // Add headers
-    scoreTable.innerHTML += `
+    SCORE_TABLE.innerHTML += `
     <thead>
             <tr>
                 <th>Player</th>
@@ -28,7 +28,7 @@ async function showScores(game) {
     scores.forEach(score => {
         let date = new Date(score.playedOn);
         date = date.toLocaleDateString("en-GB") + ' ' + date.toLocaleTimeString("en-GB");
-        scoreTable.innerHTML += `
+        SCORE_TABLE.innerHTML += `
       <tr">
           <td>${score.player}</td>
           <td>${score.points}</td>
