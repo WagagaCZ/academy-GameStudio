@@ -5,6 +5,7 @@ console.log("Mastermind script loaded");
 const PLAY_COLUMNS = document.querySelector('#play-columns');
 const DIV_SELECT_COLORS = document.getElementById('div-select-color');
 const SUBMIT_BUTTON = document.getElementById('submit-btn');
+const ADD_COMMENT_BUTTON = document.getElementById('add-comment-btn');
 
 const COLORS = ['blue', 'yellow', 'orange', 'green', 'violet', 'purple'];
 let codeLength = 4;
@@ -45,7 +46,7 @@ document.addEventListener('readystatechange', event => {
     // When window loaded ( external resources are loaded too- `css`,`src`, etc...)
     if (event.target.readyState === "complete") {
         showScores("Mastermind");
-        showComments("Mastermind")
+        showComments("Mastermind");
     }
 });
 

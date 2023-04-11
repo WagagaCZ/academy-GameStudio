@@ -1,5 +1,6 @@
 const SCORE_TABLE = document.querySelector("#score-table");
 const COMMENT_TABLE = document.querySelector("#comment-table");
+const COMMENT_FORM = document.querySelector("#comment-form");
 
 
 // Used Stefan's services and functions loading tables with minimal changes
@@ -55,6 +56,7 @@ async function sendScoreAndReloadTable(game) {
     }
 }
 
+
 /*
 COMMENT TABLE
  */
@@ -68,12 +70,21 @@ async function showComments(game) {
         return;
     }
 
+    COMMENT_TABLE.innerHTML += `
+    <thead>
+            <tr>
+                <th>Player and played on</th>
+                <th>Comment</th>
+            </tr>
+    </thead>
+    `;
+
     comments.forEach(comment => {
         let date = new Date(comment.commentedOn);
         date = date.toLocaleDateString("en-GB") + ' ' + date.toLocaleTimeString("en-GB");
         COMMENT_TABLE.innerHTML += `
       <tr">
-          <td>${comment.comment}</td>
+          
           <td>
             <span><i class="fa-solid fa-user"></i> </span>
             <span>${comment.player}</span>
@@ -81,7 +92,26 @@ async function showComments(game) {
             <span><i class="fa-solid fa-calendar-days"></i> </span>
             <span>${date}</span>
           </td>
+          <td>${comment.comment}</td>
       </tr>
       `;
     });
+}
+
+async function submitComment() {
+    const res = await apiGetUser();
+    const player = res.loggedUser;
+
+    const comment = COMMENT_FORM[0].value;
+
+    if (player != null) {
+        if (comment.length > 0) {
+
+            await apiSendComment(player, "Mastermind", comment);
+            COMMENT_FORM[0].value = '';
+            showComments("Mastermind");
+        }
+    } else {
+        alert("You aren't logged in. Your comment won't be saved.")
+    }
 }

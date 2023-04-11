@@ -7,6 +7,11 @@ body {
     background-color: antiquewhite;
 }
 
+h2 {
+    text-align: center;
+    margin-top: 25px;
+}
+
 #game-window {
     text-align: center;
     color: #323232;
@@ -164,4 +169,31 @@ input[type=button]:active {
 .db-table tbody tr.active-row {
     font-weight: bold;
     color: #009879;
+}
+
+/* Comment form */
+#comment-form {
+    display: grid;
+    grid-auto-flow: row;
+    margin: 10px auto;
+    max-width: 600px;
+    gap: 5px;
+}
+
+#add-comment-btn {
+    text-align: center;
+    background-color: darkslategray;
+    cursor: pointer;
+    color: white;
+    border-radius: 12px;
+    height: 35px;
+    width: auto;
+    margin-inline: 20px;
+    transition: 0.5s;
+    box-shadow: 5px 5px 5px gray;
+}
+
+#comment-form-header {
+    display: flex;
+    align-items: center;
 }

@@ -35,7 +35,7 @@
     </div>
 
     <div id="manual">
-        <h2>How it works</h2>
+        <h3>How it works</h3>
         <ul>
             <li>Your goal is to guess the hidden color code</li>
             <li>Colors may repeat, or be absent in the code</li>
@@ -51,8 +51,16 @@
         </ul>
     </div>
 
+
+    <form id="comment-form">
+        <textarea id="comment-text" name="comment" placeholder="Your comment" required></textarea>
+        <button id="add-comment-btn" type="button" onclick="submitComment()">Add comment</button>
+    </form>
+
     <div id="table-container">
+        <h2>Score</h2>
         <table id="score-table" class="db-table"></table>
+        <h2>Comments</h2>
         <table id="comment-table" class="db-table"></table>
     </div>
 
