@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.com"
+  layout:decorate="~{layout/layoutGameStudio.html}" lang="en">
+
+<head>
+  <title>CandyCrush</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <link th:href="@{/styles/tailwind.css}" rel="stylesheet" />
+
+  <link rel="stylesheet" th:href="@{/styles/stevo/stevoTables.css}">
+  <link rel="stylesheet" th:href="@{/styles/stevo/stevoForms.css}">
+  <link rel="stylesheet" th:href="@{/styles/stevo/stevoRatings.css}">
+
+  
+  <link rel="stylesheet" th:href="@{/candycr/candycrush.css}">
+
+  <script defer th:src="@{/script/userServiceJS.js}"></script>
+  <script defer th:src="@{/script/scoreServiceJS.js}"></script>
+  <script defer th:src="@{/script/ratingServiceJS.js}"></script>
+  <script defer th:src="@{/script/commentServiceJS.js}"></script>
+
+  <script defer th:src="@{/script/stevoTables.js}"></script>
+  
+  <script defer th:src="@{/candycr/candycrush.js}"></script>
+</head>
+
+<body>
+  <main layout:fragment="content">
+
+    <div id="scoreBox">Score: <span id="score">0</span></div>
+
+    <section id="candyField"></section>
+
+    <div class="win-window hidden">
+      <p id="win-message"></p>
+      <button id="send-score-button">Send Score and Restart</button>
+    </div>    
+
+    <section>
+      <h3>Best Scores</h3>
+
+      <table class="scores">
+        <thead>
+          <tr>
+            <th>Number</th>
+            <th>Name</th>
+            <th>Score</th>
+            <th>Date and time</th>
+          </tr>
+        </thead>
+        <tbody id="scoresTableBody">
+        </tbody>
+      </table>
+    </section>
+    <div th:replace="~{fragments/_serviceTables :: serviceTables(game=${'CandyCrush'}) }"></div>
+  </main>
+</body>
+
+</html>
