@@ -1,7 +1,12 @@
 const SCORE_TABLE = document.querySelector("#score-table");
+const COMMENT_TABLE = document.querySelector("#comment-table");
+
 
 // Used Stefan's services and functions loading tables with minimal changes
 
+/*
+SCORE TABLE
+ */
 async function showScores(game) {
     let scores = await apiGetScores(game);
 
@@ -48,4 +53,35 @@ async function sendScoreAndReloadTable(game) {
     } else {
         alert("You aren't logged in. Your score won't be saved.")
     }
+}
+
+/*
+COMMENT TABLE
+ */
+async function showComments(game) {
+    let comments = await apiGetComments(game);
+    // clear table first
+    COMMENT_TABLE.innerHTML = '';
+
+    if(comments.message) {
+        COMMENT_TABLE.innerHTML = `<tr><td>${comments.message} </td></tr>`;
+        return;
+    }
+
+    comments.forEach(comment => {
+        let date = new Date(comment.commentedOn);
+        date = date.toLocaleDateString("en-GB") + ' ' + date.toLocaleTimeString("en-GB");
+        COMMENT_TABLE.innerHTML += `
+      <tr">
+          <td>${comment.comment}</td>
+          <td>
+            <span><i class="fa-solid fa-user"></i> </span>
+            <span>${comment.player}</span>
+            <span> &nbsp </span>
+            <span><i class="fa-solid fa-calendar-days"></i> </span>
+            <span>${date}</span>
+          </td>
+      </tr>
+      `;
+    });
 }

@@ -10,6 +10,8 @@
 
     <script defer th:src="@{/script/userServiceJS.js}"></script>
     <script defer th:src="@{/script/scoreServiceJS.js}"></script>
+    <script defer th:src="@{/script/ratingServiceJS.js}"></script>
+    <script defer th:src="@{/script/commentServiceJS.js}"></script>
 
     <script defer th:src="@{/mastermind/mastermindTables.js}"></script>
 </head>
@@ -51,6 +53,7 @@
 
     <div id="table-container">
         <table id="score-table" class="db-table"></table>
+        <table id="comment-table" class="db-table"></table>
     </div>
 
     <script th:src="@{mastermind/mastermind.js}"></script>
