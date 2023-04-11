@@ -46,6 +46,7 @@ document.addEventListener('readystatechange', event => {
     if (event.target.readyState === "complete") {
         showScores();
         showComments(GAME_NAME);
+        showAverageRating();
     }
 });
 
@@ -55,7 +56,7 @@ document.addEventListener('readystatechange', event => {
  */
 function createRandomCode() {
     for (let i = 1; i <= codeLength; i++) {
-        let random_color = COLORS[Math.floor(Math.random() * COLORS.length)]
+        let random_color = COLORS[Math.floor(Math.random() * COLORS.length)];
         random_code.push(random_color);
     }
 
