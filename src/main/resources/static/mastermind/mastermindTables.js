@@ -53,12 +53,12 @@ async function showScores() {
     });
 }
 
-async function sendScoreAndReloadTable() {
+async function sendScoreAndReloadTable(score) {
     const res = await apiGetUser();
     const player = res.loggedUser;
 
     if (player != null) {
-        await apiSendScore(player, GAME_NAME, countMastermindScore());
+        await apiSendScore(player, GAME_NAME, score);
         await showScores(GAME_NAME)
     } else {
         alert("You aren't logged in. Your score won't be saved.")

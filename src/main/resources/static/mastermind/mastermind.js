@@ -244,8 +244,9 @@ function checkWin(correction_array) {
     }
 
     if (countCorrect === codeLength) {
-        sendScoreAndReloadTable();
-        alert('VICTORY\nYour score is: ' + countMastermindScore());
+        let winScore = countMastermindScore() + tries
+        sendScoreAndReloadTable(winScore);
+        alert('VICTORY\nYour score is: ' + winScore);
         init();
     } else if (submitTry > tries) {
         alert('GAME OVER');
