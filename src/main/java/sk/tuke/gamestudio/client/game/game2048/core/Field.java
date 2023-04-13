@@ -1,9 +1,5 @@
 package sk.tuke.gamestudio.client.game.game2048.core;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import sk.tuke.gamestudio.common.entity.Score;
-import sk.tuke.gamestudio.common.service.ScoreService;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Formatter;
@@ -110,6 +106,7 @@ public class Field implements Serializable {
     /**
      * Main game loop method, moves the board and if tiles shifted generates new ones, also checks if game is solved or failed
      * @param direction direction in which the board will shift
+     * @return false if game ended, true if not
      */
     public boolean doMove(Direction direction) {
         // TODO this can be done much cheaper with more brain power
@@ -336,6 +333,7 @@ public class Field implements Serializable {
      * @return score
      */
     public int getScore() {
+        score = computeScore();
         return score;
     }
 
