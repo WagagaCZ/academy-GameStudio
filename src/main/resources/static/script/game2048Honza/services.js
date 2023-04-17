@@ -2,7 +2,7 @@ const scoresTableBody = document.getElementById("scoresTableBody");
 const ratingsTableBody = document.getElementById("ratingsTableBody");
 const commentsTableBody = document.getElementById("commentsTableBody");
 
-const API_URL = "/api";
+const API_URL_SERVICE = "/api";
 
 const getScoresUrl = "/score/2048";
 const getRatingsUrl = "/rating/2048";
@@ -13,12 +13,12 @@ let comments;
 let ratings;
 
 fetchAndRenderScores();
-fetchAndRenderRatings();
-fetchAndRenderComments();
+// fetchAndRenderRatings();
+// fetchAndRenderComments();
 
 async function fetchAndRenderScores(){
     try{
-        const response = await fetch(API_URL + getScoresUrl);
+        const response = await fetch(API_URL_SERVICE + getScoresUrl);
                 if( response.status === 200 ) {
                     scores = await response.json();
                     renderScores(scores,scoresTableBody);
@@ -30,7 +30,7 @@ async function fetchAndRenderScores(){
 
 async function fetchAndRenderRatings(){
     try{
-        const response = await fetch(API_URL + getRatingsUrl);
+        const response = await fetch(API_URL_SERVICE + getRatingsUrl);
                 if( response.status === 200 ) {
                     ratings = await response.json();
                     renderRatings(ratings,ratingsTableBody);
@@ -41,7 +41,7 @@ async function fetchAndRenderRatings(){
 };
 async function fetchAndRenderComments(){
     try{
-        const response = await fetch(API_URL + getCommentsUrl);
+        const response = await fetch(API_URL_SERVICE + getCommentsUrl);
                 if( response.status === 200 ) {
                     comments = await response.json();
                     renderComments(comments,commentsTableBody);
