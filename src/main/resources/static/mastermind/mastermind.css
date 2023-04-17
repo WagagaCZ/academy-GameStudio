@@ -7,6 +7,11 @@ body {
     background-color: antiquewhite;
 }
 
+h2 {
+    text-align: center;
+    margin-top: 25px;
+}
+
 #game-window {
     text-align: center;
     color: #323232;
@@ -48,7 +53,7 @@ body {
     font-weight: bold;
 }
 
-#main {
+#play-columns {
     margin: 10px auto;
 }
 
@@ -125,7 +130,7 @@ input[type=button]:active {
 /* Styling for tables that shows data from database */
 #table-container {
     align-self: center;
-    margin: 10px auto;
+    margin: 50px auto;
 }
 
 .db-table {
@@ -134,7 +139,7 @@ input[type=button]:active {
     margin: 25px auto;
     font-size: 0.9em;
     font-family: sans-serif;
-    min-width: 400px;
+    min-width: 500px;
     box-shadow: 10px 10px 5px gray;
 }
 
@@ -164,4 +169,47 @@ input[type=button]:active {
 .db-table tbody tr.active-row {
     font-weight: bold;
     color: #009879;
+}
+
+/* Comment form */
+#comment-form {
+    display: grid;
+    grid-auto-flow: row;
+    margin: 10px auto;
+    max-width: 500px;
+    gap: 5px;
+}
+
+#add-comment-btn {
+    text-align: center;
+    background-color: darkslategray;
+    cursor: pointer;
+    color: white;
+    border-radius: 12px;
+    height: 35px;
+    width: auto;
+    margin-inline: 20px;
+    transition: 0.5s;
+    box-shadow: 5px 5px 5px gray;
+}
+
+#comment-form-header {
+    display: flex;
+    align-items: center;
+}
+
+/* Rating form */
+#rating-form {
+    display: flex;
+    align-items: center;
+    max-width: 450px;
+    margin: 25px auto;
+}
+
+h4 {
+    margin-right: 5px;
+}
+
+#rating-buttons {
+    margin: auto;
 }

@@ -10,6 +10,8 @@
 
     <script defer th:src="@{/script/userServiceJS.js}"></script>
     <script defer th:src="@{/script/scoreServiceJS.js}"></script>
+    <script defer th:src="@{/script/ratingServiceJS.js}"></script>
+    <script defer th:src="@{/script/commentServiceJS.js}"></script>
 
     <script defer th:src="@{/mastermind/mastermindTables.js}"></script>
 </head>
@@ -19,13 +21,12 @@
         <div id="game-title-mastermind">
             <h1>Mastermind</h1>
         </div>
-        <div id="main"></div>
+        <div id="play-columns"></div>
         <div id="game-footer-mastermind">
             <div id="div-select-color"></div>
             <input id="submit-btn" type="button" value="Submit"/>
         </div>
     </div>
-
 
     <div id="menu-btn-container">
         <button class="menu-btn" onclick="init()">Restart</button>
@@ -34,23 +35,43 @@
     </div>
 
     <div id="manual">
-        <h2>How it works</h2>
+        <h3>How it works</h3>
         <ul>
-            <li>Your goal is to guess the hidden color code</li>
+            <li>Your goal is to guess correctly the hidden color code</li>
             <li>Colors may repeat, or be absent in the code</li>
-            <li> Press "Own" to change the code's length and the number of tries</li>
+            <li>Press "Own" to change the code's length and the number of tries</li>
             <li>Your guesses appear in the left column
                 and their corrections in the right column
             </li>
-            <li>In corrections, red means it's the right color in the right place
-                while white means the color is present in the code but the particular place is wrong
+            <li>In corrections:<br>
+                - GREEN = correct color and correct position<br>
+                - WHITE = correct color but wrong position<br>
+                - RED   = color is not in the hidden color code
             </li>
         </ul>
     </div>
 
+    <div id="rating-form">
+        <h4>Rating: </h4>
+        <h4 id="rating"></h4>
+
+        <div id="rating-buttons">
+            <button id="rating-1">1</button>
+            <button id="rating-2">2</button>
+            <button id="rating-3">3</button>
+            <button id="rating-4">4</button>
+            <button id="rating-5">5</button>
+        </div>
+    </div>
+
+    <form id="comment-form">
+        <textarea id="comment-text" name="comment" placeholder="Write comment (You must be logged in to save your comment)" required></textarea>
+        <button id="add-comment-btn" type="button" onclick="submitComment()">Add comment</button>
+    </form>
+
     <div id="table-container">
         <table id="score-table" class="db-table"></table>
-
+        <table id="comment-table" class="db-table"></table>
     </div>
 
     <script th:src="@{mastermind/mastermind.js}"></script>
