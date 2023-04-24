@@ -31,6 +31,7 @@
       </tr>
     </table>
   </section>
+
   <section>
     <span th:if="${@userController.isLogged()}">
       <form action="/connect/comment" method="post">
@@ -45,7 +46,7 @@
 
       <!--    <p>Your rating:</p>-->
       <!--    <h2><span th:utext="${@userController.getUserRating()}"/></h2>-->
-</span>
+    </span>
 
     <p>Users rated:</p>
     <h2><span th:utext="${@connectController.getAverageRating()}"/></h2> <br>
