@@ -5,6 +5,7 @@ import java.util.Random;
 public class MastermindField {
 
     private final String[] COLORS = {"blue", "yellow", "orange", "green", "violet", "purple"};
+    //ja by som si toto vytvorila ako pole hodnot enumov, nie ako pole Stringov :)
 
     private String[][] tryField;
     private String[][] correctionField;

@@ -7,16 +7,10 @@ const DIV_SELECT_COLORS = document.getElementById('div-select-color');
 const SUBMIT_BUTTON = document.getElementById('submit-btn');
 
 const COLORS = ['blue', 'yellow', 'orange', 'green', 'violet', 'purple'];
-let codeLength = 4;
-let tries = 8;
 
-let random_code = [];
-let submitTry = 1;
-
-let score;
+let score, codeLength = 4, tries = 8, random_code = [], submitTry = 1;
 
 init();
-
 
 /**
  * The initial function that prepares the hidden code (of colors),
@@ -69,6 +63,7 @@ function createRandomCode() {
  */
 function setCodeLength() {
     let newCodeLength = prompt("Please, enter then number of hidden pegs (4-7)", "4");
+
     while (!"!/^[1-9]+$/.test(newCodeLength)") {
         alert("Unvalid input.");
         newCodeLength = prompt("Type a number between 4 and 7, please.");
@@ -115,10 +110,10 @@ function setNumberOfTries() {
 /**
  * Sets the columns for tries and corrections for the HTML file.
  */
-function setTryAndCorrectionColumn() {
+function setTryAndCorrectionColumn() { //ako reactacke by mi viac vyhovoval zapis cez template literals ``, ale je to pekny kod :)
     for (let i = 1; i <= tries; i++) {
         let div_try = document.createElement('div');
-        div_try.setAttribute('id', 'try-'+i);
+        div_try.setAttribute('id', 'try-' + i);
         div_try.setAttribute('class', 'try');
 
         let div_left = document.createElement('div');
