@@ -42,9 +42,9 @@ public class Field implements Serializable {
      * Generates playing field and two random 2 value tiles
      */
     private void generate() {
-        for (int i = 0; i < getRowCount(); ++i) {
-            for (int j = 0; j < getColumnCount(); ++j) {
-                tiles[i][j] = new Tile(i, j, 0);
+        for (int r = 0; r < getRowCount(); ++r) {
+            for (int c = 0; c < getColumnCount(); ++c) {
+                tiles[r][c] = new Tile(r, c, 0);
             }
         }
         // generates random tile
@@ -58,14 +58,14 @@ public class Field implements Serializable {
      */
     private List<Coord> findFreeSpaces() {
         List<Coord> free_spaces = new ArrayList<>();
-        for (int i = 0; i < getRowCount(); ++i) {
-            for (int j = 0; j < getColumnCount(); ++j) {
-                if (tiles[i][j].isEmpty()) {
-                    free_spaces.add(new Coord(i, j));
+        for (int r = 0; r < getRowCount(); ++r) {
+            for (int c = 0; c < getColumnCount(); ++c) {
+                if (tiles[r][c].isEmpty()) {
+                    free_spaces.add(new Coord(r, c));
                     continue;
                 }
-                if (tiles[i][j].getValue() > currLargest)
-                    currLargest = tiles[i][j].getValue();
+                if (tiles[r][c].getValue() > currLargest)
+                    currLargest = tiles[r][c].getValue();
             }
         }
         return free_spaces;
@@ -76,17 +76,15 @@ public class Field implements Serializable {
      * @return true if there is at least 2 adjacent same value tiles
      */
     private boolean isMovePossible() {
-        for (int i = 0; i < getRowCount(); ++i) {
-            for (int j = 0; j < getColumnCount(); ++j) {
-                int value = tiles[i][j].getValue();
-                if (i + 1 < getRowCount() && value == tiles[i + 1][j].getValue())
+        for (int r = 0; r < getRowCount(); ++r) {
+            for (int c = 0; c < getColumnCount(); ++c) {
+                int value = tiles[r][c].getValue();
+                if ((r + 1 < getRowCount() && value == tiles[r + 1][c].getValue())
+                   || (r - 1 >= 0 && value == tiles[r - 1][c].getValue())
+                   || (c + 1 < getColumnCount() && value == tiles[r][c + 1].getValue())
+                   || (c - 1 >= 0 && value == tiles[r][c - 1].getValue())) {
                     return true;
-                if (i - 1 >= 0 && value == tiles[i - 1][j].getValue())
-                    return true;
-                if (j + 1 < getColumnCount() && value == tiles[i][j + 1].getValue())
-                    return true;
-                if (j - 1 >= 0 && value == tiles[i][j - 1].getValue())
-                    return true;
+                }
             }
         }
         return false;
@@ -96,10 +94,10 @@ public class Field implements Serializable {
      * Generate random tile in free space inside field with value of 2
      */
     private void generateRound() {
-        List<Coord> free_spaces = findFreeSpaces();
-        int pick_coord = ThreadLocalRandom.current().nextInt(free_spaces.size());
-        int x = free_spaces.get(pick_coord).getX();
-        int y = free_spaces.get(pick_coord).getY();
+        List<Coord> freeSpaces = findFreeSpaces();
+        int pickCoord = ThreadLocalRandom.current().nextInt(freeSpaces.size());
+        int x = freeSpaces.get(pickCoord).getX();
+        int y = freeSpaces.get(pickCoord).getY();
         tiles[x][y].setValue(2);
     }
 
@@ -110,10 +108,11 @@ public class Field implements Serializable {
      */
     public boolean doMove(Direction direction) {
         // TODO this can be done much cheaper with more brain power
+        // :D
         int[][] tilesBeforeMove = new int[getRowCount()][getColumnCount()];
-        for (int i = 0; i < getRowCount(); ++i) {
-            for (int j = 0; j < getColumnCount(); ++j) {
-                tilesBeforeMove[i][j] = tiles[i][j].getValue();
+        for (int r = 0; r < getRowCount(); ++r) {
+            for (int c = 0; c < getColumnCount(); ++c) {
+                tilesBeforeMove[r][c] = tiles[r][c].getValue();
             }
         }
 
@@ -123,6 +122,15 @@ public class Field implements Serializable {
             case LEFT -> calculateMoveLEFT();
             case RIGHT -> calculateMoveRIGHT();
         }
+
+        /* da sa to spravit takto:
+         - metoda calculateMove(direction) bude v cykle na zaklade smeru vyberat jednotlive riadky/stlpce z hracieho pola ako jednorozmerne polia int[]
+         - ak ide o UP/DOWN, tak vytiahne stlpec, ak ide o LEFT/RIGHT, vytiahne riadok
+         - pokial ide o backward smer (LEFT/UP), prevrati poradie prvkov v danom poli int[]
+         - pre dany riadok vykona shiftTilesRight(int[]), potom mergeTiles(int[]) a znova shirtTilesRight(int[]) - na toto nam stacia dve genericke metody, ktore budu robit vzdy to iste
+         - nasledne vezme vysledok a ulozi ho spat do hracieho pola.
+         */
+
 
         // last compute score before game end
         score = computeScore();
@@ -156,9 +164,9 @@ public class Field implements Serializable {
      * @return false if the arrays have the same contents, true if they have at least one different tile value
      */
     private boolean moveHappened(int[][] beforeArr, Tile[][] currArr) {
-        for (int i = 0; i < getRowCount(); ++i) {
-            for (int j = 0; j < getColumnCount(); ++j) {
-                if (beforeArr[i][j] != currArr[i][j].getValue())
+        for (int r = 0; r < getRowCount(); ++r) {
+            for (int c = 0; c < getColumnCount(); ++c) {
+                if (beforeArr[r][c] != currArr[r][c].getValue())
                     return true;
             }
         }
@@ -342,16 +350,16 @@ public class Field implements Serializable {
      */
     @Override
     public String toString() {
-        Formatter str = new Formatter();
+        Formatter f = new Formatter();
         int columnSize = (int) (Math.log10(getColumnCount()) + 1) + 2;
         var format = "%" + columnSize + "s";
 
-        for (int i = 0; i < getRowCount(); ++i) {
-            for (int j = 0; j < getColumnCount(); ++j) {
-                str.format(format, tiles[i][j].toString());
+        for (int r = 0; r < getRowCount(); ++r) {
+            for (int c = 0; c < getColumnCount(); ++c) {
+                f.format(format, tiles[r][c].toString());
             }
-            str.format("\n");
+            f.format("\n");
         }
-        return str.toString();
+        return f.toString();
     }
 }
