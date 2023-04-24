@@ -15,21 +15,17 @@ import java.util.Scanner;
 import static sk.tuke.gamestudio.common.Constants.*;
 
 @Component
-public class TicTacConsoleUI {
+public class TicTacConsoleUI { //popracovat na konzistentnosti, raz to mas TicTacToe, inokedy TicTac, potom tiktaktoe a este Toe. Vyber si jedno a pouzivaj to konzistentne vsade, zvysok dorefactoruj na rovnake nazvy.
     @Autowired
     private ScoreService scoreService;
     @Autowired
     private RatingService ratingService;
-    final char SIGN_X = 'x';
-    final char SIGN_O = 'o';
-    final char SIGN_EMPTY = '.';
-    char[][] table;
-    Random random;
-    Scanner sc;
-    int countX = 0;
-    int countO = 0;
-    int free = 0;
+    final char SIGN_X = 'x', SIGN_O = 'o', SIGN_EMPTY = '.';
     public static int TT_SIZE = 3;
+    char[][] table; //table je hracie pole?
+    private final Random random; //preco nikde nepouzivas private?
+    private final Scanner sc;
+    int countX = 0, countO = 0, free = 0;
 
     TicTacConsoleUI() {
         random = new Random();
@@ -48,21 +44,13 @@ public class TicTacConsoleUI {
             if (checkWin(SIGN_X)) {
                 System.out.println(WIN);
                 ratingService.setRating(new Rating(TIC_TAC_TOE, "newUser", 3));
-                System.out.println("Average rating:");
-                System.out.println(ratingService.getAverageRating(TIC_TAC_TOE));
-                System.out.println("Your rating:");
-                System.out.println(ratingService.getRating(TIC_TAC_TOE, "player"));
-                printScores();
+                printServices();
                 break;
             }
 
             if (this.isFullTable()) {
                 System.out.println(REMIZA);
-                System.out.println("Average rating:");
-                System.out.println(ratingService.getAverageRating(TIC_TAC_TOE));
-                System.out.println("Your rating:");
-                System.out.println(ratingService.getRating(TIC_TAC_TOE, "player"));
-                printScores();
+                printServices();
                 break;
             }
 
@@ -82,6 +70,14 @@ public class TicTacConsoleUI {
 
         System.out.println(GAME_OVER);
         this.printTable();
+    }
+
+    private void printServices() {
+        System.out.println("Average rating:");
+        System.out.println(ratingService.getAverageRating(TIC_TAC_TOE));
+        System.out.println("Your rating:");
+        System.out.println(ratingService.getRating(TIC_TAC_TOE, "player"));
+        printScores();
     }
 
     private void init() {
