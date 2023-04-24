@@ -5,10 +5,11 @@
     <link th:href="@{/styles/battleship/main.css}" rel="stylesheet"/>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-		window.onload = function() {
-			checkGameResult();
-		};
-	</script>
+        window.onload = function() {
+          checkGameResult();
+        };
+        let loggedIn = false;
+	  </script>
 </head>
 <body>
 
@@ -21,15 +22,13 @@
             <span th:text="${@userController.loggedUser}"></span>
         </a>
         <script th:inline="javascript">
-            var loggedIn = true;
-
+            loggedIn = true;
         </script>
     </div>
     <div class="login-user" th:if="not ${@userController.logged}">
         Logged out
         <script th:inline="javascript">
-            var loggedIn = false;
-
+            loggedIn = false;
         </script>
     </div>
 </div>
@@ -98,12 +97,16 @@
 <div class="slide-rating">
     <h2>Rate a Game</h2>
     <form id="rating-form" method="post">
-        <input type="range" min="1" max="5" value="1" class="slider" id="myRange" name="ratingValue">
+        <input type="range" min="1" max="5" value="1"
+               class="slider"
+               id="myRange" name="ratingValue">
         <div class="rating-btn">
-            <button type="button" style="font-family: impact, sans-serif;" onclick="getRating()">Get Rating</button>
-            <button type="button" style="font-family: impact, sans-serif;" onclick="getAverageRating()">Average Rating
-            </button>
-            <input type="submit" style="font-family: impact, sans-serif;" value="Submit" name="submitRating">
+            <button type="button" style="font-family: impact, sans-serif;"
+                    onclick="getRating()">Get Rating</button>
+            <button type="button" style="font-family: impact, sans-serif;"
+                    onclick="getAverageRating()">Average Rating</button>
+            <input type="submit" style="font-family: impact, sans-serif;"
+                   value="Submit" name="submitRating">
         </div>
     </form>
     <div class="rating-value">
@@ -173,20 +176,20 @@ $(document).ready(function() {
 
 
 function startNewGame() {
-        var xhttp = new XMLHttpRequest();
-        xhttp.open("POST", "/ship/start", true);
-        xhttp.send();
-    }
+  const xhttp = new XMLHttpRequest();
+  xhttp.open("POST", "/ship/start", true);
+  xhttp.send();
+}
 
 function checkGameResult() {
-  var numberOfEnemyTiles = document.getElementById("numberOfEnemyTiles").textContent;
-  var numberOfPlayerTiles = document.getElementById("numberOfPlayerTiles").textContent;
+  const numberOfEnemyTiles = document.getElementById("numberOfEnemyTiles").textContent;
+  const numberOfPlayerTiles = document.getElementById("numberOfPlayerTiles").textContent;
 
-  if (numberOfEnemyTiles == 0) {
+  if (numberOfEnemyTiles === 0) { // ! pozor, javascript !
     setTimeout(function() {
       alert("Congratulations! You won!");
     }, 100);
-  } else if (numberOfPlayerTiles == 0) {
+  } else if (numberOfPlayerTiles === 0) {
     setTimeout(function() {
       alert("Game over. You lost.");
     }, 100);

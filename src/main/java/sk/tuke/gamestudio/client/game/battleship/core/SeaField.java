@@ -110,24 +110,17 @@ public class SeaField {
     }
 
     private boolean canPlaceShip(Tile[][] tiles, int row, int col, int size, boolean horizontal) {
+        //toto sa da cele zrefaktorovat podobne ako placeShip :)
         if (horizontal) {
             if (col + size > columnCount) {
                 return false;
             }
             for (int c = col; c < col + size; c++) {
-                if (tiles[row][c] != null) {
-                    return false;
-                }
-                if (row > 0 && tiles[row - 1][c] != null) {
-                    return false;
-                }
-                if (row < rowCount - 1 && tiles[row + 1][c] != null) {
-                    return false;
-                }
-                if (c > 0 && tiles[row][c - 1] != null) {
-                    return false;
-                }
-                if (c < columnCount - 1 && tiles[row][c + 1] != null) {
+                if (tiles[row][c] != null
+                        || row > 0 && tiles[row - 1][c] != null
+                        || row < rowCount - 1 && tiles[row + 1][c] != null
+                        || c > 0 && tiles[row][c - 1] != null
+                        || c < columnCount - 1 && tiles[row][c + 1] != null) {
                     return false;
                 }
             }
@@ -136,19 +129,11 @@ public class SeaField {
                 return false;
             }
             for (int r = row; r < row + size; r++) {
-                if (tiles[r][col] != null) {
-                    return false;
-                }
-                if (col > 0 && tiles[r][col - 1] != null) {
-                    return false;
-                }
-                if (col < columnCount - 1 && tiles[r][col + 1] != null) {
-                    return false;
-                }
-                if (r > 0 && tiles[r - 1][col] != null) {
-                    return false;
-                }
-                if (r < rowCount - 1 && tiles[r + 1][col] != null) {
+                if (tiles[r][col] != null
+                        || col > 0 && tiles[r][col - 1] != null
+                        || col < columnCount - 1 && tiles[r][col + 1] != null
+                        || r > 0 && tiles[r - 1][col] != null
+                        || r < rowCount - 1 && tiles[r + 1][col] != null) {
                     return false;
                 }
             }
@@ -167,10 +152,19 @@ public class SeaField {
                 tiles[r][col] = new Ship();
             }
         }
+
+//        for (int i = 0; i < size; i++) {
+//            int r = row + (horizontal ? 0 : i);
+//            int c = col + (horizontal ? i : 0);
+//            tiles[r][c] = new Ship();
+//        }
     }
 
     public void openTile(int row, int column) {
+        System.out.println(">>>>" + row + " " + column);
+        System.out.println(enemyTiles[row][column]);
         Tile tile = enemyTiles[row][column];
+
         if (tile.getState() == Tile.State.WATER) {
             if(tile instanceof Ship) {
                 tile.setState(Tile.State.HIT);
@@ -178,7 +172,9 @@ public class SeaField {
             } else {
                 tile.setState(Tile.State.MISS);
             }
+
             numberOfTries++;
+
             if (isSolved()) {
                 state = GameState.WON;
             }
@@ -189,17 +185,20 @@ public class SeaField {
         Random random = new Random();
         int row, col;
         Tile tile;
+
         do {
             row = random.nextInt(rowCount);
             col = random.nextInt(columnCount);
             tile = playerTiles[row][col];
         } while (tile == null || tile.getState() != Tile.State.WATER);
+
         if(tile instanceof Ship){
             tile.setState(Tile.State.HIT);
             numberOfPlayerShip--;
         } else {
             tile.setState(Tile.State.MISS);
         }
+
         if (isSolved()) {
             state = GameState.FAILED;
         }
