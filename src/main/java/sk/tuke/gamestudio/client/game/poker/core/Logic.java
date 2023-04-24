@@ -30,14 +30,6 @@ public class Logic {
         return true;
     }
 
-    public List<Card> getHand() {
-        return hand;
-    }
-
-    public void setHand(List<Card> hand) {
-        this.hand = hand;
-    }
-
     public int calculateScore() {
         int score = 0;
         if (isFlush() && isStraight()){
@@ -49,36 +41,17 @@ public class Logic {
         }
 
         System.out.println(duplicates.size());
-        switch (duplicates.size()) {
-            // Four of a kind
-            case 6 -> {
-                score = 750;
-            }
-            // Three of a kind + one pair = full house
-            case 4 -> {
-                score = 500;
-            }
-            //Three of a kind - one duplicate gets twice into the list, the other one once
 
-            case 3 -> {
-                score = 80;
-            }
-            //Two pair
-            case 2 -> {
-                score = 30;
-            }
-            //One pair
-            case 1 -> {
-                score = 10;
-            }
+        score = switch(duplicates.size()) {
+            case 6 -> 750;
+            case 4 -> 500;
+            case 3 -> 80;
+            case 2 -> 30;
+            case 1 -> 10;
+            default -> score;
+        };
 
-
-        }
         return score;
-    }
-
-    public void setDuplicates(Hand hand) {
-        duplicates = findDuplicates(hand);
     }
 
     private List<Integer> findDuplicates(Hand hand) {
@@ -97,6 +70,18 @@ public class Logic {
             }
         }
         return duplicates;
+    }
+
+    public List<Card> getHand() {
+        return hand;
+    }
+
+    public void setHand(List<Card> hand) {
+        this.hand = hand;
+    }
+
+    public void setDuplicates(Hand hand) {
+        duplicates = findDuplicates(hand);
     }
 
 }
