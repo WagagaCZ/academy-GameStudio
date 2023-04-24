@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static sk.tuke.gamestudio.client.game.puzzle.PuzzleFieldInit.baseArrayInit;
-import static sk.tuke.gamestudio.client.game.puzzle.PuzzleFieldInit.initRandomTiles;
+import static sk.tuke.gamestudio.client.game.puzzle.PuzzleFieldInit.switchRandomTiles;
 
 class PuzzleFieldInitTest {
     static final int rows = 4;
@@ -29,7 +29,7 @@ class PuzzleFieldInitTest {
 
     @Test
     void initRandomTilesTest() {
-        initRandomTiles(puzzleField);
+        switchRandomTiles(puzzleField);
         int[][] wonGrid = {{0, 1, 2, 3}, {4, 5, 6, 7}, {8, 9, 10, 11}, {12, 13, 14, 15}};
         assertFalse(Arrays.deepEquals(wonGrid, puzzleField));
     }

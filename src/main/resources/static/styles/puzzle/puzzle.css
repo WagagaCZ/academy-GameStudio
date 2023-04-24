@@ -8,6 +8,10 @@ body.puzzle a {
     align-items: center;
 }
 
+table.puzzle {
+    border-collapse: initial;
+}
+
 table.puzzle th, table.puzzle td {
     text-align: center;
     background-color: #B676B1;
@@ -22,15 +26,18 @@ table.puzzle th, table.puzzle td {
 }
 
 table.puzzle a {
-    display: grid;
-    grid-template-columns: repeat(9, 10px);
-    grid-template-rows: repeat(4, 10px);
-    grid-gap: 10px;
+    /*ak si chcela to cele zobrazit ako grid, potom musi gridom byt table.puzzle a nesmie to byt tabulka, ale divka. Mozes dat grid aj na jednu bunku, ale potom zarovnavat musis uplne inac :) */
+    /*display: grid;*/
+    /*grid-template-columns: repeat(9, 10px);*/
+    /*grid-template-rows: repeat(4, 10px);*/
+    /*grid-gap: 10px;*/
+    /*justify-content: center;*/
     margin: auto;
     max-width: 1200px;
-    justify-content: center;
     text-align: center;
     border-radius: 1em;
+    font-size: 2em; /* pekne velke */
+    text-decoration: none !important; /* bez podciarknutia a vzdy, aj ked bude cursor nad nim */
 }
 
 
