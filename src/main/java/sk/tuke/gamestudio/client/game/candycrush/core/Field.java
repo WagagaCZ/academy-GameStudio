@@ -11,12 +11,10 @@ public class Field {
     public int numCols;
     public int numSuccessfulSwaps = 0;
 
-
     private GameState state = GameState.PLAYING;
     public int score;
 
     public final long startTimeInMs;
-
 
     public boolean justFinished=false;
 
@@ -24,8 +22,10 @@ public class Field {
         this.numRows = numRows;
         this.numCols = numCols;
         this.tiles = new Tile[numRows][numCols];
+
         fill();
         generate();
+
         startTimeInMs = System.currentTimeMillis();
     }
     private int computeScore() {
@@ -48,10 +48,10 @@ public class Field {
         }
     }
 
-    public void display() {
-        for (int i = 0; i < numRows; i++) {
-            for (int j = 0; j < numCols; j++) {
-                Tile tile = tiles[i][j];
+    public void display() { //toto by mal riesit ConsoleUI, nie Field :)
+        for (int r = 0; r < numRows; r++) {
+            for (int c = 0; c < numCols; c++) {
+                Tile tile = tiles[r][c];
                 switch (tile.getColor()) {
                     case RED:
                         System.out.printf("\u001B[31m%s\u001B[0m ", "\uD83D\uDD25"); // Red fire emoji
@@ -76,18 +76,10 @@ public class Field {
         }
     }
 
-
-
-
     public boolean isValidSwap(int row1, int col1, int row2, int col2) {
-        if (row1 < 0 || row1 >= numRows || col1 < 0 || col1 >= numCols ||
-                row2 < 0 || row2 >= numRows || col2 < 0 || col2 >= numCols) {
-            return false;
-        }
-        if (Math.abs(row1 - row2) + Math.abs(col1 - col2) != 1) {
-            return false;
-        }
-        return true;
+        return !(row1 < 0 || row1 >= numRows || col1 < 0 || col1 >= numCols
+            || row2 < 0 || row2 >= numRows || col2 < 0 || col2 >= numCols
+            || Math.abs(row1 - row2) + Math.abs(col1 - col2) != 1);
     }
 
     public void swap(int row1, int col1, int row2, int col2) {
@@ -96,19 +88,21 @@ public class Field {
         tiles[row2][col2] = temp;
     }
 
+    private boolean isMatchingTile(Tile tile1, Tile tile2, Tile tile3) {
+        return tile1.getColor() == tile2.getColor() && tile1.getColor() == tile3.getColor();
+    }
+
     public boolean hasThreeInARow() {
-        for (int i = 0; i < numRows; i++) {
-            for (int j = 0; j < numCols - 2; j++) {
-                if (tiles[i][j].getColor() == tiles[i][j + 1].getColor() &&
-                        tiles[i][j].getColor() == tiles[i][j + 2].getColor()) {
+        for (int r = 0; r < numRows; r++) {
+            for (int c = 0; c < numCols - 2; c++) {
+                if (isMatchingTile(tiles[r][c], tiles[r][c+1], tiles[r][c+2])) {
                     return true;
                 }
             }
         }
-        for (int j = 0; j < numCols; j++) {
-            for (int i = 0; i < numRows - 2; i++) {
-                if (tiles[i][j].getColor() == tiles[i + 1][j].getColor() &&
-                        tiles[i][j].getColor() == tiles[i + 2][j].getColor()) {
+        for (int c = 0; c < numCols; c++) {
+            for (int r = 0; r < numRows - 2; r++) {
+                if (isMatchingTile(tiles[c][r], tiles[c+1][r], tiles[c+2][r])) {
                     return true;
                 }
             }
@@ -116,34 +110,39 @@ public class Field {
         return false;
     }
     public void removeMatches() {
+        //get matching tiles
         ArrayList<Tile> matchedTiles = new ArrayList<>();
-        for (int i = 0; i < numRows; i++) {
-            for (int j = 0; j < numCols - 2; j++) {
-                if (tiles[i][j].getColor() == tiles[i][j+1].getColor() &&
-                        tiles[i][j].getColor() == tiles[i][j+2].getColor()) {
-                    matchedTiles.add(tiles[i][j]);
-                    matchedTiles.add(tiles[i][j+1]);
-                    matchedTiles.add(tiles[i][j+2]);
+        for (int r = 0; r < numRows; r++) {
+            for (int c = 0; c < numCols - 2; c++) {
+                if (tiles[r][c].getColor() == tiles[r][c+1].getColor() &&
+                        tiles[r][c].getColor() == tiles[r][c+2].getColor()) {
+                    matchedTiles.add(tiles[r][c]);
+                    matchedTiles.add(tiles[r][c+1]);
+                    matchedTiles.add(tiles[r][c+2]);
                 }
             }
         }
-        for (int j = 0; j < numCols; j++) {
-            for (int i = 0; i < numRows - 2; i++) {
-                if (tiles[i][j].getColor() == tiles[i+1][j].getColor() &&
-                        tiles[i][j].getColor() == tiles[i+2][j].getColor()) {
-                    matchedTiles.add(tiles[i][j]);
-                    matchedTiles.add(tiles[i+1][j]);
-                    matchedTiles.add(tiles[i+2][j]);
+        for (int c = 0; c < numCols; c++) {
+            for (int r = 0; r < numRows - 2; r++) {
+                if (tiles[r][c].getColor() == tiles[r+1][c].getColor() &&
+                        tiles[r][c].getColor() == tiles[r+2][c].getColor()) {
+                    matchedTiles.add(tiles[r][c]);
+                    matchedTiles.add(tiles[r+1][c]);
+                    matchedTiles.add(tiles[r+2][c]);
                 }
             }
         }
+
+        //set them to empty
         for (Tile tile : matchedTiles) {
             tile.setColor(TileColor.EMPTY);
         }
-        for (int i = 0; i < numRows; i++) {
-            for (int j = 0; j < numCols; j++) {
-                if (tiles[i][j].getColor() == TileColor.EMPTY) {
-                    tiles[i][j].setColor(TileColor.values()[new Random().nextInt(TileColor.values().length - 1) + 1]);
+
+        //remove them from the field
+        for (int r = 0; r < numRows; r++) {
+            for (int c = 0; c < numCols; c++) {
+                if (tiles[r][c].getColor() == TileColor.EMPTY) {
+                    tiles[r][c].setColor(TileColor.values()[new Random().nextInt(TileColor.values().length - 1) + 1]);
                     break;
                 }
             }
@@ -168,10 +167,8 @@ public class Field {
         for (int row = 0; row < numRows; row++) {
             for (int col = 0; col < numCols; col++) {
                 // Check if swapping with any of the adjacent tiles results in a match
-                if (col < numCols - 1 && isValidSwap(row, col, row, col + 1)) {
-                    return true;
-                }
-                if (row < numRows - 1 && isValidSwap(row, col, row + 1, col)) {
+                if (col < numCols - 1 && isValidSwap(row, col, row, col + 1)
+                 || row < numRows - 1 && isValidSwap(row, col, row + 1, col)) {
                     return true;
                 }
             }
@@ -188,18 +185,18 @@ public class Field {
     }
 
     public void shiftDown() {
-        for (int j = 0; j < numCols; j++) {
+        for (int c = 0; c < numCols; c++) {
             int emptyRow = numRows - 1;
-            for (int i = numRows - 1; i >= 0; i--) {
-                if (tiles[i][j].getColor() == TileColor.EMPTY) {
-                    emptyRow = i;
+            for (int r = numRows - 1; r >= 0; r--) {
+                if (tiles[r][c].getColor() == TileColor.EMPTY) {
+                    emptyRow = r;
                     break;
                 }
             }
-            for (int i = emptyRow - 1; i >= 0; i--) {
-                if (tiles[i][j].getColor() != TileColor.EMPTY) {
-                    tiles[emptyRow][j] = tiles[i][j];
-                    tiles[i][j] = new Tile();
+            for (int r = emptyRow - 1; r >= 0; r--) {
+                if (tiles[r][c].getColor() != TileColor.EMPTY) {
+                    tiles[emptyRow][c] = tiles[r][c];
+                    tiles[r][c] = new Tile();
                     emptyRow--;
                 }
             }
@@ -220,17 +217,17 @@ public class Field {
 
         // Check for empty tiles in last two rows and columns
         boolean emptyTilesExist = false;
-        for (int i = numRows - 2; i < numRows; i++) {
-            for (int j = 0; j < numCols; j++) {
-                if (tiles[i][j] == null) {
+        for (int r = numRows - 2; r < numRows; r++) {
+            for (int c = 0; c < numCols; c++) {
+                if (tiles[r][c] == null) {
                     emptyTilesExist = true;
                     break;
                 }
             }
         }
-        for (int i = 0; i < numRows; i++) {
-            for (int j = numCols - 2; j < numCols; j++) {
-                if (tiles[i][j] == null) {
+        for (int r = 0; r < numRows; r++) {
+            for (int c = numCols - 2; c < numCols; c++) {
+                if (tiles[r][c] == null) {
                     emptyTilesExist = true;
                     break;
                 }
@@ -238,17 +235,17 @@ public class Field {
         }
 
         // Generate new tiles
-        for (int i = 0; i < numRows; i++) {
-            for (int j = 0; j < numCols; j++) {
+        for (int r = 0; r < numRows; r++) {
+            for (int c = 0; c < numCols; c++) {
                 TileColor color;
-                if (emptyTilesExist && (i == numRows - 1 || j == numCols - 1) && tiles[i][j] == null) {
+                if (emptyTilesExist && (r == numRows - 1 || c == numCols - 1) && tiles[r][c] == null) {
                     // Assign a random color that is not the same as the color of adjacent tiles
                     TileColor adjacentColor = TileColor.EMPTY;
-                    if (i > 0 && tiles[i - 1][j] != null) {
-                        adjacentColor = tiles[i - 1][j].getColor();
+                    if (r > 0 && tiles[r - 1][c] != null) {
+                        adjacentColor = tiles[r - 1][c].getColor();
                     }
-                    if (j > 0 && tiles[i][j - 1] != null) {
-                        adjacentColor = tiles[i][j - 1].getColor();
+                    if (c > 0 && tiles[r][c - 1] != null) {
+                        adjacentColor = tiles[r][c - 1].getColor();
                     }
                     do {
                         color = colors[random.nextInt(numColors)];
@@ -256,21 +253,27 @@ public class Field {
                 } else {
                     do {
                         color = colors[random.nextInt(numColors)];
-                    } while (hasMatchesAt(i, j, color));
+                    } while (hasMatchesAt(r, c, color));
                 }
-                tiles[i][j] = new Tile(color);
+                tiles[r][c] = new Tile(color);
             }
         }
         checkAndFillEmptyTiles();
     }
 
+    /*Mas tu takych vela opakovanych casti kodu. Taketo algoritmy sa daju refaktorovat podobnym sposobom, ako sme robili
+    metodu countAdjacentMines alebo openAdjacentTiles v Minach. Sprav si pomocnu metodu countConsecutiveTiles,
+    ktorej zadas riadok a stlpec, kde sa ma zacat a offset zaciatku a konca v riadku/stlpci, ktori sa ma checknut
+    Ak sa maju checknut tri tiles v riadku 5, tak offset riadka bude 0 pre koniec aj zaciatok a offset pre stlpec bude pre start -2 a pre end +2.
+    Takto vies spravit jednu genericku metodu, ktora prejde vsetko bud len v riadku alebo len v slpci, podla toho ake offsety jej zadas :)
+    */
     private boolean hasMatchesAt(int row, int col, TileColor color) {
         // Check horizontal matches
         int numConsecutive = 1;
-        for (int j = col - 1; j >= Math.max(0, col - 2) && tiles[row][j].getColor() == color; j--) {
+        for (int c = col - 1; c >= Math.max(0, col - 2) && tiles[row][c].getColor() == color; c--) {
             numConsecutive++;
         }
-        for (int j = col + 1; j <= Math.min(numCols - 1, col + 2) && tiles[row][j].getColor() == color; j++) {
+        for (int c = col + 1; c <= Math.min(numCols - 1, col + 2) && tiles[row][c].getColor() == color; c++) {
             numConsecutive++;
         }
         if (numConsecutive >= 3) {
@@ -279,10 +282,10 @@ public class Field {
 
         // Check vertical matches
         numConsecutive = 1;
-        for (int i = row - 1; i >= Math.max(0, row - 2) && tiles[i][col].getColor() == color; i--) {
+        for (int r = row - 1; r >= Math.max(0, row - 2) && tiles[r][col].getColor() == color; r--) {
             numConsecutive++;
         }
-        for (int i = row + 1; i <= Math.min(numRows - 1, row + 2) && tiles[i][col].getColor() == color; i++) {
+        for (int r = row + 1; r <= Math.min(numRows - 1, row + 2) && tiles[r][col].getColor() == color; r++) {
             numConsecutive++;
         }
         if (numConsecutive >= 3) {
@@ -297,26 +300,22 @@ public class Field {
     private void checkAndFillEmptyTiles() {
         TileColor[] colors = TileColor.values();
         Set<TileColor> invalidColors = new HashSet<>();
-        for (int i = 0; i < numRows; i++) {
-            for (int j = 0; j < numCols; j++) {
-                if (i == 8 && j == 8 || i == 8 && j == 9 || i == 9 && j == 8 || i == 9 && j == 9) {
-                    if (tiles[i][j] == null) {
+        for (int r = 0; r < numRows; r++) {
+            for (int c = 0; c < numCols; c++) {
+                if (r == 8 && c == 8 || r == 8 && c == 9 || r == 9 && c == 8 || r == 9 && c == 9) {
+                    if (tiles[r][c] == null) {
                         // Fill the empty tile with a color that won't trigger a match-3
                         TileColor color;
+
                         do {
                             color = colors[new Random().nextInt(colors.length)];
                         } while (invalidColors.contains(color));
+
                         invalidColors.add(color);
-                        tiles[i][j] = new Tile(color);
+                        tiles[r][c] = new Tile(color);
                     }
                 }
             }
         }
     }
-
-
-
-
-
-
 }
