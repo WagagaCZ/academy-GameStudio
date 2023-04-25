@@ -117,10 +117,7 @@ function isLost() {
       }
     }
   }
-  if (canMergeAtRow() || canMergeAtColumn()) {
-    return false;
-  }
-  return true;
+  return !canMergeAtRow() && !canMergeAtColumn();
 }
 
 function isWon() {
@@ -197,18 +194,17 @@ function reset() {
   overlayReset.classList.remove('hidden');
 
   setTimeout(() => {
-  generateBoard();
-  addRandomNumber();
-  addRandomNumber();
-  refreshBoard();
-  gameStatus = "paused";
-  moveCount = 0;
-  biggestNumber = 0;
-  overlayReset.classList.add('hidden');
-  resetTimer();
-  refreshBoard();
+    generateBoard();
+    addRandomNumber();
+    addRandomNumber();
+    refreshBoard();
+    gameStatus = "paused";
+    moveCount = 0;
+    biggestNumber = 0;
+    overlayReset.classList.add('hidden');
+    resetTimer();
+    refreshBoard();
   }, 600);
-
 }
 
 function countScore() {

@@ -1,3 +1,15 @@
+/* mas tu vela funkcii s takmer rovnakym kodom.
+da sa to spravit tak, ze ked presuvas dlazdice,
+tak si docasne vytiahnes kazdy riadok/stlpec do samostatneho pola a nad nim robis presun.
+Lebo presuny sa vlastne deju vzdy nad riadkom/stlpcom a nesuvisia s ostatnym okolim.
+Cize nebudes mat moveRight, moveLeft atd, ale len move, ktory bude pre dany riadok robit vzdy to iste (shift, merge, shift)
+ale bude to robit na predpripraveny riadok (ak to bude smer hore, tak to bude stlpec otoceny odzadu).
+
+Je to ale pekny kod na ukor vacsieho mnozstva kopirovania hodnot. Aby si si nezaplnil pamat,
+tak si treba vytvorit docasne premennu,
+kde budes vzdy postupne davat tie stransformovane hodnoty, nie zakazdym nove pole.
+ */
+
 ////////
 // Moves
 
