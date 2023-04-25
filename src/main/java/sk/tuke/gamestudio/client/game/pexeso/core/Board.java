@@ -7,7 +7,6 @@ public class Board {
     private int row;
     private Card[][] cards;
 
-
     public Board(int row, int column) {
         this.row = row;
         this.column = column;
@@ -28,15 +27,13 @@ public class Board {
     }
 
     public Card getCard(int x, int y) {
-        if (x < 0 || x >= row || y < 0 || y >= column) {
-            return null;
-        }
-        return cards[x][y];
+        return x < 0 || x >= row || y < 0 || y >= column //mozno by to chcelo helper metodku pre tuto celu dlhu podmienku, napr checkBounaries
+                ? null : cards[x][y];
     }
 
     public boolean isFlipped(int x, int y) {
-        return x >= 0 && x < row && y >= 0 && y < column && cards[x][y].isFlipped();
-
+        return x >= 0 && x < row && y >= 0 && y < column //opat checkBoundaries :) mas to aj nizsie niekde
+                && cards[x][y].isFlipped();
     }
 
     public Card[][] getCards() {
@@ -60,7 +57,6 @@ public class Board {
             cards[i] = temp;
         }
 
-
         // Fill the board with the randomized cards
         int index = 0;
         for (int x = 0; x < row; x++) {
@@ -68,8 +64,6 @@ public class Board {
                 setCard(x, y, cards[index++]);
             }
         }
-
-
     }
 
     public void flipCard(int x, int y) {
@@ -78,7 +72,6 @@ public class Board {
         }
 
         cards[x][y].flip(); // Flip the card (or unflip it if it's already flipped)
-
     }
 
     public boolean isSolved() {

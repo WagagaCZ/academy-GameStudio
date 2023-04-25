@@ -63,30 +63,32 @@ public class PexesoController {
     }
 
     private void startOrUpdateGame(Integer row, Integer column) {
-
         if (board == null) {
             startNewGame();
         }
-        if (row != null && column != null) {
-            if (!board.isSolved()) {
-                if (flippedCards.size() == 2) {
-                    Card firstCard = flippedCards.get(0);
-                    Card secondCard = flippedCards.get(1);
-                    if (firstCard.getValue() == secondCard.getValue()) {
-                        //nothing is supposed to happen
-                    } else {
-                        firstCard.flip();
-                        secondCard.flip();
-                        score++;
-                    }
-                    flippedCards.clear();
+        if (row != null && column != null && !board.isSolved()) {
+            if (flippedCards.size() == 2) {
+                Card firstCard = flippedCards.get(0);
+                Card secondCard = flippedCards.get(1);
+
+                if (firstCard.getValue() != secondCard.getValue()) {
+                    firstCard.flip();
+                    secondCard.flip();
+                    score++;
                 }
-                Card currentCard = board.getCard(row, column);
-                currentCard.flip();
-                flippedCards.add(currentCard);
-                if (userController.isLogged() && board.isSolved()) {
-                    scoreService.addScore(new Score("pexeso", userController.getLoggedUser(), score, new Timestamp(System.currentTimeMillis())));
-                }
+                flippedCards.clear();
+            }
+
+            Card currentCard = board.getCard(row, column);
+            currentCard.flip();
+            flippedCards.add(currentCard);
+
+            if (userController.isLogged() && board.isSolved()) {
+                scoreService.addScore(new Score( //taketo dlhe riadky sa uz oplati odenterovat
+                        "pexeso",
+                        userController.getLoggedUser(),
+                        score,
+                        new Timestamp(System.currentTimeMillis())));
             }
         }
     }
@@ -95,6 +97,7 @@ public class PexesoController {
     private void startNewGame() {
         board = new Board(6, 5);
     }
+
     public List<Score> getTopScores() {
         return scoreService.getTopScores("pexeso");
     }
@@ -102,17 +105,23 @@ public class PexesoController {
     public double getRating() {
         return ratingService.getAverageRating("pexeso");
     }
+
     @PostMapping("/submitComment")
     public String submitComment(@RequestParam("commentText") String commentText) {
         if (userController.isLogged()) {
-            commentService.addComment(new Comment(commentText, "pexeso", userController.getLoggedUser(), new Timestamp(System.currentTimeMillis())));
+            commentService.addComment(new Comment(
+                    commentText,
+                    "pexeso",
+                    userController.getLoggedUser(),
+                    new Timestamp(System.currentTimeMillis())));
         }
         return "redirect:/pexeso";
     }
     @PostMapping("/submitRating")
     public String submitRating(@RequestParam("rating") int rating) {
         if (userController.isLogged()) {
-            ratingService.setRating(new Rating("pexeso",userController.getLoggedUser(),rating));
+            ratingService.setRating(new Rating(
+                    "pexeso", userController.getLoggedUser(), rating));
         }
         return "redirect:/pexeso";
     }
@@ -129,19 +138,11 @@ public class PexesoController {
     }
 
     public boolean isSolved() {
-        if (board == null) {
-            return false;
-        } else {
-            return (board.isSolved());
-        }
+        return board != null && board.isSolved();
     }
 
     public String getCardText(Card card) {
-        if (card.isFlipped()) {
-            return card.toString();
-        }
-        return "X";
-
+        return card.isFlipped() ? card.toString() : "X";
     }
 
     public int getScore() {
