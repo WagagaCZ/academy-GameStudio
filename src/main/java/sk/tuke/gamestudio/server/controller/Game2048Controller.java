@@ -24,6 +24,7 @@ public class Game2048Controller {
     UserController userController;
     private Field field;
     boolean lastMoveState;
+
     @GetMapping("/new")
     public Field newGame(@RequestParam int size) {
         this.field = new Field(size, size);
@@ -35,10 +36,14 @@ public class Game2048Controller {
     @GetMapping("/move")
     public Field makeMove(@RequestParam(name = "dir") Direction direction) {
         boolean currMoveState = this.field.doMove(direction);
-        if( !currMoveState ) {
+        if(!currMoveState) {
             // if state changed and lastMoveState wasn't false then write score
-            if( lastMoveState != currMoveState )
-                scoreService.addScore( new Score("2048", userController.isLogged() ? userController.getLoggedUser() : "anonymous", this.field.getScore(), new Date() ) );
+            if(lastMoveState != currMoveState)
+                scoreService.addScore(new Score(
+                        "2048",
+                        userController.isLogged() ? userController.getLoggedUser() : "anonymous",
+                        this.field.getScore(),
+                        new Date()));
             lastMoveState = currMoveState;
         }
         return this.field;

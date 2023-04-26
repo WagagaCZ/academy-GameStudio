@@ -28,55 +28,51 @@
   <script defer th:src="@{/Game1024/game1024Moves.js}"></script>
   <script defer th:src="@{/Game1024/game1024.js}"></script>
 
-  <title>Minesweeper</title>
+  <title>1024</title>
 </head>
 
 <body>
-<main layout:fragment="content">
+  <main layout:fragment="content">
 
-<div class="main-wrapper game-wrapper">
+    <div class="main-wrapper game-wrapper">
 
-<div class="settings settings-game1024">
-  <div class="settings-head">
-    <h2>Game 1024</h2>
-  </div>
-  <div class="settings-body">
-    <div class="game1024-settings-wrapper">
+      <div class="settings settings-game1024">
+        <div class="settings-head">
+          <h2>Game 1024</h2>
+        </div>
+        <div class="settings-body">
+          <div class="game1024-settings-wrapper">
 
-      <h3> moves: <span id="display-moves">0</span></h3>
+            <h3> moves: <span id="display-moves">0</span></h3>
 
-      <h2 class="game-state"><span id="display-biggest">0</span> / 1024</h2>
+            <h2 class="game-state"><span id="display-biggest">0</span> / 1024</h2>
 
-      <button onclick="reset()">reset</button>
+            <button onclick="reset()">reset</button>
 
+          </div>
+          <h3 class="timer-display"></h3>
+          <p style="text-align: center;">WASD or arrows to play</p>
+        </div>
+      </div>
+
+      <div class="game-field-wrapper">
+        <div class="game-field"></div>
+
+        <div class="overlay overlay-reset hidden">Resetting⌛</div>
+        <div class="overlay overlay-win hidden">You Won👍</div>
+        <div class="overlay overlay-lose hidden">You Lost👎</div>
+      </div>
+
+      <div class="controls">
+        <div class="control-btn btn-up" onclick="dispatchKeyboardEvent('w')"><i class="fa-solid fa-caret-up"></i></div>
+        <div class="control-btn btn-left" onclick="dispatchKeyboardEvent('a')"><i class="fa-solid fa-caret-left"></i></div>
+        <div class="control-btn btn-empty"><i class="fa-solid fa-gamepad"></i></div>
+        <div class="control-btn btn-right" onclick="dispatchKeyboardEvent('d')"><i class="fa-solid fa-caret-right"></i></div>
+        <div class="control-btn btn-down" onclick="dispatchKeyboardEvent('s')"><i class="fa-solid fa-caret-down"></i></div>
+      </div>
+
+      <div th:replace="~{fragments/_serviceTables :: serviceTables(game=${'Game1024'}) }"></div>
     </div>
-    <h3 class="timer-display"></h3>
-    <p style="text-align: center;">WASD or arrows to play</p>
-  </div>
-</div>
-
-<div class="game-field-wrapper">
-  <div class="game-field"></div>
-
-  <div class="overlay overlay-reset hidden">Resetting⌛</div>
-  <div class="overlay overlay-win hidden">You Won👍</div>
-  <div class="overlay overlay-lose hidden">You Lost👎</div>
-</div>
-
-<div class="controls">
-  <div class="control-btn btn-up" onclick="dispatchKeyboardEvent('w')"><i class="fa-solid fa-caret-up"></i></div>
-  <div class="control-btn btn-left" onclick="dispatchKeyboardEvent('a')"><i class="fa-solid fa-caret-left"></i></div>
-  <div class="control-btn btn-empty"><i class="fa-solid fa-gamepad"></i></div>
-  <div class="control-btn btn-right" onclick="dispatchKeyboardEvent('d')"><i class="fa-solid fa-caret-right"></i></div>
-  <div class="control-btn btn-down" onclick="dispatchKeyboardEvent('s')"><i class="fa-solid fa-caret-down"></i></div>
-</div>
-
-
-  <div th:replace="~{fragments/_serviceTables :: serviceTables(game=${'Game1024'}) }"></div>
-
-
-  </div>
+  </main>
 </body>
-
-</main>
 </html>

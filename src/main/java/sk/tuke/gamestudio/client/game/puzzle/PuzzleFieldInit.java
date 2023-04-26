@@ -13,11 +13,8 @@ public interface PuzzleFieldInit {
         }
     }
 
-    static void initRandomTiles(int[][] grid) {
-        int rndRowFrom;
-        int rndRowDest;
-        int rndColDest;
-        int rndColFrom;
+    static void switchRandomTiles(int[][] grid) {
+        int rndRowFrom, rndRowDest, rndColDest, rndColFrom;
         Random random = new Random();
 
         for (int replacementsNumber = 0; replacementsNumber < 15; replacementsNumber++) {
@@ -25,6 +22,7 @@ public interface PuzzleFieldInit {
             rndColFrom = random.nextInt(grid.length);
             rndRowDest = random.nextInt(grid.length);
             rndColDest = random.nextInt(grid.length);
+
             int temp = grid[rndRowFrom][rndColFrom];
             grid[rndRowFrom][rndColFrom] = grid[rndRowDest][rndColDest];
             grid[rndRowDest][rndColDest] = temp;

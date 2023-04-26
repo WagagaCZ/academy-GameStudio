@@ -4,16 +4,14 @@ public class Card {
     private int value;
     private boolean isFlipped = false;
 
-
-    public int getValue() {
-        return value;
-    }
+    public Card() {}
 
     public Card(int value) {
         this.value = value;
     }
-    public Card(){
 
+    public int getValue() {
+        return value;
     }
 
     public void setValue(int value) {
@@ -30,7 +28,6 @@ public class Card {
     public void setFlipped(boolean flipped) {
         isFlipped = flipped;
     }
-
 
     @Override
     public boolean equals(Object obj) {

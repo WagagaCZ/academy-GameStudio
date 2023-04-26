@@ -6,11 +6,13 @@ const COMMENT_FORM = document.querySelector("#comment-form");
 
 const ratingDisplay = document.querySelector("#rating");
 
-const RATING_BTN_1 = document.getElementById('rating-1');
-const RATING_BTN_2 = document.getElementById('rating-2');
-const RATING_BTN_3 = document.getElementById('rating-3');
-const RATING_BTN_4 = document.getElementById('rating-4');
-const RATING_BTN_5 = document.getElementById('rating-5');
+const RATING_BUTTONS = [
+  document.getElementById('rating-1'),
+  document.getElementById('rating-2'),
+  document.getElementById('rating-3'),
+  document.getElementById('rating-4'),
+  document.getElementById('rating-5')
+];
 
 // Used Stefan's services and functions loading tables with a few changes
 
@@ -21,7 +23,13 @@ async function showScores() {
     let scores = await apiGetScores(GAME_NAME);
 
     if(scores.message) {
-        SCORE_TABLE.innerHTML = `<tr><td></td><td></td><td style='text-align: end'>${scores.message} </td></tr>`;
+        SCORE_TABLE.innerHTML = `
+              <tr>
+                <td></td>
+                <td></td>
+                <td style='text-align: end'>${scores.message} </td>
+              </tr>
+        `; //uz ked pouzivas ``, tak to vyuzi a pekne si to sformatuj :)
         return;
     }
 
@@ -30,13 +38,13 @@ async function showScores() {
 
     // Add headers
     SCORE_TABLE.innerHTML += `
-    <thead>
-            <tr>
-                <th>Player</th>
-                <th>Score</th>
-                <th>Played on</th>
-            </tr>
-    </thead>
+        <thead>
+                <tr>
+                    <th>Player</th>
+                    <th>Score</th>
+                    <th>Played on</th>
+                </tr>
+        </thead>
     `;
 
     // Add score data
@@ -44,11 +52,11 @@ async function showScores() {
         let date = new Date(score.playedOn);
         date = date.toLocaleDateString("en-GB") + ' ' + date.toLocaleTimeString("en-GB");
         SCORE_TABLE.innerHTML += `
-      <tr">
-          <td>${score.player}</td>
-          <td>${score.points}</td>
-          <td>${date}</td>
-      </tr>
+          <tr>
+              <td>${score.player}</td>
+              <td>${score.points}</td>
+              <td>${date}</td>
+          </tr>
       `;
     });
 }
@@ -80,29 +88,28 @@ async function showComments() {
     }
 
     COMMENT_TABLE.innerHTML += `
-    <thead>
-            <tr>
-                <th>Player & Time</th>
-                <th>Comment</th>
-            </tr>
-    </thead>
+        <thead>
+                <tr>
+                    <th>Player & Time</th>
+                    <th>Comment</th>
+                </tr>
+        </thead>
     `;
 
     comments.forEach(comment => {
         let date = new Date(comment.commentedOn);
         date = date.toLocaleDateString("en-GB") + ' ' + date.toLocaleTimeString("en-GB");
         COMMENT_TABLE.innerHTML += `
-      <tr">
-          
-          <td>
-            <span><i class="fa-solid fa-user"></i> </span>
-            <span>${comment.player}</span>
-            <span> &nbsp </span>
-            <span><i class="fa-solid fa-calendar-days"></i> </span>
-            <span>${date}</span>
-          </td>
-          <td>${comment.comment}</td>
-      </tr>
+          <tr>
+              <td>
+                <span><i class="fa-solid fa-user"></i> </span>
+                <span>${comment.player}</span>
+                <span> &nbsp </span>
+                <span><i class="fa-solid fa-calendar-days"></i> </span>
+                <span>${date}</span>
+              </td>
+              <td>${comment.comment}</td>
+          </tr>
       `;
     });
 }
@@ -115,7 +122,6 @@ async function submitComment() {
 
     if (player != null) {
         if (comment.length > 0) {
-
             await apiSendComment(player, GAME_NAME, comment);
             COMMENT_FORM[0].value = '';
             showComments(GAME_NAME);
@@ -141,27 +147,9 @@ async function showAverageRating() {
     }
 }
 
-
-RATING_BTN_1.addEventListener('click', () => {
-    submitRating(1);
-});
-
-RATING_BTN_2.addEventListener('click', () => {
-    submitRating(2);
-});
-
-RATING_BTN_3.addEventListener('click', () => {
-    submitRating(3);
-});
-
-RATING_BTN_4.addEventListener('click', () => {
-    submitRating(4);
-});
-
-RATING_BTN_5.addEventListener('click', () => {
-    submitRating(5);
-});
-
+for(let i in RATING_BUTTONS) {
+    RATING_BUTTONS[i].addEventListener('click', () => submitRating(i + 1));
+}
 
 async function submitRating(rating) {
     const res = await apiGetUser();

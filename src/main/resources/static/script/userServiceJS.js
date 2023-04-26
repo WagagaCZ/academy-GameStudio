@@ -7,6 +7,5 @@ const apiGetUser = async () => {
     const scores = await response.json();
 
     return scores;
-
   } catch (err) { console.log(err) }
 }

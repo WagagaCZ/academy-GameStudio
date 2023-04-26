@@ -37,12 +37,8 @@ public class BlackJackController extends GameController {
         }
         if (move != null) {
             switch (move) {
-                case 1 -> {
-                    table.drawNewCard();
-                }
-                case 2 -> {
-                    table.switchTurns();
-                }
+                case 1 -> table.drawNewCard();
+                case 2 -> table.switchTurns();
             }
         }
     }
@@ -66,7 +62,10 @@ public class BlackJackController extends GameController {
     private String end() {
         if (table.getTurn() == Turn.END) {
             if (userController.isLogged()) {
-                scoreService.addScore(new Score(getGameName(), userController.getLoggedUser(), table.getBank(), new Date()));
+                scoreService.addScore( //taketo dlhe riadky je lepsie odenterovat
+                        new Score(getGameName(),
+                        userController.getLoggedUser(),
+                        table.getBank(), new Date()));
             }
             table = new Table();
         }
@@ -93,10 +92,8 @@ public class BlackJackController extends GameController {
     public String getCardText(Card card) {
         if(card!= null){
             return card.toString();
-        }
-        else {
-            return null;
-        }
+        } //ak mas v if return, netreba ti else
+        return null;
     }
 
     public boolean isPlayersTurn() {
@@ -119,8 +116,10 @@ public class BlackJackController extends GameController {
         return String.valueOf(table.getBet());
     }
 
-    public boolean canDouble() {
-        return (table.getTurn() == Turn.PLAYER && table.getBank() >= (table.getBet() * 2) && table.getPlayerHand()[2] == null);
+    public boolean canDouble() { //toto vyzera ako logika jadra hry, nemalo by to byt v table?
+        return (table.getTurn() == Turn.PLAYER
+                && table.getBank() >= (table.getBet() * 2)
+                && table.getPlayerHand()[2] == null);
     }
 
     @Override

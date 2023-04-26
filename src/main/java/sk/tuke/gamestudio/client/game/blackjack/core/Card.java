@@ -19,54 +19,29 @@ public class Card {
 
     @Override
     public String toString() {
-        char cid = '0';
-        char iid = '0';
-        StringBuilder finale = new StringBuilder();
-        switch (category){
-            case -1: {
-                return "?";
-            }
-            case 0: {
-                cid = 9824;
-                break;
-            }
-            case 1: {
-                cid = 9829;
-                break;
-            }
-            case 2: {
-                cid = 9827;
-                break;
-            }
-            case 3: {
-                cid = 9830;
-                break;
-            }
-        }
-        finale.append(cid);
-        switch (id){
-            case 1: {
-                iid = 65;
-                break;
-            }
-            case 11: {
-                iid = 74;
-                break;
-            }
-            case 12: {
-                iid = 81;
-                break;
-            }
-            case 13: {
-                iid = 75;
-                break;
-            }
-            default: {
-                iid = (char) (48+id);
-                break;
-            }
-        }
-        finale.append(iid);
-        return finale.toString();
+        if(category == -1) return "?";
+
+        StringBuilder sb = new StringBuilder();
+
+        sb.append((char) switch(category) {
+            case 0 -> 9824;
+            case 1 -> 9829;
+            case 2 -> 9827;
+            case 3 -> 9830;
+            default -> 0;
+        });
+
+        sb.append((char) switch(id) {
+            case 1 -> 65;
+            case 11 -> 74;
+            case 12 -> 81;
+            case 13 -> 75;
+            default -> (48 + id);
+        });
+
+        return sb.toString();
+        /* neviem ci tu este nebude niekde nejaky bug,
+           lebo v jednom pripade mi to vypisuje dvojbodku,
+           ale takto nejako by som to refaktorovala */
     }
 }

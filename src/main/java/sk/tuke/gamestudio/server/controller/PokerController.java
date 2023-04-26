@@ -30,6 +30,15 @@ public class PokerController {
     private Deck deck = null;
     private List<Integer> selected = new ArrayList<>();
     private PokerGameState state = PokerGameState.DEALT;
+    private Logic logic = new Logic();
+    private int score = 0;
+    @Autowired
+    private ScoreService scoreService;
+    @Autowired
+    private CommentService commentService;
+    @Autowired
+    private RatingService ratingService;
+    @Autowired UserController userController;
 
     public Hand getHand() {
         return hand;
@@ -71,9 +80,6 @@ public class PokerController {
         this.logic = logic;
     }
 
-    private Logic logic = new Logic();
-    private int score = 0;
-
     public int getScore() {
         return score;
     }
@@ -81,14 +87,6 @@ public class PokerController {
     public void setScore(int score) {
         this.score = score;
     }
-
-    @Autowired
-    private ScoreService scoreService;
-    @Autowired
-    private CommentService commentService;
-    @Autowired
-    private RatingService ratingService;
-    @Autowired UserController userController;
 
     public List<Comment> getComments() {
         return commentService.getComments("poker");
@@ -105,8 +103,7 @@ public class PokerController {
     @RequestMapping
     public String selectCard(@RequestParam(required = false) Integer i) {
         startOrUpdateGame(i);
-        return "poker";
-
+        return "poker"; //pouzivas to viacerych miestach, takze by bolo super to dat ako konstantu - Refactor -> introduce constant
     }
 
     @RequestMapping("/setrating")
@@ -156,6 +153,7 @@ public class PokerController {
         state = PokerGameState.CARDS_SWAPPED;
         startNewGameIfDeckNull();
         selected.sort(null);
+
         for (int i = selected.size() - 1; i >= 0; i--) {
             int num = selected.get(i);
             deck.deck.add(hand.getHand().get(num));
@@ -163,10 +161,10 @@ public class PokerController {
 
             hand.draw(deck, 1);
         }
+
         logic.setDuplicates(hand);
         logic.setHand(hand.getHand());
         score += logic.calculateScore();
-
 
         selected.clear();
 
@@ -185,15 +183,13 @@ public class PokerController {
 
     @RequestMapping("/finish")
     private String finishGame(@RequestParam(required = false) String name) {
-        String username;
-        if(name == null){
-            username = "Anonymous user";
-        } else {username = userController.getLoggedUser();}
+        String username = name == null ? "Anonymous user" : userController.getLoggedUser();
+
         state = PokerGameState.FINISHED;
         startNewGameIfDeckNull();
-        deck = null;
-        hand = null;
-        logic = null;
+
+        deck = null; hand = null; logic = null;
+
         if (score > 0) {
             Score dbScore = new Score("poker", username, score, new Date());
             scoreService.addScore(dbScore);
@@ -204,12 +200,13 @@ public class PokerController {
     private void startNewGame() {
         score = 0;
         selected.clear();
+
         deck = new Deck();
         hand = new Hand();
         logic = new Logic();
+
         hand.draw(deck, 5);
         state = PokerGameState.DEALT;
-
     }
 
     @RequestMapping("/new")

@@ -23,17 +23,21 @@ public class Table {
                 System.out.println("Not enough in bank.");
                 return;
             }
-            System.out.println("Cards in deck: " + deck.getLeftInDeck());
+
+            System.out.println("Cards in deck: " + deck.getLeftInDeck()); //vypisy by mal robit console/web ui, tu by sa mali hadzat nejake vynimky, aby sa to tam mohlo odchytit
             if (deck.getLeftInDeck() < 10) {
                 shuffle();
             }
+
             playerHand = new Card[5];
             dealerHand = new Card[5];
             turn = Turn.PLAYER;
+
             for (int i = 0; i < 2; i++) {
                 playerHand[i] = deck.drawCard();
                 dealerHand[i] = deck.drawCard();
             }
+
             dealerCard = dealerHand[1];
             dealerHand[1] = new Card(-1, -1);
             numberOfDealerCards = 2;
@@ -85,6 +89,7 @@ public class Table {
 
     private boolean checkIfOut(Card[] hand) {
         int sum = checkSum(hand);
+
         if (sum > 21) {
             turn = Turn.END;
             System.out.println("Over");
@@ -92,6 +97,7 @@ public class Table {
             System.out.println(sum);
             return true;
         }
+
         if (numberOfPlayerCards == 5 && turn == Turn.PLAYER) {
             System.out.println("Player over hand limit");
             switchTurns();
@@ -101,31 +107,30 @@ public class Table {
             System.out.println("Dealer");
             changeBank();
         }
+
         System.out.println(sum);
         return false;
     }
 
     private int checkSum(Card[] hand) {
-        int sum = 0;
-        int numOfAces = 0;
+        int sum = 0, numOfAces = 0;
         boolean aceOver = false;
-        for (int i = 0; i < hand.length; i++) {
-            if (hand[i] == null) {
+
+        for (Card card : hand) {
+            if (card == null) {
                 break;
             }
-            Card card = hand[i];
-            if (card.getId() > 1 && card.getId() < 11) {
-                sum += card.getId();
-            } else if (card.getId() > 10) {
+
+            int cardId = card.getId();
+            if (cardId > 1 && cardId < 11) {
+                sum += cardId;
+            } else if (cardId > 10) {
                 sum += 10;
-            } else if (card.getId() == 1) {
+            } else if (cardId == 1) {
                 numOfAces++;
-                if (aceOver) {
-                    sum += 1;
-                } else {
-                    sum += 11;
-                }
+                sum += aceOver ? 1 : 11;
             }
+
             if (sum > 21 && !aceOver && numOfAces > 0) {
                 aceOver = true;
                 sum = sum - (numOfAces * 10);
@@ -135,17 +140,20 @@ public class Table {
     }
 
     private void changeBank() {
-        if (checkSum(playerHand) <= 21 && (checkSum(playerHand) > checkSum(dealerHand) || checkSum(dealerHand) > 21)) {
-            System.out.println("Bank then: " + bank);
-            bank += bet;
-            System.out.println("Bank now: " + bank);
-            System.out.println("Bet: " + bet);
+        if (checkSum(playerHand) <= 21
+                && (checkSum(playerHand) > checkSum(dealerHand)
+                        || checkSum(dealerHand) > 21)) {
+            changeBank(+1);
         } else {
-            System.out.println("Bank then: " + bank);
-            bank -= bet;
-            System.out.println("Bank now: " + bank);
-            System.out.println("Bet: " + bet);
+            changeBank(-1);
         }
+    }
+
+    private void changeBank(int change) {
+        System.out.println("Bank then: " + bank);
+        bank += change;
+        System.out.println("Bank now: " + bank);
+        System.out.println("Bet: " + bet);
     }
 
     public Card[] getPlayerHand() {
@@ -165,7 +173,9 @@ public class Table {
     }
 
     public boolean isPlayerWinner() {
-        return (checkSum(playerHand) <= 21 && (checkSum(playerHand) > checkSum(dealerHand) || checkSum(dealerHand) > 21));
+        return (checkSum(playerHand) <= 21
+                && (checkSum(playerHand) > checkSum(dealerHand)
+                || checkSum(dealerHand) > 21));
     }
 
     private boolean hasEnough(int bet) {

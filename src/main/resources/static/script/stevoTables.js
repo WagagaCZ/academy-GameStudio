@@ -70,7 +70,7 @@ async function submitRating(game) {
   const res = await apiGetUser();
   const player = res.loggedUser;
 
-  if (player == null) {
+  if (player === null) {
     alert("log in first");
     return;
   }
@@ -82,7 +82,7 @@ async function submitRating(game) {
     }
   });
 
-  if (rating == -1) {
+  if (rating === -1) {
     return;
   }
 

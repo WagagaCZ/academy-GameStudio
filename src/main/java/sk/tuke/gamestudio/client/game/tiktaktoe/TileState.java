@@ -1,13 +1,13 @@
 package sk.tuke.gamestudio.client.game.tiktaktoe;
 
-public enum StateTile {
-    EMPTY(" "),
+public enum TileState {
+    EMPTY(" "), //parametricky enum, pekne :)
     CROSS("X"),
     ZERO("0");
 
     private final String stateTile;
-    StateTile(String stateTile) {
-        this.stateTile=stateTile;
+    TileState(String stateTile) {
+        this.stateTile = stateTile;
     }
     public String getStateTile() {
         return stateTile;

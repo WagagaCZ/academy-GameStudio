@@ -1,12 +1,17 @@
+/* trochu som ti to prestylovala, len pre priklad :) */
 body {
     background-image: url("/images/blackjack/tableBackground.jpg");
-    background-size:100% 100%;
+    background-size: 100% 100%;
     color: #FFFFFF;
 }
+.content {
+    min-height: initial;
+}
+
 .container{
     display: flex;
-    padding-left: 0px;
-    padding-right: 0px;
+    padding-left: 0; /* ak je hodnota 0, potom sa nemusia pisat jednotky */
+    padding-right: 0;
     border-top: 3px solid white;
 }
 .center {
@@ -15,16 +20,17 @@ body {
     border-left: 3px solid white;
     border-right: 3px solid white;
     padding: 10px;
-    height: 100vh;
+    height: calc(100vh - (2*16px) - 85px - 3rem - (2*10px) - 0.5rem - 24px - (2*16px)); /* da sa takto vyratat, odratavam vsetky paddingy a velkosti hlaviciek a footra.. chcelo by to vyratat jednu hodnotu z toho, aby to nebolo take skarede */
+    position: relative; /* aby sme mohli napozicionovat back home tlacidlo relativne v tomto divku na jeho spodok */
 }
 .left{
     width: 25%;
-    height: 100vh;
+    height: calc(100vh - (2*16px) - 85px - 3rem - (2*10px) - 0.5rem - 24px - (2*16px));
 }
 .right{
     text-align: right;
     width: 25%;
-    height: 100vh;
+    height: calc(100vh - (2*16px) - 85px - 3rem - (2*10px) - 0.5rem - 24px - (2*16px));
 }
 .bjbutton{
     text-align: center;
@@ -38,10 +44,19 @@ body {
     font-weight: normal;
 }
 
+.homeButton {
+    position: absolute;
+    bottom: 2rem;
+}
+
 table.blackjack {
     text-align: center;
     width: 95%;
     border: white solid 2px;
+}
+
+table.blackjack th.cardTile {
+    height: 6rem;
 }
 
 table.blackjack th {
@@ -51,7 +66,7 @@ table.blackjack th {
 }
 
 table.blackjack tr:nth-child(even) {
-    background-color: lightgreen
+    background-color: lightgreen;
     border: white solid 2px;
 }
 
@@ -63,4 +78,9 @@ th.hand {
     font-weight: bold;
     color: #FFFFFF;
     border: white solid 2px;
+    width: 20%;
+}
+
+footer.foooooooter {
+    bottom: 0;
 }

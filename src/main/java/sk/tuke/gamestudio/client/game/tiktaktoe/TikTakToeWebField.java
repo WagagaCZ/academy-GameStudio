@@ -5,32 +5,34 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class TiktaktoeWebField {
-    private final Map<Integer, StateTile> tikTakToeField;
+public class TikTakToeWebField {
+    private final Map<Integer, TileState> tikTakToeField;
     private final int TILES_COUNT = 9;
-    public TiktaktoeWebField() {
+    public TikTakToeWebField() {
         tikTakToeField = new HashMap<>();
         for (int i = 0; i < TILES_COUNT; i++) {
-            tikTakToeField.put(i, StateTile.EMPTY);
+            tikTakToeField.put(i, TileState.EMPTY);
         }
     }
 
-    public Map<Integer, StateTile> getTikTakToeField() {
+    public Map<Integer, TileState> getTikTakToeField() {
         return tikTakToeField;
     }
 
-    public List<StateTile> getData() {
-        return tikTakToeField.entrySet().stream().sorted(Map.Entry.comparingByKey()).map(Map.Entry::getValue)
+    public List<TileState> getData() {
+        return tikTakToeField.entrySet().stream()
+                .sorted(Map.Entry.comparingByKey())
+                .map(Map.Entry::getValue)
                 .collect(Collectors.toList());
     }
 
     public int getIndexEmptyTile() {
         return tikTakToeField.entrySet().stream()
-                .filter(e -> e.getValue() == StateTile.EMPTY)
+                .filter(e -> e.getValue() == TileState.EMPTY)
                 .map(Map.Entry::getKey).findFirst().orElse(-1);
     }
 
-    public StateTile checkWin() {
+    public TileState checkWin() {
         List<List<Integer>> winPossibilities = List.of(
                 List.of(0, 1, 2),
                 List.of(3, 4, 5),
@@ -40,7 +42,16 @@ public class TiktaktoeWebField {
                 List.of(2, 5, 8),
                 List.of(0, 4, 8),
                 List.of(2, 4, 6)
-        );
+        ); /*zaujimave riesenie, zjednodusila si si tym algoritmizaciu,
+        nevyhodou vsak je, ze extenzivne plnis heap,
+        kedze pri kazdom checku vznikaju nove docasne listy,
+        ktore sa hned po checku zahodia.
+        Ak by si teda mala vacsie pole a klikala by si velmi rychlo,
+        garbage collector by to nestihal zahadzovat,
+         a teda mohlo by ti to sposobit heap overflow.
+
+         Az na tuto malu vec je ale cela trieda velmi pekny kratky kod, paci sa mi to :)
+        */
 
         for (List<Integer> win : winPossibilities) {
             if (tikTakToeField.get(win.get(0)) == tikTakToeField.get(win.get(1)) &&
@@ -48,9 +59,7 @@ public class TiktaktoeWebField {
                 return tikTakToeField.get(win.get(0));
             }
         }
-        return StateTile.EMPTY;
+        return TileState.EMPTY;
     }
-
-
 }
 

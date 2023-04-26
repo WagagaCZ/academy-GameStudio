@@ -6,8 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.WebApplicationContext;
-import sk.tuke.gamestudio.client.game.tiktaktoe.StateTile;
-import sk.tuke.gamestudio.client.game.tiktaktoe.TiktaktoeWebField;
+import sk.tuke.gamestudio.client.game.tiktaktoe.TileState;
+import sk.tuke.gamestudio.client.game.tiktaktoe.TikTakToeWebField;
 import sk.tuke.gamestudio.common.entity.Comment;
 import sk.tuke.gamestudio.common.entity.Rating;
 import sk.tuke.gamestudio.common.entity.Score;
@@ -18,6 +18,7 @@ import sk.tuke.gamestudio.server.service.ScoreServiceJPA;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.Formatter;
 import java.util.List;
 
 import static sk.tuke.gamestudio.common.Constants.*;
@@ -33,12 +34,12 @@ public class ToeController {
     @Autowired
     RatingService ratingService;
     @Autowired
-    RatingServiceJPA ratingServiceJPA;
+    RatingServiceJPA ratingServiceJPA; //preco tu mas toto JPA, ked uz mas wirenute vsetky servisy cez rozhranie? nerozumiem
     @Autowired
     ScoreServiceJPA scoreServiceJPA;
     @Autowired
     CommentService commentService;
-    TiktaktoeWebField field = new TiktaktoeWebField();
+    TikTakToeWebField field = new TikTakToeWebField();
     public static final String userName = System.getProperty("user.name");
     private String gameResult = WIN;
     public boolean gameOver = false;
@@ -90,37 +91,46 @@ public class ToeController {
         return "toe";
     }
 
-    public String getToeField() {
-        List<StateTile> tileList = field.getData();
+    public String getToeField() { //je to len moja konvencia, ale primarne vsetko, co je spojene s vykreslovanim, pouziva render(ed), cize ja by som to nazvala getRenderedToeField
+        List<TileState> tileList = field.getData();
         int index = 0;
-        StringBuilder sb = new StringBuilder();
-        sb.append("<table class='toe'> \n");
+        Formatter f = new Formatter();
+
+        f.format("<table class='toe'> \n");
         for (int row = 0; row < 3; row++) {
-            sb.append("<tr>\n");
+            f.format("<tr>\n");
             for (int column = 0; column < 3; column++) {
-                sb.append("<td>\n");
-                sb.append("<a href='/toe?index=").append(index).append("'>\n");
-                sb.append("<span>").append(tileList.get(index).getStateTile()).append("</span>");
+                f.format("""
+                        <td>
+                          <a href='toe?index=%s'>
+                            <span> %s </span>
+                          </a>
+                        </td>
+                        """, index, tileList.get(index).getStateTile());
                 index++;
-                sb.append("</a>\n");
-                sb.append("</td>\n");
+//                f.format("<td>\n");
+//                f.format("<a href='/toe?index=").format(index).format("'>\n");
+//                f.format("<span>").format(tileList.get(index).getStateTile()).format("</span>");
+//                index++;
+//                f.format("</a>\n");
+//                f.format("</td>\n");
             }
-            sb.append("</tr>\n");
+            f.format("</tr>\n");
         }
-        sb.append("</table>\n");
-        return sb.toString();
+        f.format("</table>\n");
+        return f.toString();
     }
 
     private void startNewGame() {
-        field = new TiktaktoeWebField();
+        field = new TikTakToeWebField();
         startMillis = System.currentTimeMillis();
     }
 
     private void updateGame(int index) throws InterruptedException {
         //ak je dlazdica prazdna
-        if (field.getTikTakToeField().get(index) == StateTile.EMPTY) {
+        if (field.getTikTakToeField().get(index) == TileState.EMPTY) {
             //dame krizek
-            field.getTikTakToeField().put(index, StateTile.CROSS);
+            field.getTikTakToeField().put(index, TileState.CROSS);
             countOfPlayerMove++;
             //skontrolujeme vyhru
             if (checkWin()) {
@@ -133,7 +143,7 @@ public class ToeController {
             int zeroIndex = field.getIndexEmptyTile();
             if (zeroIndex >= 0) {
                 Thread.sleep(100);
-                field.getTikTakToeField().put(zeroIndex, StateTile.ZERO);
+                field.getTikTakToeField().put(zeroIndex, TileState.ZERO);
                 if (checkWin()) {
                     setGameResult(GAME_OVER);
                     return;
@@ -149,9 +159,9 @@ public class ToeController {
     }
 
     public boolean checkWin() {
-        StateTile winner = field.checkWin();
-        if (StateTile.CROSS == winner || StateTile.ZERO == winner) {
-            List<StateTile> data = field.getData();
+        TileState winner = field.checkWin();
+        if (TileState.CROSS == winner || TileState.ZERO == winner) {
+            List<TileState> data = field.getData();
             return true;
         }
         return false;

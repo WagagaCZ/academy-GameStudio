@@ -10,23 +10,26 @@ public class Deck {
 
     public Deck() {
         deck = new Card[52];
-        for(int i = 0; i<4;i++){
-            for(int z = 1; z<=13; z++){
-                deck[(z-1) + (i*13)] = new Card(z,i);
+        
+        for (int shape = 0; shape < 4; shape++) { //Trvalo mi dobru minutu kym som pochopila, co tu vlastne robis. Spravne nazvy lepsie komunikuju vyznam kodu.
+            for (int card = 1; card <= 13; card++) {
+                this.deck[(card - 1) + (shape * 13)] = new Card(card, shape);
             }
         }
     }
-    public Card drawCard(){
+
+    public Card drawCard() {
         Card drawn;
         int pick = ThreadLocalRandom.current().nextInt(51);
-        if(deck[pick] != null){
+
+        if (deck[pick] != null) {
             drawn = deck[pick];
             deck[pick] = null;
             leftInDeck--;
-        }
-        else {
+        } else {
             drawn = drawCard();
         }
+
         return drawn;
     }
 

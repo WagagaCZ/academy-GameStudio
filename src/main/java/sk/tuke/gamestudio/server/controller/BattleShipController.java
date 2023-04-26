@@ -38,7 +38,8 @@ public class BattleShipController {
     private UserController userController;
 
     @RequestMapping
-    public String processUserInput(@RequestParam(required = false) Integer row, @RequestParam(required = false) Integer column) {
+    public String processUserInput(@RequestParam(required = false) Integer row,
+                                   @RequestParam(required = false) Integer column) {
         startOrUpdateGame(row, column);
         return "battleship";
     }
@@ -53,17 +54,21 @@ public class BattleShipController {
         if (seaField == null) {
             startNewGame();
         }
+
         if (row != null && column != null) {
             GameState stateBeforeMove = seaField.getState();
             if (stateBeforeMove == GameState.PLAYING) {
+
                 seaField.openTile(row, column);
+
                 if (seaField.getState() == GameState.WON && stateBeforeMove != seaField.getState()) {
                     if (userController.isLogged()) {
                         scoreService.addScore(new Score("battleship", userController.getLoggedUser(), seaField.getNumberOfTries(), Timestamp.valueOf(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Timestamp(new Date().getTime())))));
-                        return;
+                        return; //return sa spravi tak ci tak po tomto if-e, naco ti je tu potom tento tu?
                     }
                     return;
                 }
+
                 seaField.opponentOpenTile();
             }
         }
@@ -76,18 +81,23 @@ public class BattleShipController {
     }
 
     public List<Score> getTopScores() {
-        return scoreService.getTopScores("battleship");
+        return scoreService.getTopScores("battleship"); //"battleship" pouzivas velakrat, oplati sa spravit si na to konstantu -> refactor -> Introduce Constant
     }
 
 
-    public List<Comment> showComments() {
+    public List<Comment> showComments() { //toto nie je show comments, to je skor get alebo load
         return commentService.getComments("battleship");
     }
 
     @PostMapping("/submitComment")
     public String submitComment(@RequestParam("commentText") String commentText) {
         if (userController.isLogged()) {
-            commentService.addComment(new Comment(userController.getLoggedUser(), "battleship", commentText, Timestamp.valueOf(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Timestamp(new Date().getTime())))));
+            //ak mas taketo dlhe riadky, tak to odenteruj, kazdy parameter na novy riadok
+            commentService.addComment(new Comment(userController.getLoggedUser(),
+                    "battleship", commentText,
+                    //toto vytvorenie timestamp tu opakujes viackrat, treba to zrefaktorovat a hodit do privatnej metody (Refactor -> Extract Method)
+                    //ale aj tak si myslim, ze nejake moc komplikovane to je na jednoduchy Timestamp...
+                    Timestamp.valueOf(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Timestamp(new Date().getTime())))));
         }
         return "redirect:/ship";
     }
@@ -126,105 +136,62 @@ public class BattleShipController {
 
 
     public Tile[][] getPlayerFieldTiles() {
-        if (seaField == null) {
-            return null;
-        } else {
-            return seaField.getPlayerTiles();
-        }
+        return seaField != null ? seaField.getPlayerTiles() : null;
     }
 
     public Tile[][] getEnemyFieldTiles() {
-        if (seaField == null) {
-            return null;
-        } else {
-            return seaField.getEnemyTiles();
-        }
+        return seaField != null ? seaField.getEnemyTiles() : null; //ak tu nahodou vratis null, nepadne ti to na strane klienta? nemal by si tu vratit aspon nejake nove prazdne pole docasne?
     }
 
     public boolean isPlaying() {
-        if (seaField == null) {
-            return false;
-        } else {
-            return (seaField.getState() == GameState.PLAYING);
-        }
+        return seaField != null && seaField.getState() == GameState.PLAYING;
     }
 
     public String getTileText(Tile tile) {
-        switch (tile.getState()) {
-            case WATER -> {
-                return "~";
-            }
-            case MISS -> {
-                return "O";
-            }
-            case HIT -> {
-                return "X";
-            }
-            default -> {
-                if (tile instanceof Ship) {
-                    return "#";
-                } else {
-                    return "~";
-                }
-            }
-        }
+        //takychto switchov tu mas viacej, da sa to takto prepisat
+        return switch(tile.getState()) {
+            case WATER -> "~";
+            case MISS -> "0";
+            case HIT -> "X";
+            default -> tile instanceof Ship ? "#" : "~";
+        };
     }
 
 
     public String getTileClass(Tile tile) {
-        if (seaField.getState() == GameState.WON) {
-            if (tile.getState() == Tile.State.WATER) {
-                return "water-endgame";
-            }
-        } else if (seaField.getState() == GameState.FAILED) {
+        if (seaField.getState() == GameState.WON &&
+                tile.getState() == Tile.State.WATER) {
+            return "water-endgame";
+        } //ak mas return, netreba ti else, podobne aj nizsie
+
+        if (seaField.getState() == GameState.FAILED) {
             if (tile.getState() == Tile.State.WATER && tile instanceof Ship) {
                 return "ship";
-            } else {
-                switch (tile.getState()) {
-                    case WATER -> {
-                        return "water-endgame";
-                    }
-                    case MISS -> {
-                        return "missed";
-                    }
-                    case HIT -> {
-                        return "hit";
-                    }
-                    default -> throw new RuntimeException("Unexpected tile state");
-                }
             }
+
+            return switch (tile.getState()) {
+                case WATER -> "water-endgame";
+                case MISS -> "missed";
+                case HIT -> "hit";
+                default -> throw new RuntimeException("Unexpected tile state");
+            };
         }
-        switch (tile.getState()) {
-            case WATER -> {
-                return "water";
-            }
-            case MISS -> {
-                return "missed";
-            }
-            case HIT -> {
-                return "hit";
-            }
+
+        return switch (tile.getState()) {
+            case WATER -> "water";
+            case MISS -> "missed";
+            case HIT -> "hit";
             default -> throw new RuntimeException("Unexpected tile state");
-        }
+        };
     }
 
     public String getTileClassPlayer(Tile tile) {
-        switch (tile.getState()) {
-            case WATER -> {
-                if (tile instanceof Ship) {
-                    return "ship";
-                } else {
-                    return "water-player";
-                }
-            }
-            case MISS -> {
-                return "missed";
-            }
-            case HIT -> {
-                return "hit";
-            }
+        return switch (tile.getState()) {
+            case WATER -> tile instanceof Ship ? "ship" : "water-player";
+            case MISS -> "missed";
+            case HIT -> "hit";
             default -> throw new RuntimeException("Unexpected tile state");
-        }
+        };
     }
 
     public String getNumberOfPlayerTiles() {
@@ -234,6 +201,5 @@ public class BattleShipController {
     public String getNumberOfEnemyTiles() {
         return Integer.toString(seaField.getNumberOfEnemyShip());
     }
-
 }
 

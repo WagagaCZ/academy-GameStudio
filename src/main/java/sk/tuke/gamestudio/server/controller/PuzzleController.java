@@ -22,6 +22,7 @@ import java.io.*;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.Formatter;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -72,36 +73,33 @@ public class PuzzleController implements PuzzleFieldInit {
     public String saveGame() {
         isSaved = false;
         isLoaded = false;
-        try {
-            FileOutputStream fileOutputStream = new FileOutputStream(SAVED_GAME);
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-            objectOutputStream.writeObject(grid);
-            objectOutputStream.writeObject(countOfMove);
+        try (FileOutputStream fos = new FileOutputStream(SAVED_GAME); //snaz sa vyhybat az tak dlhym nazvom docasnych premennych v tak kratkom kode
+             ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+            oos.writeObject(grid);
+            oos.writeObject(countOfMove);
             isSaved = true;
         } catch (IOException e) {
             isSaved = false;
             System.out.println("Game was not saved" + e.getMessage());
-        } finally {
-            return "redirect:/puzzle";
         }
+        return "redirect:/puzzle";
     }
 
     @RequestMapping("/load")
-        public String getSavedGame() throws IOException {
-        ObjectInputStream in = new ObjectInputStream(new FileInputStream(SAVED_GAME));
+    public String getSavedGame() throws IOException {
         isSaved = false;
         isLoaded = false;
-        try {
-            grid = (int[][]) in.readObject();
+
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(SAVED_GAME))) {
+            grid = (int[][]) ois.readObject();
             isLoaded = true;
-            countOfMove = (int) in.readObject();
+            countOfMove = (int) ois.readObject();
         } catch (ClassNotFoundException e) {
             System.out.println("Saved game not exists");
             isLoaded = false;
             startNewGame();
-        } finally {
-            return "redirect:/puzzle";
         }
+        return "redirect:/puzzle";
     }
 
     @PostMapping("/ratings")
@@ -128,27 +126,25 @@ public class PuzzleController implements PuzzleFieldInit {
         }
 
         int index = 0;
-        StringBuilder sb = new StringBuilder();
-        sb.append("<table class='puzzle'> \n");
+        Formatter f = new Formatter();
+        f.format("<table class='puzzle'>\n");
 
         for (int row = 0; row < size; row++) {
-            sb.append("<tr>\n");
+            f.format("<tr>\n");
             for (int column = 0; column < size; column++) {
-                sb.append("<td>\n");
-                sb.append("<a href='/puzzle?index=" + index + "'>\n");
-                index++;
-                if (grid[row][column] == 0) {
-                    sb.append("<span>" + " " + "</span>");
-                } else {
-                    sb.append("<span>" + grid[row][column] + "</span>");
-                }
-                sb.append("</a>\n");
-                sb.append("</td>\n");
+                f.format("""
+                        <td>
+                          <a href='/puzzle?index=%d'>
+                            <span>%s</span>
+                          </a>
+                        </td>
+                        """, index++, grid[row][column] == 0 ? " " : grid[row][column]);
             }
-            sb.append("</tr>\n");
+            f.format("</tr>\n");
         }
-        sb.append("</table>\n");
-        return sb.toString();
+        f.format("</table>\n");
+
+        return f.toString();
     }
 
 
@@ -158,22 +154,41 @@ public class PuzzleController implements PuzzleFieldInit {
 
         PuzzleFieldInit.baseArrayInit(grid);
         do {
-            PuzzleFieldInit.initRandomTiles(grid);
-        }
-        while (PuzzleFieldInit.isSolved(grid));
+            PuzzleFieldInit.switchRandomTiles(grid);
+        } while (PuzzleFieldInit.isSolved(grid));
     }
 
     void startOrUpdateGame(Integer index) {
-        int temp = 0;
-        int listIndex = 0;
+        int temp = 0, listIndex = 0;
         boolean isMove = false;
+
         if (grid == null) {
             startNewGame();
         }
         //if parameter was input
         if (index != null) {
-            List<Integer> list = Arrays.stream(grid).flatMap(row -> Arrays.stream(row).boxed()).collect(Collectors.toList());
+            List<Integer> list = Arrays.stream(grid)
+                    .flatMap(row -> Arrays.stream(row).boxed())
+                    .collect(Collectors.toList());
+
             if (!Objects.equals(list, winCombination)) {
+//                toto treba zrefaktorovat, pouzila by som nieco taketo, pripadne aj enum Direction, ten sa vzdy hodi :)
+//                moveleft
+//                if ((index - 1) >= 0 && (index - 1) % 4 != 3) {
+//                    move(index, index - 1, list);
+//                }
+//                //moveright
+//                if ((index + 1) <= 15 && (index + 1) % 4 != 0) {
+//                    move(index, index + 1, list);
+//                }
+//                //moveup
+//                if ((index - 4) >= 0) {
+//                    move(index, index - 4, list);
+//                }
+//                //movedown
+//                if ((index + 4) <= 15) {
+//                    move(index, index + 4, list);
+//                }
                 //moveleft
                 if ((index - 1) >= 0 && (index - 1) <= 15) {
                     if (list.get(index - 1) == 0) {
@@ -240,7 +255,7 @@ public class PuzzleController implements PuzzleFieldInit {
             if (Objects.equals(list, winCombination)) {
                 setGameResult(WIN);
                 checkWin = true;
-                return;
+                return; //naco je tu return? sme na konci metody
             }
         }
     }

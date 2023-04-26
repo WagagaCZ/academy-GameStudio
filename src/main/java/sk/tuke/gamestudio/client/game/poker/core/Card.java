@@ -14,6 +14,15 @@ public class Card {
     private Type type;
     private Color color;
     private String path;
+    private boolean selected;
+
+    public Card(int value, Type type, Color color, String path) {
+        this.value = value;
+        this.type = type;
+        this.color = color;
+        this.path = path;
+        this.selected = false;
+    }
 
     public boolean isSelected() {
         return selected;
@@ -23,16 +32,6 @@ public class Card {
         this.selected = selected;
     }
 
-    private boolean selected;
-    public Card(int value, Type type, Color color, String path) {
-        this.value = value;
-        this.type = type;
-        this.color = color;
-        this.path = path;
-        this.selected = false;
-    }
-
-
     public String getPath() {
         return path;
     }
@@ -41,53 +40,8 @@ public class Card {
         this.path = path;
     }
 
-    @Override
-    public String toString() {
-        String cardValue;
-        cardValue = String.valueOf(value);
-        switch (value){
-            case 1 -> {
-                cardValue="A";
-            }
-            case 13 -> {
-                cardValue = "K";
-            }
-            case 12 -> {
-                cardValue = "Q";
-            }
-            case 11 -> {
-                cardValue = "J";
-            }
-        }
-        return
-                "value=" + cardValue +
-                ", type=" + type +
-                ", color=" + color +
-                ';';
-    }
-
     public int getValue() {
         return value;
-    }
-    public String getValueString() {
-
-        String cardValue;
-        cardValue = String.valueOf(value);
-        switch (value){
-            case 1 -> {
-                cardValue="A";
-            }
-            case 13 -> {
-                cardValue = "K";
-            }
-            case 12 -> {
-                cardValue = "Q";
-            }
-            case 11 -> {
-                cardValue = "J";
-            }
-        }
-        return cardValue;
     }
 
     public void setValue(int value) {
@@ -108,5 +62,23 @@ public class Card {
 
     public void setColor(Color color) {
         this.color = color;
+    }
+
+    public String getValueString() {
+        return switch(value) {
+            case 1 -> "A";
+            case 13 -> "K";
+            case 12 -> "Q";
+            case 11 -> "J";
+            default -> String.valueOf(value);
+        };
+    }
+
+    @Override
+    public String toString() {
+        return "value=" + getValueString() +
+                ", type=" + type +
+                ", color=" + color +
+                ';';
     }
 }

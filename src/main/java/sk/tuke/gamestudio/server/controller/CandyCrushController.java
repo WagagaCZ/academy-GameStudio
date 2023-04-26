@@ -43,18 +43,23 @@ public class CandyCrushController {
     // /candycrush/new
     @RequestMapping("/new")
     public String startNewGame() {
-        field = new Field(9,9);
+        field = new Field(9, 9);
         return "candycrush";
     }
 
     // /matchthree/move
     @RequestMapping("/move")
     @ResponseBody
-    public String move(@RequestParam int x1, @RequestParam int y1, @RequestParam int x2, @RequestParam int y2) {
-        startOrUpdateGame(x1,y2,x2,y2);
+    public String move(@RequestParam int x1, @RequestParam int y1,
+                       @RequestParam int x2, @RequestParam int y2) {
+        startOrUpdateGame(x1, y2, x2, y2);
         if (field.isSolved()) {
             if (userController.isLogged()) {
-                scoreService.addScore(new Score("matchthree", userController.getLoggedUser(), field.getScore(), new Date()));
+                scoreService.addScore(new Score( //taketo dlhe riadky radsej odenterovat
+                        "matchthree",
+                        userController.getLoggedUser(),
+                        field.getScore(),
+                        new Date()));
             }
         }
         return "candycrush";
@@ -63,18 +68,22 @@ public class CandyCrushController {
     // /matchthree/json
     @RequestMapping(value = "/json", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public Field proccessUserInput(@RequestParam(required = false) Integer row1, @RequestParam(required = false) Integer column1, @RequestParam(required = false) Integer row2, @RequestParam(required = false) Integer column2) {
-        field.setJustFinished(startOrUpdateGame(row1,column1,row2,column2));
+    public Field proccessUserInput(@RequestParam(required = false) Integer row1,
+                                   @RequestParam(required = false) Integer column1,
+                                   @RequestParam(required = false) Integer row2,
+                                   @RequestParam(required = false) Integer column2) {
+        field.setJustFinished(startOrUpdateGame(row1, column1, row2, column2));
         return field;
     }
 
-    @RequestMapping(value="/jsonnew", produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/jsonnew", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public Field newGameJson(){
+    public Field newGameJson() {
         startNewGame();
         field.setJustFinished(false);
         return field;
     }
+
     @RequestMapping(value = "/api/gamefield", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Field getGameField() {
@@ -89,12 +98,13 @@ public class CandyCrushController {
 
 //    }
 
-    private boolean startOrUpdateGame(Integer row1, Integer column1, Integer row2, Integer column2) {
+    private boolean startOrUpdateGame(Integer row1, Integer column1,
+                                      Integer row2, Integer column2) {
         if (candyCrush == null) {
             startNewGame();
         }
 
-        boolean justFinished=false;
+        boolean justFinished = false;
 
         if (row1 != null && column1 != null && row2 != null && column2 != null) {
             if (isValidSwap(row1, column1, row2, column2)) {
@@ -108,7 +118,11 @@ public class CandyCrushController {
 
             if (field.isSolved()) {
                 if (userController.isLogged()) {
-                    scoreService.addScore(new Score("matchthree", userController.getLoggedUser(), field.getScore(), new Date()));
+                    scoreService.addScore(new Score(
+                            "matchthree",
+                            userController.getLoggedUser(),
+                            field.getScore(),
+                            new Date()));
                 }
                 return true;
             }
@@ -117,6 +131,8 @@ public class CandyCrushController {
         return justFinished;
     }
 
+    //mas tu velmi vela z logiky hry, malo by sa to riesit vsetko vo Field a nad nim len volat metody, napr. field.isValidSwap(...)
+    //vysledok iba zobrazovat v UI
     public boolean isValidSwap(int row1, int col1, int row2, int col2) {
         // The two tiles must be adjacent to each other
         if (!isAdjacent(row1, col1, row2, col2)) {
@@ -137,19 +153,11 @@ public class CandyCrushController {
 
 
     public boolean isPlaying() {
-        if (field == null) {
-            return false;
-        } else {
-            return !field.isSolved();
-        }
+        return field != null && !field.isSolved();
     }
 
     public int getScore() {
-        if (field == null) {
-            return 0;
-        } else {
-            return field.getScore();
-        }
+        return field == null ? 0 : field.getScore();
     }
 
     public List<Score> getTopScores() {
